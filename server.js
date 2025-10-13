@@ -13,7 +13,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
-
+e
+vare[videoLinkewv]
 // MySQL connection setup
 const dbConfig = {
     host: process.env.DB_HOST || 'localhost',
