@@ -12,12 +12,12 @@
     <header>
         <h1 class="accent-text"><%= movie.title %></h1>
         <nav>
-            <a href="/">HOME</a>
-            <a href="/watchlist">WATCHLIST</a>
+            <a href="/" class="nav-icon-link" title="Home" aria-label="Home"><%- include('partials/icon', { name: 'home' }) %></a>
+            <a href="/watchlist" class="nav-icon-link" title="Watchlist" aria-label="Watchlist"><%- include('partials/icon', { name: 'bookmark' }) %></a>
             <% if (user) { %>
-                <a href="/logout">LOGOUT</a>
+                <a href="/logout" class="nav-icon-link" title="Log out" aria-label="Log out"><%- include('partials/icon', { name: 'log-out' }) %></a>
             <% } else { %>
-                <a href="/login">LOGIN</a>
+                <a href="/login" class="nav-icon-link" title="Log in" aria-label="Log in"><%- include('partials/icon', { name: 'log-in' }) %></a>
             <% } %>
             <%- include('partials/theme-toggle') %>
         </nav>
@@ -26,24 +26,31 @@
     <main id="main">
         <div class="movie-details">
             <img src="<%= movie.poster %>" alt="<%= movie.title %>">
-            <h2>Release Date: <%= movie.releaseDate %></h2>
-            <p>Cast: 
-                <% movie.cast.forEach(castMember => { %>
-                    <span><%= castMember.name %> as <%= castMember.role %></span><br>
-                <% }); %>
-            </p>
-            <p>Crew:
-                <% movie.crew.forEach(crewMember => { %>
-                    <span><%= crewMember.name %> (<%= crewMember.role %>)</span><br>
-                <% }); %>
-            </p>
+            <h2>Release Date: <span class="release-date"><%= movie.releaseDate %></span></h2>
+            <% if (movie.cast.length > 0) { %>
+                <p>Cast:
+                    <% movie.cast.forEach(castMember => { %>
+                        <span><%= castMember.name %> as <%= castMember.role %></span><br>
+                    <% }); %>
+                </p>
+            <% } %>
+            <% if (movie.crew.length > 0) { %>
+                <p>Crew:
+                    <% movie.crew.forEach(crewMember => { %>
+                        <span><%= crewMember.name %> (<%= crewMember.role %>)</span><br>
+                    <% }); %>
+                </p>
+            <% } %>
+            <% if (movie.cast.length === 0 && movie.crew.length === 0) { %>
+                <p class="no-video-message">Cast and crew details aren't available for this title yet.</p>
+            <% } %>
 
             <!-- Watch Now Button -->
             <% if (hasVideo) { %>
                 <% if (user) { %>
-                    <a class="watch-now-btn" href="/video/<%= movie.id %>">Watch Now</a>
+                    <a class="watch-now-btn" href="/video/<%= movie.id %>"><svg class="watch-now-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><polygon points="6 3 20 12 6 21 6 3"/></svg>Watch Now</a>
                 <% } else { %>
-                    <a class="watch-now-btn" href="/login?redirectTo=<%= encodeURIComponent(`/video/${movie.id}`) %>">Watch Now</a>
+                    <a class="watch-now-btn" href="/login?redirectTo=<%= encodeURIComponent(`/video/${movie.id}`) %>"><svg class="watch-now-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><polygon points="6 3 20 12 6 21 6 3"/></svg>Watch Now</a>
                 <% } %>
             <% } else { %>
                 <p class="no-video-message">No video available yet for this title.</p>
@@ -55,6 +62,6 @@
     <footer>
         <p>&copy; <span id="current-year"></span> COMICS <span class="accent-text">TV</span></p>
     </footer>
-    <script src="/public/javascript/script.js"></script>
+    <script src="/public/Javascript/script.js"></script>
 </body>
 </html>

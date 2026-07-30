@@ -72,21 +72,50 @@ async function verifyAdminLogin(username, password) {
 // generic self-asserted OIDC provider where auto-linking on email is an
 // account-takeover risk (see the design notes on this). Creates a new
 // account if neither matches.
-async function findOrCreateGoogleUser({ sub, email, emailVerified }) {
+async function findOrCreateGoogleUser({ sub, email, emailVerified, picture }) {
     const bySub = await userRepo.findByGoogleSub(sub);
-    if (bySub) return bySub;
+    if (bySub) {
+        if (!bySub.avatar_url && picture) {
+            await userRepo.syncGoogleAvatar(bySub.id, picture);
+            return userRepo.findByGoogleSub(sub);
+        }
+        return bySub;
+    }
 
     if (emailVerified) {
         const byEmail = await userRepo.findByEmail(email);
         if (byEmail) {
-            await userRepo.linkGoogleSub(byEmail.id, sub);
-            return byEmail;
+            await userRepo.linkGoogleSub(byEmail.id, sub, picture);
+            return userRepo.findByGoogleSub(sub);
         }
     }
 
     const username = await generateUsernameFromEmail(email);
-    await userRepo.createGoogleUser(username, email, sub);
+    await userRepo.createGoogleUser(username, email, sub, picture);
     return userRepo.findByGoogleSub(sub);
 }
 
-module.exports = { verifyUserLogin, signupUser, verifyAdminLogin, findOrCreateGoogleUser };
+// Stores an uploaded avatar's bytes directly in the database and points
+// avatar_url at our own serving route (GET /account/avatar/:username) -
+// never at a client-supplied path. A cache-busting query string is appended
+// so the browser refetches after a change instead of serving a stale
+// cached copy of the previous image from the same URL.
+async function setUploadedAvatar(username, buffer, mime) {
+    const avatarUrl = `/account/avatar/${encodeURIComponent(username)}?v=${Date.now()}`;
+    await userRepo.setUploadedAvatarImage(username, buffer, mime, avatarUrl);
+    return { ok: true, avatarUrl };
+}
+
+async function clearAvatar(username) {
+    await userRepo.clearAvatar(username);
+    return { ok: true, avatarUrl: null };
+}
+
+module.exports = {
+    verifyUserLogin,
+    signupUser,
+    verifyAdminLogin,
+    findOrCreateGoogleUser,
+    setUploadedAvatar,
+    clearAvatar,
+};

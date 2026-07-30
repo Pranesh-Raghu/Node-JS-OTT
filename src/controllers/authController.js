@@ -30,6 +30,7 @@ async function handleLogin(req, res, next) {
         // req.session.user as the canonical username.
         req.session.user = user.username;
         req.session.email = user.email || null;
+        req.session.avatarUrl = user.avatar_url || null;
         safeRedirect(res, redirectTo, '/');
     } catch (err) {
         next(err);
@@ -53,6 +54,7 @@ async function handleSignup(req, res, next) {
         await regenerateSession(req);
         req.session.user = result.username;
         req.session.email = email;
+        req.session.avatarUrl = null;
         res.redirect('/');
     } catch (err) {
         next(err);
@@ -131,6 +133,7 @@ async function handleGoogleCallback(req, res, next) {
         await regenerateSession(req);
         req.session.user = user.username;
         req.session.email = user.email || null;
+        req.session.avatarUrl = user.avatar_url || null;
         safeRedirect(res, redirectTo, '/');
     } catch (err) {
         next(err);

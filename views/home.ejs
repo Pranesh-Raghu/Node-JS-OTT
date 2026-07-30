@@ -7,21 +7,21 @@
     <link rel="stylesheet" href="/public/css/style.css">
     
 </head>
-<body>
+<body data-logged-in="<%= user ? 'true' : 'false' %>">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header>
     <div class="header-top">
         <a class="brand" href="/"><h1>COMICS <span class="accent-text">TV</span></h1></a>
         <nav>
-            <a href="/watchlist">WATCHLIST</a>
+            <a href="/watchlist" class="nav-icon-link" title="Watchlist" aria-label="Watchlist"><%- include('partials/icon', { name: 'bookmark' }) %></a>
             <% if (user) { %>
-                <a href="/account/sessions">SESSIONS<% if (typeof deviceCount !== 'undefined' && deviceCount > 0) { %> <span class="nav-badge"><%= deviceCount %></span><% } %></a>
-                <a href="/account/webhooks">WEBHOOKS</a>
-                <a href="/logout">LOGOUT</a>
+                <a href="/account/sessions" class="nav-icon-link" title="Sessions" aria-label="Sessions"><%- include('partials/icon', { name: 'monitor' }) %><% if (typeof deviceCount !== 'undefined' && deviceCount > 0) { %><span class="nav-badge"><%= deviceCount %></span><% } %></a>
+                <a href="/account/webhooks" class="nav-icon-link" title="Webhooks" aria-label="Webhooks"><%- include('partials/icon', { name: 'link' }) %></a>
+                <a href="/logout" class="nav-icon-link" title="Log out" aria-label="Log out"><%- include('partials/icon', { name: 'log-out' }) %></a>
                 <%- include('partials/avatar', { email: typeof email !== 'undefined' ? email : null, avatarUrl: typeof avatarUrl !== 'undefined' ? avatarUrl : null, username: user }) %>
             <% } else { %>
-                <a href="/login">LOGIN</a>
+                <a href="/login" class="nav-icon-link" title="Log in" aria-label="Log in"><%- include('partials/icon', { name: 'log-in' }) %></a>
             <% } %>
             <%- include('partials/theme-toggle') %>
         </nav>

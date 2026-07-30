@@ -15,6 +15,7 @@ function requireLoginRedirect(req, res, next) {
 }
 
 router.get('/', catalogController.home);
+router.get('/api/search', catalogController.searchMovies);
 router.get(
     '/movie/:id',
     requireFgaPermission('can_discover', (req) => `title:${req.params.id}`, { tier: 'browse' }),

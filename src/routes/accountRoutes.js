@@ -1,8 +1,13 @@
 const express = require('express');
 const sessionsController = require('../controllers/sessionsController');
 const webhooksController = require('../controllers/webhooksController');
+const profileController = require('../controllers/profileController');
 
 const router = express.Router();
+
+router.get('/account/profile', profileController.showProfile);
+router.post('/account/profile', profileController.updateProfile);
+router.get('/account/avatar/:username', profileController.serveAvatar);
 
 router.get('/account/sessions', sessionsController.listSessions);
 router.post('/account/sessions/:sessionId/revoke', sessionsController.revokeSession);

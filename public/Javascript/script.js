@@ -9,6 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Custom file-upload control (account/profile): shows the chosen
+    // filename instead of the browser's native "No file chosen" text. Pure
+    // progressive enhancement - without JS the label's for="" attribute
+    // still opens the native file picker and the form still submits fine.
+    const fileInput = document.querySelector('.file-upload-input');
+    const fileText = document.querySelector('.js-file-upload-text');
+    if (fileInput && fileText) {
+        const defaultText = fileText.textContent;
+        fileInput.addEventListener('change', () => {
+            fileText.textContent = fileInput.files[0]?.name || defaultText;
+        });
+    }
+
     // --- Toast notifications (self-contained, no third-party CDN) ---
     let toastContainer = document.querySelector('.toast-container');
     if (!toastContainer) {
@@ -34,12 +47,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showEmptyMessage = (container) => {
         container.innerHTML = '';
-        const emptyMessage = document.createElement('h2');
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'watchlist-empty-state';
+
+        const heading = document.createElement('h2');
         const label = document.createElement('span');
         label.className = 'empty-label';
-        label.textContent = 'EMPTY';
-        emptyMessage.append('Your Watchlist is ', label);
-        container.appendChild(emptyMessage);
+        label.textContent = 'empty';
+        heading.append('Your watchlist is ', label);
+
+        const subtitle = document.createElement('p');
+        subtitle.className = 'text-muted';
+        subtitle.textContent = 'Movies you add will show up here so you can pick up where you left off.';
+
+        const browseLink = document.createElement('a');
+        browseLink.className = 'watch-now-btn';
+        browseLink.href = '/';
+        browseLink.textContent = 'Browse movies';
+
+        wrapper.append(heading, subtitle, browseLink);
+        container.appendChild(wrapper);
     };
 
     const appendToWatchlist = (movie, container) => {
@@ -135,19 +163,100 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Single search-bar handler, dispatched by whichever card type is present
-    // on the current page (movie-card on home, watchlist-item on watchlist).
+    // on the current page.
+    //
+    // The watchlist page already has every item in the DOM (it's not
+    // paginated), so a pure client-side filter there is correct. The home
+    // page's movie grid IS paginated (24 per page) - filtering only the DOM
+    // silently searched just the current page and missed the rest of the
+    // catalog, so that case now calls /api/search instead and replaces the
+    // grid with the real results.
     const searchBar = document.getElementById('search-bar');
-    if (searchBar) {
+    const movieGallery = document.querySelector('.movie-gallery');
+    if (searchBar && movieGallery) {
+        const isLoggedIn = document.body.dataset.loggedIn === 'true';
+        const originalGalleryHTML = movieGallery.innerHTML;
+        const paginationNav = document.querySelector('.pagination');
+        let debounceHandle = null;
+
+        const buildCard = (movie) => {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+
+            const link = document.createElement('a');
+            link.className = 'movie-link';
+            link.href = `/movie/${encodeURIComponent(movie.id)}`;
+
+            const img = document.createElement('img');
+            img.src = movie.poster && movie.poster.startsWith('https://') ? movie.poster : `/${movie.poster || ''}`;
+            img.alt = '';
+            link.appendChild(img);
+
+            const titleSpan = document.createElement('span');
+            titleSpan.className = 'movie-title';
+            titleSpan.textContent = movie.title;
+            link.appendChild(titleSpan);
+
+            card.appendChild(link);
+
+            if (isLoggedIn) {
+                const button = document.createElement('button');
+                button.className = 'add-to-watchlist-btn';
+                button.setAttribute('data-id', movie.id);
+                button.textContent = 'Add to Watchlist';
+                card.appendChild(button);
+            } else {
+                const loginLink = document.createElement('a');
+                loginLink.className = 'add-to-watchlist-btn';
+                loginLink.href = `/login?redirectTo=${encodeURIComponent(`/movie/${movie.id}`)}`;
+                loginLink.textContent = 'Add to Watchlist';
+                card.appendChild(loginLink);
+            }
+
+            return card;
+        };
+
+        const renderResults = (movies) => {
+            movieGallery.innerHTML = '';
+            if (movies.length === 0) {
+                const empty = document.createElement('p');
+                empty.className = 'empty-label';
+                empty.textContent = 'No movies match your search.';
+                movieGallery.appendChild(empty);
+                return;
+            }
+            movies.forEach((movie) => movieGallery.appendChild(buildCard(movie)));
+        };
+
+        const runSearch = async (query) => {
+            try {
+                const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+                if (!res.ok) throw new Error(`search request failed: ${res.status}`);
+                const data = await res.json();
+                renderResults(data.movies || []);
+            } catch (err) {
+                console.error('Search failed:', err);
+            }
+        };
+
+        searchBar.addEventListener('input', (event) => {
+            const query = event.target.value.trim();
+            clearTimeout(debounceHandle);
+
+            if (!query) {
+                movieGallery.innerHTML = originalGalleryHTML;
+                if (paginationNav) paginationNav.style.display = '';
+                return;
+            }
+
+            if (paginationNav) paginationNav.style.display = 'none';
+            debounceHandle = setTimeout(() => runSearch(query), 300);
+        });
+    } else if (searchBar) {
+        // Watchlist page: everything is already loaded, filter in place.
         searchBar.addEventListener('input', (event) => {
             const query = event.target.value.toLowerCase().trim();
-            const movieCards = document.querySelectorAll('.movie-card');
-            const watchlistItems = document.querySelectorAll('.watchlist-item');
-
-            movieCards.forEach((card) => {
-                const title = card.querySelector('.movie-title').innerText.toLowerCase().trim();
-                card.style.display = title.includes(query) ? '' : 'none';
-            });
-            watchlistItems.forEach((item) => {
+            document.querySelectorAll('.watchlist-item').forEach((item) => {
                 const titleEl = item.querySelector('.watchlist-title');
                 if (!titleEl) return;
                 const title = titleEl.innerText.toLowerCase().trim();
@@ -180,23 +289,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     // Avatar fallback chain: Gravatar -> custom uploaded picture -> first-
-    // letter initial. We only find out an image doesn't exist once the
-    // browser actually requests it (Gravatar's d=404 mode), so this is
-    // handled via `error` events rather than a server-side existence check.
-    document.querySelectorAll('.js-avatar-chain').forEach((img) => {
-        img.addEventListener('error', () => {
-            const nextSrc = img.dataset.next;
-            if (nextSrc) {
-                img.dataset.next = '';
-                img.src = nextSrc;
-                return;
-            }
-            const wrapper = img.closest('.avatar-wrapper');
-            const initial = document.createElement('span');
-            initial.className = 'avatar avatar-initial';
-            initial.style.backgroundColor = wrapper?.dataset.fallbackColor || '#666';
-            initial.textContent = wrapper?.dataset.fallbackInitial || '?';
-            img.replaceWith(initial);
-        });
+    // letter initial (the initial is what's actually rendered server-side;
+    // see views/partials/avatar.ejs). Each candidate URL is preloaded with a
+    // detached Image() and only swapped into the visible DOM once it's
+    // confirmed to load - this avoids ever showing the browser's native
+    // broken-image icon for the common case of a user with no Gravatar
+    // picture registered (Gravatar's d=404 mode means that URL is a real
+    // 404 for most users).
+    document.querySelectorAll('.js-avatar-chain').forEach((wrapper) => {
+        const candidates = [wrapper.dataset.gravatarUrl, wrapper.dataset.avatarUrl].filter(Boolean);
+        if (candidates.length === 0) return;
+
+        const tryNext = (index) => {
+            if (index >= candidates.length) return;
+            const probe = new Image();
+            probe.onload = () => {
+                const img = document.createElement('img');
+                img.className = 'avatar avatar-img';
+                img.src = candidates[index];
+                img.alt = wrapper.dataset.alt || '';
+                const initial = wrapper.querySelector('.avatar-initial');
+                if (initial) initial.replaceWith(img);
+            };
+            probe.onerror = () => tryNext(index + 1);
+            probe.src = candidates[index];
+        };
+        tryNext(0);
     });
 });

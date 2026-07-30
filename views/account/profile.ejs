@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My sessions</title>
+    <title>My profile</title>
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
@@ -28,8 +28,8 @@
 
 <main id="main">
     <div class="form-card">
-        <h2>Your <span class="accent-text">sessions</span></h2>
-        <p class="text-muted">Devices and browsers currently signed in to your account.</p>
+        <h2>Your <span class="accent-text">profile</span></h2>
+        <p class="text-muted">Upload a custom profile picture, or leave it unset to use your Gravatar or Google photo.</p>
 
         <% if (error) { %>
             <p class="error-message"><%= error %></p>
@@ -38,34 +38,28 @@
             <p class="success-message"><%= message %></p>
         <% } %>
 
-        <% if (sessions.length === 0) { %>
-            <p>No active sessions found.</p>
-        <% } else { %>
-            <ul class="device-list">
-                <% sessions.forEach(function(device) { %>
-                    <li class="device-item">
-                        <div class="device-item-info">
-                            <strong>
-                                <%= device.label %>
-                                <% if (device.isCurrent) { %>
-                                    <span class="badge-current">This device</span>
-                                <% } %>
-                            </strong>
-                            <span class="device-location">Location: <%= device.locationLabel %></span>
-                            <span class="text-muted">First seen: <%= new Date(device.firstSeenAt).toLocaleString() %></span>
-                            <span class="text-muted">Last seen: <%= new Date(device.lastSeenAt).toLocaleString() %></span>
-                        </div>
-                        <form class="inline-form" action="/account/sessions/<%= encodeURIComponent(device.sessionId) %>/revoke" method="POST">
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <button type="submit"><%= device.isCurrent ? 'Sign out' : 'Sign out this device' %></button>
-                        </form>
-                    </li>
-                <% }); %>
-            </ul>
+        <div class="profile-avatar-preview">
+            <%- include('../partials/avatar', { email, avatarUrl, username: user, linkToProfile: false }) %>
+        </div>
 
-            <form action="/account/sessions/revoke-all" method="POST">
+        <form action="/account/profile" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div class="file-upload">
+                <input type="file" id="avatar" name="avatar" class="file-upload-input" accept="image/jpeg,image/png,image/webp,image/gif">
+                <label for="avatar" class="file-upload-label">
+                    <%- include('../partials/icon', { name: 'upload' }) %>
+                    <span class="file-upload-text js-file-upload-text">Choose an image&hellip;</span>
+                </label>
+            </div>
+            <p class="text-muted profile-hint">JPEG, PNG, WEBP, or GIF, up to 3 MB.</p>
+            <button type="submit">Upload</button>
+        </form>
+
+        <% if (avatarUrl) { %>
+            <form action="/account/profile" method="POST" class="profile-remove-form">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit">Sign out everywhere</button>
+                <input type="hidden" name="removeAvatar" value="1">
+                <button type="submit" class="profile-remove-btn">Remove current picture</button>
             </form>
         <% } %>
     </div>

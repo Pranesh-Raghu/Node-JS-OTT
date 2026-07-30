@@ -8,6 +8,12 @@ async function countMovies() {
     return titleRepo.countPublished();
 }
 
+async function searchMovies(query) {
+    const trimmed = (query || '').trim();
+    if (!trimmed) return [];
+    return titleRepo.searchPublished(trimmed, { limit: 30 });
+}
+
 async function getMovie(id) {
     return titleRepo.findById(id);
 }
@@ -34,4 +40,4 @@ async function listForAdminSelect() {
     return titleRepo.listForAdminSelect();
 }
 
-module.exports = { listMoviesPage, countMovies, getMovie, getPlayable, addMovie, addVideo, listForAdminSelect };
+module.exports = { listMoviesPage, countMovies, searchMovies, getMovie, getPlayable, addMovie, addVideo, listForAdminSelect };

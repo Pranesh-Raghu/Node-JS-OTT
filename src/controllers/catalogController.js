@@ -25,6 +25,7 @@ async function home(req, res, next) {
             movies,
             user: req.session.user,
             email: req.session.email,
+            avatarUrl: req.session.avatarUrl,
             deviceCount,
             pagination: { page, totalPages, hasPrev: page > 1, hasNext: page < totalPages },
         });
@@ -57,11 +58,23 @@ async function videoPlayer(req, res, next) {
     }
 }
 
+async function searchMovies(req, res, next) {
+    try {
+        const movies = await catalogService.searchMovies(req.query.q);
+        res.json({ movies });
+    } catch (err) {
+        next(err);
+    }
+}
+
 async function watchlist(req, res) {
     if (!req.session.user) {
         return safeRedirect(res, undefined, '/login?redirectTo=/watchlist');
     }
-    res.render('watchlist', { watchlist: req.session.watchlist || [], user: req.session.user });
+    // The watchlist itself is rendered entirely client-side from
+    // localStorage (see public/Javascript/script.js) - there's no
+    // server-side watchlist data to pass in.
+    res.render('watchlist', { user: req.session.user });
 }
 
-module.exports = { home, movieDetails, videoPlayer, watchlist };
+module.exports = { home, movieDetails, videoPlayer, watchlist, searchMovies };

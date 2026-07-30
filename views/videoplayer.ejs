@@ -12,12 +12,12 @@
 <header>
     <h1 class="accent-text"><%= video.title %></h1>
     <nav>
-        <a href="/">HOME</a>
-        <a href="/watchlist">WATCHLIST</a>
+        <a href="/" class="nav-icon-link" title="Home" aria-label="Home"><%- include('partials/icon', { name: 'home' }) %></a>
+        <a href="/watchlist" class="nav-icon-link" title="Watchlist" aria-label="Watchlist"><%- include('partials/icon', { name: 'bookmark' }) %></a>
         <% if (user) { %>
-            <a href="/logout">LOGOUT</a>
+            <a href="/logout" class="nav-icon-link" title="Log out" aria-label="Log out"><%- include('partials/icon', { name: 'log-out' }) %></a>
         <% } else { %>
-            <a href="/login">LOGIN</a>
+            <a href="/login" class="nav-icon-link" title="Log in" aria-label="Log in"><%- include('partials/icon', { name: 'log-in' }) %></a>
         <% } %>
         <%- include('partials/theme-toggle') %>
     </nav>
@@ -49,7 +49,7 @@
 
 
 
-<script src="/public/javascript/script.js"></script>
+<script src="/public/Javascript/script.js"></script>
 
 </body>
 </html>

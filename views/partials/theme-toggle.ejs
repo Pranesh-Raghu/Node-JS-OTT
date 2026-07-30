@@ -1,1 +1,4 @@
-<a href="/theme/toggle" class="theme-toggle-btn"><%= (typeof theme !== 'undefined' && theme === 'light') ? 'DARK MODE' : 'LIGHT MODE' %></a>
+<% const isLight = typeof theme !== 'undefined' && theme === 'light'; %>
+<a href="/theme/toggle" class="theme-toggle-btn" title="<%= isLight ? 'Switch to dark mode' : 'Switch to light mode' %>" aria-label="<%= isLight ? 'Switch to dark mode' : 'Switch to light mode' %>">
+    <%- include('icon', { name: isLight ? 'moon' : 'sun' }) %>
+</a>

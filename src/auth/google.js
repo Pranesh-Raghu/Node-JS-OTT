@@ -55,6 +55,7 @@ async function exchangeCodeForProfile(req, code) {
         email: profile.email,
         emailVerified: profile.email_verified === true,
         name: profile.name,
+        picture: profile.picture || null,
     };
 }
 

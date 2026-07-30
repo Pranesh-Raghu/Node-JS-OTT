@@ -18,6 +18,7 @@ const { csrfSynchronisedProtection, attachCsrfToken } = require('./middleware/cs
 const { globalLimiter, authLimiter } = require('./middleware/rateLimit');
 const { trackSessionDevice } = require('./middleware/trackSessionDevice');
 const { attachViewHelpers } = require('./middleware/locals');
+const { avatarUploadMiddleware } = require('./middleware/avatarUpload');
 const oauthRoutes = require('./auth/oidc/routes');
 const mcpRouter = require('./mcp/server');
 const themeRoutes = require('./routes/themeRoutes');
@@ -38,9 +39,15 @@ function createApp() {
         })
     );
 
-    // CSP allowlists the actual third-party media this app embeds:
-    // TMDB poster images, legacy Firebase-hosted posters, Cloudinary-hosted
-    // video files, and YouTube trailer iframes. style-src keeps
+    // CSP allowlists the actual third-party media this app embeds. img-src
+    // is broadened to any https: source rather than a fixed domain list --
+    // profile pictures now come from Gravatar, Google (googleusercontent.com
+    // and its several subdomains), and arbitrary user-pasted avatar URLs
+    // (see account/profile), so a fixed allowlist would need constant
+    // upkeep and still not cover the user-pasted case. img-src can't
+    // execute script, so this doesn't open an XSS path the way a broad
+    // script-src would. media-src/frame-src stay on explicit allowlists
+    // since those load actual video/iframe content. style-src keeps
     // 'unsafe-inline' for now because some inline style="" attributes are
     // still being removed in a parallel cleanup pass; tighten once that
     // lands (see the frontend hardening phase).
@@ -49,7 +56,7 @@ function createApp() {
             contentSecurityPolicy: {
                 directives: {
                     ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-                    'img-src': ["'self'", 'data:', 'https://image.tmdb.org', 'https://firebasestorage.googleapis.com', 'https://placehold.co', 'https://img.youtube.com', 'https://www.gravatar.com'],
+                    'img-src': ["'self'", 'data:', 'https:'],
                     'media-src': ["'self'", 'https://res.cloudinary.com', 'https://firebasestorage.googleapis.com', 'https://interactive-examples.mdn.mozilla.net'],
                     'frame-src': ["'self'", 'https://www.youtube.com'],
                     'style-src': ["'self'", 'https:', "'unsafe-inline'"],
@@ -90,6 +97,9 @@ function createApp() {
     );
 
     app.use(globalLimiter);
+    // Scoped to this one path, and mounted before the CSRF check: see the
+    // comment on avatarUploadMiddleware for why order matters here.
+    app.use('/account/profile', avatarUploadMiddleware);
     app.use(attachCsrfToken);
     app.use(csrfSynchronisedProtection);
     app.use(trackSessionDevice);

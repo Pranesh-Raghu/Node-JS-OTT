@@ -476,17 +476,18 @@ button,
 a.watch-now-btn,
 a.add-to-watchlist-btn {
     display: inline-block;
-    font-family: 'Arial', sans-serif;
-    font-size: 1rem;
-    padding: 12px 20px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.55rem 1.1rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
     text-decoration: none;
     color: white;
     background: linear-gradient(to right, #ff6f61, #ff4500);
     text-transform: uppercase;
-    font-weight: bold;
+    letter-spacing: 0.03em;
+    font-weight: 600;
     position: relative;
     overflow: hidden;
 }
@@ -520,6 +521,31 @@ a.add-to-watchlist-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(255, 111, 97, 0.5);
     background: linear-gradient(to right, #ff4500, #ff6f61);
+}
+
+/* Watch Now is the primary call-to-action on the movie details page -
+   larger and pill-shaped with a play icon, distinct from the smaller
+   utility buttons (Add to Watchlist, form submits) it previously matched
+   exactly. Declared after the shared button rule above so it wins at equal
+   specificity. */
+a.watch-now-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(255, 69, 0, 0.35);
+}
+
+a.watch-now-btn:hover {
+    box-shadow: 0 8px 24px rgba(255, 69, 0, 0.5);
+}
+
+.watch-now-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex-shrink: 0;
 }
 
 .movie-details {
@@ -593,17 +619,23 @@ a.add-to-watchlist-btn:hover {
     color: var(--highlight-color);
 }
 
+.release-date {
+    color: #ffd54f;
+    text-shadow: 0 0 12px rgba(255, 213, 79, 0.4);
+}
+
 /* 3D Button Effect */
 .movie-details button {
     margin-top: 2rem;
-    padding: 1rem 2rem;
+    padding: 0.65rem 1.5rem;
     background: var(--accent-color);
     border: none;
-    border-radius: var(--border-radius);
+    border-radius: 6px;
     color: #fff;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     transform: translateZ(0);
@@ -787,13 +819,19 @@ video:hover {
     transform: translateY(-5px);
 }
 
-/* The actual search input field */
+/* The actual search input field. It shares type="text" with regular form
+   inputs, so it also matches the global input[type="text"] rule earlier in
+   this file - margin/width/border must be reset explicitly here or that
+   rule's margin-bottom: 20px pushes the input down out of this rounded pill
+   container instead of sitting centered inside it. */
 #search-bar {
     flex-grow: 1;
+    width: auto;
+    margin: 0;
     border: none;
     outline: none;
     background: transparent;
-    font-size: 18px;
+    font-size: 1rem;
     color: var(--color-text);
     padding: 0.4rem 0.25rem;
     caret-color: #00bcd4;
@@ -1112,6 +1150,26 @@ hr {
 
 .empty-label {
     color: #ff4500;
+    text-transform: uppercase;
+}
+
+.watchlist-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 4rem 1.5rem;
+    margin: 2rem auto;
+    max-width: 480px;
+}
+
+.watchlist-empty-state h2 {
+    margin-bottom: 0;
+}
+
+.watchlist-empty-state .watch-now-btn {
+    margin-top: 0.75rem;
 }
 
 .trailer-note {
@@ -1381,8 +1439,8 @@ hr {
     }
 
     button, a.watch-now-btn {
-        font-size: 0.9rem;
-        padding: 10px 15px;
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
     }
 
     .video-player-container {
@@ -1476,18 +1534,119 @@ hr {
     background: #222;
 }
 
+.profile-avatar-preview {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-avatar-preview .avatar {
+    width: 96px;
+    height: 96px;
+    font-size: 2.25rem;
+}
+
+.profile-hint {
+    margin-top: -0.75rem;
+    margin-bottom: 1rem;
+}
+
+.profile-remove-form {
+    margin-top: 0.5rem;
+}
+
+.profile-remove-btn {
+    background: transparent;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    width: 100%;
+}
+
+.profile-remove-btn:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
+}
+
+/* Custom file-upload control, replacing the browser's native (and
+   inconsistently-styled across browsers) file input button. */
+.file-upload {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.file-upload-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px dashed var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    background: var(--input-bg);
+    margin-bottom: 0;
+}
+
+.file-upload-label:hover {
+    border-color: var(--accent-color);
+    color: var(--color-text);
+}
+
+.file-upload-input:focus-visible + .file-upload-label {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.file-upload-label .nav-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+}
+
+.file-upload-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Avatar in the header nav is a link to /account/profile now (see
+   partials/avatar.ejs's linkToProfile option) - give it the same hover
+   affordance as the icon-only nav links next to it. */
+header nav a:has(.avatar-wrapper) {
+    padding: 0.35rem;
+    display: inline-flex;
+}
+
 .nav-badge {
+    position: absolute;
+    top: 0.1rem;
+    right: 0.1rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 1.4rem;
-    height: 1.4rem;
-    padding: 0 0.35rem;
+    min-width: 1rem;
+    height: 1rem;
+    padding: 0 0.25rem;
     border-radius: 999px;
     background: #ff4500;
     color: #fff;
-    font-size: 0.75rem;
+    font-size: 0.6rem;
     font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 0 0 2px var(--color-header-bg);
 }
 
 /* (Session/device card sizing/contrast lives in the single consolidated
@@ -1541,14 +1700,37 @@ hr {
     flex-shrink: 0;
 }
 
-.theme-toggle-btn {
+/* Icon-only nav links (watchlist/profile/sessions/webhooks/login/logout and
+   the theme toggle) - a visible label still reaches assistive tech and
+   mouse users via aria-label/title, per the icon partial's callers. */
+.nav-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    display: block;
+}
+
+.nav-icon-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem;
     color: var(--color-text) !important;
-    font-size: 0.85rem !important;
+}
+
+.theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    color: var(--color-text) !important;
     border: 1px solid var(--color-border);
     border-radius: 999px;
-    padding: 0.3rem 0.85rem;
+    padding: 0;
 }
 
 .theme-toggle-btn:hover {
     border-color: var(--accent-color);
+    color: var(--accent-color) !important;
 }

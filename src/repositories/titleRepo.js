@@ -27,6 +27,28 @@ async function listPublished({ limit, offset }) {
     }));
 }
 
+// Server-side search across the whole catalog, not just the current page.
+// Uses .query() rather than .execute() for the LIMIT placeholder, matching
+// listPublished above - mysql2's prepared-statement path (.execute()) has a
+// long-standing quirk where a bound LIMIT parameter isn't reliably accepted.
+async function searchPublished(query, { limit = 30 } = {}) {
+    const [rows] = await pool.query(
+        `SELECT id, title, poster_url, release_date, trailer_youtube_key
+         FROM titles
+         WHERE status = 'published' AND deleted_at IS NULL AND title LIKE ?
+         ORDER BY title ASC
+         LIMIT ?`,
+        [`%${query}%`, limit]
+    );
+    return rows.map((r) => ({
+        id: String(r.id),
+        title: r.title,
+        poster: r.poster_url,
+        releaseDate: r.release_date,
+        trailerYoutubeKey: r.trailer_youtube_key,
+    }));
+}
+
 async function findById(id) {
     const [rows] = await pool.execute(
         `SELECT id, title, poster_url, release_date, trailer_youtube_key, status
@@ -128,29 +150,56 @@ async function createTitle({ title, releaseDate, poster, cast, crew }) {
             }),
         });
 
-        let billing = 0;
-        for (const c of cast || []) {
-            const personId = await upsertPerson(conn, c.name);
-            await conn.execute(
-                `INSERT IGNORE INTO title_credits (title_id, person_id, credit_type, role, billing_order)
-                 VALUES (?, ?, 'cast', ?, ?)`,
-                [titleId, personId, c.role || '', billing]
-            );
-            billing += 1;
-        }
-        billing = 0;
-        for (const c of crew || []) {
-            const personId = await upsertPerson(conn, c.name);
-            await conn.execute(
-                `INSERT IGNORE INTO title_credits (title_id, person_id, credit_type, role, department, billing_order)
-                 VALUES (?, ?, 'crew', ?, 'Directing', ?)`,
-                [titleId, personId, c.role || '', billing]
-            );
-            billing += 1;
-        }
+        await insertCredits(conn, titleId, cast, crew);
 
         return { id: String(titleId), title, releaseDate: date, poster, cast, crew };
     });
+}
+
+async function insertCredits(conn, titleId, cast, crew) {
+    let billing = 0;
+    for (const c of cast || []) {
+        const personId = await upsertPerson(conn, c.name);
+        await conn.execute(
+            `INSERT IGNORE INTO title_credits (title_id, person_id, credit_type, role, billing_order)
+             VALUES (?, ?, 'cast', ?, ?)`,
+            [titleId, personId, c.role || '', billing]
+        );
+        billing += 1;
+    }
+    billing = 0;
+    for (const c of crew || []) {
+        const personId = await upsertPerson(conn, c.name);
+        await conn.execute(
+            `INSERT IGNORE INTO title_credits (title_id, person_id, credit_type, role, department, billing_order)
+             VALUES (?, ?, 'crew', ?, 'Directing', ?)`,
+            [titleId, personId, c.role || '', billing]
+        );
+        billing += 1;
+    }
+}
+
+// Used by scripts/backfill-credits.js to add cast/crew to a title that
+// already exists but was seeded without them (see createTitle above for the
+// same logic used at creation time).
+async function addCreditsForTitle(titleId, cast, crew) {
+    return withTransaction((conn) => insertCredits(conn, titleId, cast, crew));
+}
+
+async function listTitlesMissingCredits() {
+    // Some titles have crew (director) rows but zero cast rows - checking
+    // for "any credit at all" (as an earlier version of this query did)
+    // missed those. This checks cast specifically, since that's the gap
+    // that actually shows up on the movie details page.
+    const [rows] = await pool.query(
+        `SELECT t.id, t.title, t.release_date
+         FROM titles t
+         LEFT JOIN title_credits tc ON tc.title_id = t.id AND tc.credit_type = 'cast'
+         WHERE t.status = 'published' AND t.deleted_at IS NULL
+         GROUP BY t.id
+         HAVING COUNT(tc.title_id) = 0`
+    );
+    return rows.map((r) => ({ id: r.id, title: r.title, releaseDate: r.release_date }));
 }
 
 async function listForAdminSelect() {
@@ -172,9 +221,12 @@ async function createVideoAsset({ titleId, label, src }) {
 module.exports = {
     countPublished,
     listPublished,
+    searchPublished,
     findById,
     findPlayableById,
     createTitle,
+    addCreditsForTitle,
+    listTitlesMissingCredits,
     createVideoAsset,
     listForAdminSelect,
 };

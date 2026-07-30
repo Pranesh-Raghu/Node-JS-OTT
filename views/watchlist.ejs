@@ -12,12 +12,12 @@
 <header>
     <h1>YOUR <span class="accent-text">WATCHLIST</span></h1>
     <nav>
-        <a href="/">HOME</a>
-        <a href="/watchlist">WATCHLIST</a>
+        <a href="/" class="nav-icon-link" title="Home" aria-label="Home"><%- include('partials/icon', { name: 'home' }) %></a>
+        <a href="/watchlist" class="nav-icon-link" title="Watchlist" aria-label="Watchlist"><%- include('partials/icon', { name: 'bookmark' }) %></a>
         <% if (user) { %>
-            <a href="/logout">LOGOUT</a>
+            <a href="/logout" class="nav-icon-link" title="Log out" aria-label="Log out"><%- include('partials/icon', { name: 'log-out' }) %></a>
         <% } else { %>
-            <a href="/login">LOGIN</a>
+            <a href="/login" class="nav-icon-link" title="Log in" aria-label="Log in"><%- include('partials/icon', { name: 'log-in' }) %></a>
         <% } %>
         <%- include('partials/theme-toggle') %>
     </nav>
@@ -29,21 +29,13 @@
 </header>
 
 <main id="main">
-    <div class="watchlist-container">
-        <% if (watchlist && watchlist.length > 0) { %>
-            <div class="watchlist-grid">
-                <% watchlist.forEach(movie => { %>                 
-                    <div class="watchlist-item">
-                        <img src="<%= movie.poster.startsWith('https://') ? movie.poster : '/' + movie.poster %>" alt="<%= movie.title %>">
-                        <a href="/movie/<%= movie.id %>"><%= movie.title %></a>
-                        <button class="remove-from-watchlist-btn" data-id="<%= movie.id %>">Remove</button>
-                    </div>
-                <% }); %>
-            </div>
-        <% } else { %>
-            <p class="empty-watchlist-message"> </p>
-        <% } %>
-    </div>    
+    <%# The watchlist is stored client-side in localStorage (see
+        public/Javascript/script.js), not server-side - req.session.watchlist
+        is never actually written to, so a server-rendered branch here was
+        always empty and left a stray blank line above whatever script.js
+        appended into this container. script.js populates everything,
+        including the empty state, on load. %>
+    <div class="watchlist-container"></div>
 </main>
 
 <footer>
