@@ -1,7 +1,7 @@
 exports.up = async function up(knex) {
     await knex.raw(`
         ALTER TABLE session_devices
-        ADD COLUMN location_label VARCHAR(128) NULL AFTER ip_address;
+        ADD COLUMN location_label VARCHAR(128) NULL;
     `);
 };
 

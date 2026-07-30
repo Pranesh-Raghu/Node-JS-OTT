@@ -2,12 +2,12 @@ const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
+const PgSessionStore = require('connect-pg-simple')(session);
 const pinoHttp = require('pino-http');
 
 const config = require('./config');
 const logger = require('./logger');
-const { pool } = require('./db/pool');
+const { rawPool } = require('./db/pool');
 const authRoutes = require('./routes/authRoutes');
 const catalogRoutes = require('./routes/catalogRoutes');
 const adminRoutes = require('./routes/adminRoutes');
@@ -78,7 +78,10 @@ function createApp() {
     // exposed .env, data.json, server.js, and package.json over HTTP.
     app.use('/public', express.static(path.join(__dirname, '..', 'public'), { dotfiles: 'ignore' }));
 
-    const sessionStore = new MySQLStore({}, pool);
+    // createTableIfMissing: false - we own this table via migration 0001
+    // (indexed on `expire` from the start; the library's auto-created
+    // table has no such index, so its expiry sweep would full-scan).
+    const sessionStore = new PgSessionStore({ pool: rawPool, tableName: 'sessions', createTableIfMissing: false });
 
     app.use(
         session({

@@ -38,12 +38,12 @@ async function upsertPerson(conn, nameCache, rawName) {
     const seenSlugs = new Set(slugRows.map((r) => r.slug));
     const slug = uniqueSlug(name, seenSlugs);
 
-    const [result] = await conn.execute(
-        'INSERT INTO people (ulid, slug, name) VALUES (?, ?, ?)',
+    const [rows] = await conn.execute(
+        'INSERT INTO people (ulid, slug, name) VALUES (?, ?, ?) RETURNING id',
         [ulid(), slug, name]
     );
-    nameCache.set(key, result.insertId);
-    return result.insertId;
+    nameCache.set(key, rows[0].id);
+    return rows[0].id;
 }
 
 async function main() {
@@ -71,23 +71,24 @@ async function main() {
         const { date, precision } = parseReleaseDate(movie.releaseDate);
         const slug = uniqueSlug(movie.title, seenTitleSlugs);
 
-        const [titleResult] = await conn.execute(
+        const [titleRows] = await conn.execute(
             `INSERT INTO titles
                (ulid, slug, legacy_id, kind, title, release_date, release_date_precision,
                 poster_url, status, published_at)
-             VALUES (?, ?, ?, 'movie', ?, ?, ?, ?, 'published', NOW())`,
+             VALUES (?, ?, ?, 'movie', ?, ?, ?, ?, 'published', NOW()) RETURNING id`,
             [ulid(), slug, movie.id, movie.title, date, precision, movie.poster]
         );
-        const titleId = titleResult.insertId;
+        const titleId = titleRows[0].id;
         titlesCreated += 1;
 
         let billing = 0;
         for (const castMember of movie.cast || []) {
             const personId = await upsertPerson(conn, personNameCache, castMember.name);
             await conn.execute(
-                `INSERT IGNORE INTO title_credits
+                `INSERT INTO title_credits
                    (title_id, person_id, credit_type, role, billing_order)
-                 VALUES (?, ?, 'cast', ?, ?)`,
+                 VALUES (?, ?, 'cast', ?, ?)
+                 ON CONFLICT (title_id, person_id, credit_type, role) DO NOTHING`,
                 [titleId, personId, castMember.role || '', billing]
             );
             billing += 1;
@@ -97,9 +98,10 @@ async function main() {
         for (const crewMember of movie.crew || []) {
             const personId = await upsertPerson(conn, personNameCache, crewMember.name);
             await conn.execute(
-                `INSERT IGNORE INTO title_credits
+                `INSERT INTO title_credits
                    (title_id, person_id, credit_type, role, department, billing_order)
-                 VALUES (?, ?, 'crew', ?, 'Directing', ?)`,
+                 VALUES (?, ?, 'crew', ?, 'Directing', ?)
+                 ON CONFLICT (title_id, person_id, credit_type, role) DO NOTHING`,
                 [titleId, personId, crewMember.role || '', billing]
             );
             billing += 1;

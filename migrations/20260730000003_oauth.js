@@ -3,71 +3,72 @@
 // plain JWK rather than AES-GCM-encrypted, no provisional-client throttling
 // table) — those are flagged in code comments as follow-ups, not silently
 // dropped.
+//
+// Ported to Postgres: MySQL's `PRIMARY KEY (col(255))` prefix-index syntax
+// (needed there because indexing a full VARBINARY(512) column exceeds
+// MySQL's index key length limits) has no Postgres equivalent, and none is
+// needed - Postgres btree indexes handle these column sizes directly, so
+// the primary keys below just use the full column.
 exports.up = async function up(knex) {
     await knex.raw(`
         CREATE TABLE oauth_clients (
-          client_id      VARBINARY(512) NOT NULL,
+          client_id      BYTEA NOT NULL PRIMARY KEY,
           client_name    VARCHAR(128) NOT NULL,
-          kind           ENUM('dcr','cimd','static') NOT NULL DEFAULT 'dcr',
-          redirect_uris  JSON NOT NULL,
-          token_endpoint_auth_method ENUM('none','private_key_jwt') NOT NULL DEFAULT 'none',
-          grant_types    JSON NOT NULL,
+          kind           VARCHAR(16) NOT NULL DEFAULT 'dcr' CHECK (kind IN ('dcr','cimd','static')),
+          redirect_uris  JSONB NOT NULL,
+          token_endpoint_auth_method VARCHAR(32) NOT NULL DEFAULT 'none' CHECK (token_endpoint_auth_method IN ('none','private_key_jwt')),
+          grant_types    JSONB NOT NULL,
           scope          VARCHAR(512) NOT NULL DEFAULT 'catalog:read',
-          registration_access_token_hash BINARY(32) NULL,
+          registration_access_token_hash BYTEA NULL,
           created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          last_used_at   DATETIME NULL,
-          PRIMARY KEY (client_id(255))
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+          last_used_at   TIMESTAMP NULL
+        );
     `);
 
     await knex.raw(`
         CREATE TABLE oauth_authorization_codes (
-          code_hash       BINARY(32) NOT NULL,
-          client_id       VARBINARY(512) NOT NULL,
-          account_id      BIGINT UNSIGNED NOT NULL,
-          redirect_uri    VARBINARY(512) NOT NULL,
-          code_challenge  VARBINARY(128) NOT NULL,
+          code_hash       BYTEA NOT NULL PRIMARY KEY,
+          client_id       BYTEA NOT NULL,
+          account_id      BIGINT NOT NULL,
+          redirect_uri    BYTEA NOT NULL,
+          code_challenge  BYTEA NOT NULL,
           scope           VARCHAR(512) NOT NULL,
           resource        VARCHAR(255) NULL,
-          expires_at      DATETIME(3) NOT NULL,
-          consumed_at     DATETIME(3) NULL,
-          PRIMARY KEY (code_hash)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+          expires_at      TIMESTAMP(3) NOT NULL,
+          consumed_at     TIMESTAMP(3) NULL
+        );
     `);
 
     await knex.raw(`
         CREATE TABLE oauth_token_families (
-          family_id    CHAR(26) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-          client_id    VARBINARY(512) NOT NULL,
-          account_id   BIGINT UNSIGNED NOT NULL,
+          family_id    CHAR(26) NOT NULL PRIMARY KEY,
+          client_id    BYTEA NOT NULL,
+          account_id   BIGINT NOT NULL,
           resource     VARCHAR(255) NULL,
           scope        VARCHAR(512) NOT NULL,
           created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          absolute_expires_at DATETIME NOT NULL,
-          revoked_at   DATETIME(3) NULL,
-          revoked_reason VARCHAR(255) NULL,
-          PRIMARY KEY (family_id)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+          absolute_expires_at TIMESTAMP NOT NULL,
+          revoked_at   TIMESTAMP(3) NULL,
+          revoked_reason VARCHAR(255) NULL
+        );
     `);
 
     await knex.raw(`
         CREATE TABLE oauth_refresh_tokens (
-          token_hash   BINARY(32) NOT NULL,
-          family_id    CHAR(26) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-          expires_at   DATETIME(3) NOT NULL,
-          rotated_at   DATETIME(3) NULL,
-          created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          PRIMARY KEY (token_hash),
-          KEY ix_family (family_id)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+          token_hash   BYTEA NOT NULL PRIMARY KEY,
+          family_id    CHAR(26) NOT NULL,
+          expires_at   TIMESTAMP(3) NOT NULL,
+          rotated_at   TIMESTAMP(3) NULL,
+          created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE INDEX ix_family ON oauth_refresh_tokens (family_id);
     `);
 
     await knex.raw(`
         CREATE TABLE revoked_jti (
-          jti VARBINARY(64) NOT NULL,
-          expires_at DATETIME NOT NULL,
-          PRIMARY KEY (jti)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+          jti BYTEA NOT NULL PRIMARY KEY,
+          expires_at TIMESTAMP NOT NULL
+        );
     `);
 
     // NOTE: private_jwk stored as plain JSON, not AES-GCM-encrypted at rest,
@@ -75,43 +76,41 @@ exports.up = async function up(knex) {
     // real deployment (see the full design's §5.5).
     await knex.raw(`
         CREATE TABLE signing_keys (
-          kid         VARCHAR(64) NOT NULL,
+          kid         VARCHAR(64) NOT NULL PRIMARY KEY,
           alg         VARCHAR(16) NOT NULL DEFAULT 'ES256',
-          state       ENUM('current','retiring') NOT NULL DEFAULT 'current',
-          public_jwk  JSON NOT NULL,
-          private_jwk JSON NOT NULL,
-          created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          PRIMARY KEY (kid)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+          state       VARCHAR(16) NOT NULL DEFAULT 'current' CHECK (state IN ('current','retiring')),
+          public_jwk  JSONB NOT NULL,
+          private_jwk JSONB NOT NULL,
+          created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
     `);
 
     await knex.raw(`
         CREATE TABLE api_keys (
-          id             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-          key_id         VARBINARY(32) NOT NULL,
-          secret_hmac    BINARY(32) NOT NULL,
-          owner_account_id BIGINT UNSIGNED NOT NULL,
+          id             BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+          key_id         BYTEA NOT NULL,
+          secret_hmac    BYTEA NOT NULL,
+          owner_account_id BIGINT NOT NULL,
           name           VARCHAR(128) NOT NULL,
           scope          VARCHAR(512) NOT NULL DEFAULT 'catalog:read',
-          expires_at     DATETIME NOT NULL,
-          last_used_at   DATETIME NULL,
-          revoked_at     DATETIME NULL,
+          expires_at     TIMESTAMP NOT NULL,
+          last_used_at   TIMESTAMP NULL,
+          revoked_at     TIMESTAMP NULL,
           created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          PRIMARY KEY (id),
-          UNIQUE KEY uq_apikeys_keyid (key_id),
-          UNIQUE KEY uq_apikeys_hmac (secret_hmac),
+          CONSTRAINT uq_apikeys_keyid UNIQUE (key_id),
+          CONSTRAINT uq_apikeys_hmac UNIQUE (secret_hmac),
           CONSTRAINT fk_apikeys_account FOREIGN KEY (owner_account_id) REFERENCES accounts (id) ON DELETE RESTRICT
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+        );
     `);
 
     await knex.raw(`
         CREATE TABLE oauth_consents (
-          account_id BIGINT UNSIGNED NOT NULL,
-          client_id  VARBINARY(512) NOT NULL,
+          account_id BIGINT NOT NULL,
+          client_id  BYTEA NOT NULL,
           scope      VARCHAR(512) NOT NULL,
           granted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          PRIMARY KEY (account_id, client_id(255))
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+          PRIMARY KEY (account_id, client_id)
+        );
     `);
 };
 

@@ -134,7 +134,7 @@ router.post('/oauth/consent', async (req, res, next) => {
         await pool.execute(
             `INSERT INTO oauth_authorization_codes
                (code_hash, client_id, account_id, redirect_uri, code_challenge, scope, resource, expires_at)
-             VALUES (?, ?, ?, ?, ?, ?, ?, DATE_ADD(NOW(3), INTERVAL 60 SECOND))`,
+             VALUES (?, ?, ?, ?, ?, ?, ?, NOW() + INTERVAL '60 seconds')`,
             [hashCode(code), clientId, accountId, redirectUri, codeChallenge, scope, resource || null]
         );
 
@@ -163,8 +163,8 @@ router.post('/oauth/token', express.urlencoded({ extended: false }), async (req,
 
             const codeHash = hashCode(code);
             const [updateResult] = await pool.execute(
-                `UPDATE oauth_authorization_codes SET consumed_at = NOW(3)
-                 WHERE code_hash = ? AND consumed_at IS NULL AND expires_at > NOW(3)`,
+                `UPDATE oauth_authorization_codes SET consumed_at = NOW()
+                 WHERE code_hash = ? AND consumed_at IS NULL AND expires_at > NOW()`,
                 [codeHash]
             );
 
@@ -195,14 +195,14 @@ router.post('/oauth/token', express.urlencoded({ extended: false }), async (req,
             const familyId = ulid();
             await pool.execute(
                 `INSERT INTO oauth_token_families (family_id, client_id, account_id, resource, scope, absolute_expires_at)
-                 VALUES (?, ?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 30 DAY))`,
+                 VALUES (?, ?, ?, ?, ?, NOW() + INTERVAL '30 days')`,
                 [familyId, clientId, codeRow.account_id, codeRow.resource, codeRow.scope]
             );
 
             const refreshToken = crypto.randomBytes(32).toString('base64url');
             await pool.execute(
                 `INSERT INTO oauth_refresh_tokens (token_hash, family_id, expires_at)
-                 VALUES (?, ?, DATE_ADD(NOW(3), INTERVAL 14 DAY))`,
+                 VALUES (?, ?, NOW() + INTERVAL '14 days')`,
                 [crypto.createHash('sha256').update(refreshToken).digest(), familyId]
             );
 
@@ -231,8 +231,8 @@ router.post('/oauth/token', express.urlencoded({ extended: false }), async (req,
             const tokenHash = crypto.createHash('sha256').update(refreshToken).digest();
             const result = await withTransaction(async (conn) => {
                 const [updateResult] = await conn.execute(
-                    `UPDATE oauth_refresh_tokens SET rotated_at = NOW(3)
-                     WHERE token_hash = ? AND rotated_at IS NULL AND expires_at > NOW(3)`,
+                    `UPDATE oauth_refresh_tokens SET rotated_at = NOW()
+                     WHERE token_hash = ? AND rotated_at IS NULL AND expires_at > NOW()`,
                     [tokenHash]
                 );
                 if (updateResult.affectedRows === 0) {
@@ -243,7 +243,7 @@ router.post('/oauth/token', express.urlencoded({ extended: false }), async (req,
                     );
                     if (existing.length > 0) {
                         await conn.execute(
-                            "UPDATE oauth_token_families SET revoked_at = NOW(3), revoked_reason = 'refresh_reuse' WHERE family_id = ?",
+                            "UPDATE oauth_token_families SET revoked_at = NOW(), revoked_reason = 'refresh_reuse' WHERE family_id = ?",
                             [existing[0].family_id]
                         );
                     }
@@ -266,7 +266,7 @@ router.post('/oauth/token', express.urlencoded({ extended: false }), async (req,
                 const newRefreshToken = crypto.randomBytes(32).toString('base64url');
                 await conn.execute(
                     `INSERT INTO oauth_refresh_tokens (token_hash, family_id, expires_at)
-                     VALUES (?, ?, DATE_ADD(NOW(3), INTERVAL 14 DAY))`,
+                     VALUES (?, ?, NOW() + INTERVAL '14 days')`,
                     [crypto.createHash('sha256').update(newRefreshToken).digest(), family.family_id]
                 );
                 return { family, newRefreshToken };

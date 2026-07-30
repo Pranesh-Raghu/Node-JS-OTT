@@ -21,7 +21,7 @@ async function findBySessionId(sessionId) {
     return rows[0] || null;
 }
 
-// Deletes the device record and the express-mysql-session row for one
+// Deletes the device record and the connect-pg-simple session row for one
 // session id, in a transaction. Revocation must be all-or-nothing: this app
 // otherwise reads the `sessions` table on every request to decide whether a
 // cookie is still valid, so a partial write here could either leave a
@@ -29,7 +29,10 @@ async function findBySessionId(sessionId) {
 async function revokeSession(sessionId) {
     await withTransaction(async (conn) => {
         await conn.execute('DELETE FROM session_devices WHERE session_id = ?', [sessionId]);
-        await conn.execute('DELETE FROM sessions WHERE session_id = ?', [sessionId]);
+        // connect-pg-simple's session table uses `sid` as its primary key
+        // column, not `session_id` (which was express-mysql-session's name
+        // for the equivalent column).
+        await conn.execute('DELETE FROM sessions WHERE sid = ?', [sessionId]);
     });
 }
 
@@ -43,7 +46,11 @@ async function revokeAllForAccount(accountId) {
 
     await withTransaction(async (conn) => {
         await conn.execute('DELETE FROM session_devices WHERE account_id = ?', [accountId]);
-        await conn.query('DELETE FROM sessions WHERE session_id IN (?)', [sessionIds]);
+        // = ANY(?) with a JS array parameter, not IN (?) - mysql2 let a
+        // single `?` auto-expand to `IN (?, ?, ?)` when bound to an array;
+        // pg has no equivalent, but does auto-convert a bound JS array into
+        // a Postgres array, which ANY() can then test membership against.
+        await conn.query('DELETE FROM sessions WHERE sid = ANY(?)', [sessionIds]);
     });
     return sessionIds;
 }

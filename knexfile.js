@@ -1,14 +1,11 @@
-require('dotenv').config();
+// override: true - see the matching comment in src/config/index.js.
+require('dotenv').config({ override: true });
 
 const base = {
-    client: 'mysql2',
+    client: 'pg',
     connection: {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME,
-        charset: 'utf8mb4',
+        connectionString: process.env.DATABASE_URL,
+        ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     },
     migrations: {
         directory: './migrations',

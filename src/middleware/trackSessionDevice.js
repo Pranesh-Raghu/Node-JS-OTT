@@ -39,9 +39,12 @@ async function recordDevice(req) {
 
     await pool.execute(
         `INSERT INTO session_devices (session_id, account_id, user_agent, ip_address, location_label, label)
-         VALUES (?, ?, ?, INET6_ATON(?), ?, ?)
-         ON DUPLICATE KEY UPDATE last_seen_at = NOW(), user_agent = VALUES(user_agent),
-             location_label = VALUES(location_label), label = VALUES(label)`,
+         VALUES (?, ?, ?, ?::inet, ?, ?)
+         ON CONFLICT (session_id) DO UPDATE SET
+             last_seen_at = NOW(),
+             user_agent = EXCLUDED.user_agent,
+             location_label = EXCLUDED.location_label,
+             label = EXCLUDED.label`,
         [req.sessionID, accountId, userAgent || null, req.ip || null, locationLabel, label]
     );
 }

@@ -37,10 +37,17 @@ async function generateUsernameFromEmail(email) {
     return candidate;
 }
 
-async function signupUser(email, password) {
-    if (!email || !email.includes('@')) {
+async function signupUser(rawEmail, password) {
+    if (!rawEmail || !rawEmail.includes('@')) {
         return { ok: false, error: 'A valid email is required' };
     }
+    // Normalized to lowercase before storing or comparing - MySQL's default
+    // collation (utf8mb4_0900_ai_ci) made "=" comparisons case-insensitive,
+    // which silently covered for the email never being normalized on write.
+    // Postgres's default equality is case-sensitive, so without this,
+    // "User@x.com" and "user@x.com" would both pass the findByEmail check
+    // below and create two accounts for the same real address.
+    const email = rawEmail.trim().toLowerCase();
     const existing = await userRepo.findByEmail(email);
     if (existing) {
         return { ok: false, error: 'An account with that email already exists' };
@@ -53,8 +60,10 @@ async function signupUser(email, password) {
     } catch (err) {
         // DB-level unique constraint as the race-condition safety net behind
         // the findByEmail check above (two concurrent signups for the same
-        // email could otherwise both pass that check).
-        if (err.code === 'ER_DUP_ENTRY') {
+        // email could otherwise both pass that check). '23505' is
+        // Postgres's unique_violation code (MySQL's equivalent was
+        // ER_DUP_ENTRY).
+        if (err.code === '23505') {
             return { ok: false, error: 'An account with that email already exists' };
         }
         throw err;
@@ -72,7 +81,8 @@ async function verifyAdminLogin(username, password) {
 // generic self-asserted OIDC provider where auto-linking on email is an
 // account-takeover risk (see the design notes on this). Creates a new
 // account if neither matches.
-async function findOrCreateGoogleUser({ sub, email, emailVerified, picture }) {
+async function findOrCreateGoogleUser({ sub, email: rawEmail, emailVerified, picture }) {
+    const email = rawEmail ? rawEmail.trim().toLowerCase() : rawEmail;
     const bySub = await userRepo.findByGoogleSub(sub);
     if (bySub) {
         if (!bySub.avatar_url && picture) {

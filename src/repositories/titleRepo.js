@@ -31,11 +31,16 @@ async function listPublished({ limit, offset }) {
 // Uses .query() rather than .execute() for the LIMIT placeholder, matching
 // listPublished above - mysql2's prepared-statement path (.execute()) has a
 // long-standing quirk where a bound LIMIT parameter isn't reliably accepted.
+//
+// ILIKE, not LIKE: MySQL's default collation (utf8mb4_0900_ai_ci) made LIKE
+// case-insensitive there, but Postgres's LIKE is always case-sensitive -
+// ILIKE is the Postgres-specific case-insensitive equivalent, needed to
+// keep "batman" matching a title stored as "Batman".
 async function searchPublished(query, { limit = 30 } = {}) {
     const [rows] = await pool.query(
         `SELECT id, title, poster_url, release_date, trailer_youtube_key
          FROM titles
-         WHERE status = 'published' AND deleted_at IS NULL AND title LIKE ?
+         WHERE status = 'published' AND deleted_at IS NULL AND title ILIKE ?
          ORDER BY title ASC
          LIMIT ?`,
         [`%${query}%`, limit]
@@ -110,11 +115,11 @@ async function upsertPerson(conn, name) {
     const seen = new Set(slugRows.map((r) => r.slug));
     const slug = uniqueSlug(trimmed, seen);
 
-    const [result] = await conn.execute(
-        'INSERT INTO people (ulid, slug, name) VALUES (?, ?, ?)',
+    const [rows] = await conn.execute(
+        'INSERT INTO people (ulid, slug, name) VALUES (?, ?, ?) RETURNING id',
         [ulid(), slug, trimmed]
     );
-    return result.insertId;
+    return rows[0].id;
 }
 
 async function createTitle({ title, releaseDate, poster, cast, crew }) {
@@ -129,12 +134,12 @@ async function createTitle({ title, releaseDate, poster, cast, crew }) {
         const slug = uniqueSlug(title, seen);
         const { date, precision } = parseReleaseDate(releaseDate);
 
-        const [result] = await conn.execute(
+        const [rows] = await conn.execute(
             `INSERT INTO titles (ulid, slug, kind, title, release_date, release_date_precision, poster_url, status, published_at)
-             VALUES (?, ?, 'movie', ?, ?, ?, ?, 'published', NOW())`,
+             VALUES (?, ?, 'movie', ?, ?, ?, ?, 'published', NOW()) RETURNING id`,
             [ulid(), slug, title, date, precision, poster]
         );
-        const titleId = result.insertId;
+        const titleId = rows[0].id;
 
         // Enqueue webhook deliveries in the same transaction as the title
         // insert, not as a separate step afterwards -- otherwise a crash
@@ -157,12 +162,16 @@ async function createTitle({ title, releaseDate, poster, cast, crew }) {
 }
 
 async function insertCredits(conn, titleId, cast, crew) {
+    // ON CONFLICT DO NOTHING targets the same (title_id, person_id,
+    // credit_type, role) columns as the uq_credit constraint (migration
+    // 0001) - the Postgres equivalent of MySQL's INSERT IGNORE here.
     let billing = 0;
     for (const c of cast || []) {
         const personId = await upsertPerson(conn, c.name);
         await conn.execute(
-            `INSERT IGNORE INTO title_credits (title_id, person_id, credit_type, role, billing_order)
-             VALUES (?, ?, 'cast', ?, ?)`,
+            `INSERT INTO title_credits (title_id, person_id, credit_type, role, billing_order)
+             VALUES (?, ?, 'cast', ?, ?)
+             ON CONFLICT (title_id, person_id, credit_type, role) DO NOTHING`,
             [titleId, personId, c.role || '', billing]
         );
         billing += 1;
@@ -171,8 +180,9 @@ async function insertCredits(conn, titleId, cast, crew) {
     for (const c of crew || []) {
         const personId = await upsertPerson(conn, c.name);
         await conn.execute(
-            `INSERT IGNORE INTO title_credits (title_id, person_id, credit_type, role, department, billing_order)
-             VALUES (?, ?, 'crew', ?, 'Directing', ?)`,
+            `INSERT INTO title_credits (title_id, person_id, credit_type, role, department, billing_order)
+             VALUES (?, ?, 'crew', ?, 'Directing', ?)
+             ON CONFLICT (title_id, person_id, credit_type, role) DO NOTHING`,
             [titleId, personId, c.role || '', billing]
         );
         billing += 1;

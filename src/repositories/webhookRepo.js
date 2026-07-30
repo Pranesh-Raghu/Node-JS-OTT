@@ -6,12 +6,12 @@ const { pool } = require('../db/pool');
 
 async function createEndpoint({ accountId, url, eventTypes }) {
     const secret = crypto.randomBytes(32);
-    const [result] = await pool.execute(
+    const [rows] = await pool.execute(
         `INSERT INTO webhook_endpoints (account_id, url, secret, event_types)
-         VALUES (?, ?, ?, ?)`,
+         VALUES (?, ?, ?, ?) RETURNING id`,
         [accountId, url, secret, JSON.stringify(eventTypes)]
     );
-    return { id: result.insertId, secret };
+    return { id: rows[0].id, secret };
 }
 
 async function listByAccount(accountId) {
@@ -64,8 +64,14 @@ async function listRecentDeliveries(endpointId, limit = 5) {
 // event_id without this function reaching into ulid-generation concerns of
 // its own event modeling.
 async function enqueueForEvent(conn, { eventType, buildPayload }) {
+    // `@>` is JSONB containment: this checks whether eventType (as a bare
+    // JSON string) is an element of the event_types array column - the
+    // Postgres equivalent of MySQL's JSON_CONTAINS(). Not `?`/`?|` (the
+    // JSONB "key exists" operators) - those are literal `?` characters that
+    // would collide with this codebase's own `?` placeholder convention
+    // (see src/db/pool.js's shim).
     const [endpoints] = await conn.query(
-        `SELECT id FROM webhook_endpoints WHERE status = 'enabled' AND JSON_CONTAINS(event_types, ?)`,
+        `SELECT id FROM webhook_endpoints WHERE status = 'enabled' AND event_types @> ?::jsonb`,
         [JSON.stringify(eventType)]
     );
 

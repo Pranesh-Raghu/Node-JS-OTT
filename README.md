@@ -1,6 +1,6 @@
 # COMICS TV
 
-A Marvel/DC streaming platform built on Express, EJS, and MySQL, with a hand-rolled
+A Marvel/DC streaming platform built on Express, EJS, and Postgres, with a hand-rolled
 OAuth 2.1 authorization server, OpenFGA-based fine-grained authorization, an MCP server,
 and Google SSO.
 
@@ -41,7 +41,7 @@ src/
   app.js               Express app factory (helmet, sessions, CSRF, rate limiting)
   index.js             Entry point, graceful shutdown, webhook delivery loop
   config/              Environment variable loading/validation
-  db/                  MySQL connection pool + transaction helper
+  db/                  Postgres connection pool + transaction helper
   repositories/        Only place raw SQL lives
   services/            Business logic, transaction boundaries
   controllers/         Request/response glue
@@ -61,7 +61,7 @@ public/                Static assets, CSS, client-side JS
 ## Requirements
 
 - Node.js (version pinned in `.nvmrc` — `nvm use`)
-- MySQL 8
+- Postgres 14+ (locally, or a free hosted instance — see [Deployment](#deployment))
 - Docker (to run OpenFGA locally)
 - A TMDB API key (for posters/trailers)
 - A Google OAuth 2.0 client ID/secret (for Google SSO)
@@ -84,15 +84,18 @@ public/                Static assets, CSS, client-side JS
 
    See [Environment variables](#environment-variables) below for what each one is for.
 
-3. Create the MySQL database and run migrations.
+3. Create a Postgres database and run migrations.
 
    ```bash
+   createdb comics_tv
    npx knex migrate:latest
    ```
 
-4. Start OpenFGA locally with Docker, then create a store and write the authorization
-   model from `authz/model.fga`. Put the resulting store ID and model ID into
-   `FGA_STORE_ID` / `FGA_MODEL_ID` in `.env`.
+4. Start OpenFGA locally with Docker, pointed at its own Postgres datastore (OpenFGA
+   creates its own tables — `store`, `tuple`, etc. — so it's fine to share the same
+   database as the app, or use a separate one), then create a store and write the
+   authorization model from `authz/model.fga`. Put the resulting store ID and model ID
+   into `FGA_STORE_ID` / `FGA_MODEL_ID` in `.env`.
 
 5. Seed the catalog and OpenFGA tuples.
 
@@ -108,7 +111,7 @@ public/                Static assets, CSS, client-side JS
 | Variable | Purpose |
 |---|---|
 | `PORT` | Port the app listens on |
-| `DB_HOST` / `DB_USER` / `DB_PASS` / `DB_NAME` | MySQL connection |
+| `DATABASE_URL` | Postgres connection string |
 | `SESSION_SECRET` | Signs the session cookie |
 | `NODE_ENV` | `development` or `production` |
 | `TMDB_API_KEY` | Fetches posters/trailers from TMDB |
@@ -140,11 +143,20 @@ The app listens on the port set in `PORT` (defaults to `1000`).
 
 ## Deployment
 
-The app is deployed on Render.
+The app is deployed on Render. Render has no managed MySQL, and its private-service
+tier (the usual way to self-host a database as a Docker container) requires payment
+info even at $0 — so both the app and OpenFGA point at a free external Postgres
+instead (e.g. [Neon](https://neon.tech) or [Supabase](https://supabase.com), no card
+required):
 
 - Live URL: https://node-js-ott-6.onrender.com/
-- Set every variable from [Environment variables](#environment-variables) in Render's
-  environment settings.
+- `DATABASE_URL` on the app service points at the free Postgres instance.
+- OpenFGA runs as its own Render web service (public `type: web`, not a private
+  service, for the same payment-info reason), with `OPENFGA_DATASTORE_ENGINE=postgres`
+  and `OPENFGA_DATASTORE_URI` pointed at the **same** Postgres instance — OpenFGA
+  creates its own tables (`store`, `tuple`, etc.) that don't collide with the app's.
+- Set every other variable from [Environment variables](#environment-variables) in
+  Render's environment settings.
 - Add both your local (`http://localhost:<PORT>/auth/google/callback`) and production
   (`https://node-js-ott-6.onrender.com/auth/google/callback`) redirect URIs to the
   Google Cloud OAuth client's authorized redirect URIs list.

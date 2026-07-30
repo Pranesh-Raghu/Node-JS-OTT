@@ -22,7 +22,7 @@ async function createApiKey({ accountId, name, scope, expiresInDays = 90 }) {
     const { fullKey, keyId } = generateKey();
     await pool.execute(
         `INSERT INTO api_keys (key_id, secret_hmac, owner_account_id, name, scope, expires_at)
-         VALUES (?, ?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL ? DAY))`,
+         VALUES (?, ?, ?, ?, ?, NOW() + (?::numeric * INTERVAL '1 day'))`,
         [keyId, hmac(fullKey), accountId, name, scope || 'catalog:read', expiresInDays]
     );
     return fullKey; // shown once

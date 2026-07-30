@@ -31,14 +31,14 @@ async function main() {
         // must stay NULL alongside it, or this violates the
         // ck_accounts_hash_pair check constraint.
         const passwordAlgo = user.password ? 'bcrypt' : null;
-        const [result] = await pool.execute(
+        const [rows] = await pool.execute(
             `INSERT INTO accounts (ulid, username, password_hash, password_algo, role, status)
-             VALUES (?, ?, ?, ?, 'user', 'active')`,
+             VALUES (?, ?, ?, ?, 'user', 'active') RETURNING id`,
             [ulid(), user.username, user.password, passwordAlgo]
         );
         await pool.execute(
-            `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', 1)`,
-            [ulid(), result.insertId]
+            `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', TRUE)`,
+            [ulid(), rows[0].id]
         );
         existingUsernames.add(user.username);
         accountsCreated += 1;
@@ -50,14 +50,14 @@ async function main() {
             skipped += 1;
             continue;
         }
-        const [result] = await pool.execute(
+        const [rows] = await pool.execute(
             `INSERT INTO accounts (ulid, username, password_hash, password_algo, role, status, must_reset_password)
-             VALUES (?, ?, NULL, NULL, 'admin', 'pending_reset', 1)`,
+             VALUES (?, ?, NULL, NULL, 'admin', 'pending_reset', TRUE) RETURNING id`,
             [ulid(), admin.username]
         );
         await pool.execute(
-            `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', 1)`,
-            [ulid(), result.insertId]
+            `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', TRUE)`,
+            [ulid(), rows[0].id]
         );
         existingUsernames.add(admin.username);
         accountsCreated += 1;

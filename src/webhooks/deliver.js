@@ -88,7 +88,7 @@ async function attemptDelivery(row) {
          SET attempts = ?,
              status = ?,
              last_error = ?,
-             next_attempt_at = LEAST(NOW() + INTERVAL POW(2, ?) MINUTE, NOW() + INTERVAL ? MINUTE)
+             next_attempt_at = LEAST(NOW() + (POWER(2, ?::numeric) * INTERVAL '1 minute'), NOW() + (?::numeric * INTERVAL '1 minute'))
          WHERE id = ?`,
         [attempts, abandoned ? 'abandoned' : 'failed', String(errorMessage).slice(0, 512), attempts, MAX_BACKOFF_MINUTES, row.id]
     );
@@ -96,10 +96,11 @@ async function attemptDelivery(row) {
     // Single atomic UPDATE rather than read-then-write: avoids a race where
     // two concurrent failures both read the same consecutive_failures value
     // and under-count, which would delay auto-disabling a dead endpoint.
+    // CASE, not MySQL's IF() - Postgres has no IF() function.
     await pool.execute(
         `UPDATE webhook_endpoints
          SET consecutive_failures = consecutive_failures + 1,
-             status = IF(consecutive_failures + 1 >= ?, 'disabled', status)
+             status = CASE WHEN consecutive_failures + 1 >= ? THEN 'disabled' ELSE status END
          WHERE id = ?`,
         [MAX_CONSECUTIVE_FAILURES, row.endpoint_id]
     );

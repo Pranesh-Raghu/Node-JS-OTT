@@ -14,7 +14,12 @@ async function findByUsername(username) {
 
 async function findByEmail(email) {
     if (!email) return null;
-    const [rows] = await pool.execute(`SELECT ${USER_COLUMNS} FROM users WHERE email = ?`, [email]);
+    // LOWER() on both sides: emails are normalized to lowercase on write
+    // (see authService.signupUser), but this stays case-insensitive
+    // defensively for any row written before that normalization existed,
+    // and because Postgres's "=" is case-sensitive by default (MySQL's
+    // original collation here was not).
+    const [rows] = await pool.execute(`SELECT ${USER_COLUMNS} FROM users WHERE LOWER(email) = LOWER(?)`, [email]);
     return rows[0] || null;
 }
 
@@ -22,7 +27,7 @@ async function findByEmail(email) {
 // since the user is never shown their generated username at signup.
 async function findByUsernameOrEmail(identifier) {
     const [rows] = await pool.execute(
-        `SELECT ${USER_COLUMNS} FROM users WHERE username = ? OR email = ? LIMIT 1`,
+        `SELECT ${USER_COLUMNS} FROM users WHERE username = ? OR LOWER(email) = LOWER(?) LIMIT 1`,
         [identifier, identifier]
     );
     return rows[0] || null;

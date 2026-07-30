@@ -38,16 +38,17 @@ async function getOrCreateAccountIdForUsername(username) {
         // this violates the ck_accounts_hash_pair check constraint
         // ((password_hash IS NULL) = (password_algo IS NULL)).
         const passwordAlgo = users[0].password ? 'bcrypt' : null;
-        const [result] = await conn.execute(
+        const [rows] = await conn.execute(
             `INSERT INTO accounts (ulid, username, password_hash, password_algo, role, status)
-             VALUES (?, ?, ?, ?, 'user', 'active')`,
+             VALUES (?, ?, ?, ?, 'user', 'active') RETURNING id`,
             [ulid(), username, users[0].password, passwordAlgo]
         );
+        const newAccountId = rows[0].id;
         await conn.execute(
-            `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', 1)`,
-            [ulid(), result.insertId]
+            `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', TRUE)`,
+            [ulid(), newAccountId]
         );
-        return { id: result.insertId, isNew: true };
+        return { id: newAccountId, isNew: true };
     });
 
     if (accountId.isNew) {
