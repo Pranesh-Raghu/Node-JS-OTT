@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header>
-        <h1 style="color: red;"><%= movie.title %></h1>
+        <h1 class="accent-text"><%= movie.title %></h1>
         <nav>
             <a href="/">HOME</a>
             <a href="/watchlist">WATCHLIST</a>
@@ -18,10 +19,11 @@
             <% } else { %>
                 <a href="/login">LOGIN</a>
             <% } %>
+            <%- include('partials/theme-toggle') %>
         </nav>
     </header>
 
-    <main>
+    <main id="main">
         <div class="movie-details">
             <img src="<%= movie.poster %>" alt="<%= movie.title %>">
             <h2>Release Date: <%= movie.releaseDate %></h2>
@@ -37,21 +39,21 @@
             </p>
 
             <!-- Watch Now Button -->
-            <% if (user) { %>
-                <button class="watch-now-btn">
-                    <a id="Resume" href="/video/<%= movie.id %>">Watch Now</a>
-                </button>
+            <% if (hasVideo) { %>
+                <% if (user) { %>
+                    <a class="watch-now-btn" href="/video/<%= movie.id %>">Watch Now</a>
+                <% } else { %>
+                    <a class="watch-now-btn" href="/login?redirectTo=<%= encodeURIComponent(`/video/${movie.id}`) %>">Watch Now</a>
+                <% } %>
             <% } else { %>
-                <button class="watch-now-btn">
-                    <a id="Resume" href="/login?redirectTo=/video/<%= movie.id %>">Watch Now</a>
-                </button>
+                <p class="no-video-message">No video available yet for this title.</p>
             <% } %>
 
         </div>
     </main>
 
     <footer>
-        <p>&copy; <span id="current-year"></span> COMICS <span style="color: red;">TV</span></p>
+        <p>&copy; <span id="current-year"></span> COMICS <span class="accent-text">TV</span></p>
     </footer>
     <script src="/public/javascript/script.js"></script>
 </body>

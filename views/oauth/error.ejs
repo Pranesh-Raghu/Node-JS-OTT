@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
+<head>
+    <meta charset="UTF-8">
+    <title>Authorization error</title>
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body class="auth-page">
+    <main id="main">
+        <div class="form-card">
+            <h2>Authorization error</h2>
+            <p class="error-message"><%= message %></p>
+        </div>
+    </main>
+</body>
+</html>

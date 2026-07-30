@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
+<head>
+    <meta charset="UTF-8">
+    <title>Authorize application</title>
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body class="auth-page">
+    <main id="main">
+        <a class="auth-brand" href="/">COMICS <span class="accent-text">TV</span></a>
+        <div class="form-card consent-card">
+            <h2>Authorize application</h2>
+            <p class="form-card-subtitle"><strong><%= clientName %></strong> is requesting access to your account.</p>
+
+            <% if (isLoopback) { %>
+                <p class="error-message">
+                    This app runs on your own computer (<%= redirectUri %>). Only continue if you just started it yourself.
+                </p>
+            <% } %>
+
+            <p class="consent-label">Redirecting to</p>
+            <p class="secret-reveal consent-redirect"><%= redirectUri %></p>
+
+            <p class="consent-label">This will allow the app to</p>
+            <ul class="scope-list">
+                <% scopes.forEach(scope => { %>
+                    <li><%= scope %></li>
+                <% }); %>
+            </ul>
+
+            <form action="<%= formAction %>" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <% Object.keys(hiddenFields).forEach(key => { %>
+                    <input type="hidden" name="<%= key %>" value="<%= hiddenFields[key] %>">
+                <% }); %>
+                <button type="submit">Allow</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

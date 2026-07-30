@@ -4,7 +4,7 @@
       "id": "1",
       "title": "Zack Snyder's Justice League",
       "releaseDate": "18 Mar 2021",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FZSJL.jpg?alt=media&token=5f7008e8-ea28-40e9-af58-fe5ebc55ecea",
+      "poster": "https://image.tmdb.org/t/p/w780/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg",
       "cast": [
         {
           "name": "Ben Affleck",
@@ -16,13 +16,14 @@
           "name": "Zack Snyder",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "ui37YKQ9AC4"
     },
     {
       "id": "2",
       "title": "Avengers Infinity War",
       "releaseDate": "27 April 2018",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FInfinity%20war.jpg?alt=media&token=f5eacb87-d8d2-45a4-8e8d-f4d5e6868f05",
+      "poster": "https://image.tmdb.org/t/p/w780/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
       "cast": [
         {
           "name": "Robert Downey Jr.",
@@ -34,13 +35,14 @@
           "name": "Russo Brothers",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "QwievZ1Tx-8"
     },
     {
       "id": "3",
       "title": "The Dark Knight",
       "releaseDate": "02 Aug 2008",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FDark%20knight.jpg?alt=media&token=51c54a88-b34d-4aaf-92b7-6b4ff109464f",
+      "poster": "https://image.tmdb.org/t/p/w780/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
       "cast": [
         {
           "name": "Heath ledger",
@@ -52,13 +54,14 @@
           "name": "Christopher Nolan ",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "_PZpmTj1Q8Q"
     },
     {
       "id": "4",
       "title": "Avengers Endgame",
       "releaseDate": "27 April 2019",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FEndgame.png?alt=media&token=ed7d45dc-45a3-4ebc-bd1d-cebb61eca6dc",
+      "poster": "https://image.tmdb.org/t/p/w780/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg",
       "cast": [
         {
           "name": "Chris Evans",
@@ -70,13 +73,14 @@
           "name": "Russo Brothers",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "AMSITikqKiM"
     },
     {
       "id": "5",
       "title": "Man of Steel",
       "releaseDate": "03 July 2013",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FMOS.jpg?alt=media&token=dfab6f0c-7a8e-43f5-b018-8ddcd1cc8fce",
+      "poster": "https://image.tmdb.org/t/p/w780/8GFtkImmK0K1VaUChR0n9O61CFU.jpg",
       "cast": [
         {
           "name": "Henry Cavil",
@@ -88,13 +92,14 @@
           "name": "Zack Snyder",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "vGrBV1C4hgo"
     },
     {
       "id": "6",
       "title": "Joker Folie Deux",
       "releaseDate": "04 Oct 2024",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FFolie%20deux.jpg?alt=media&token=e44275d9-6c93-4641-a2f0-69c2f9d16a4b",
+      "poster": "https://image.tmdb.org/t/p/w780/if8QiqCI7WAGImKcJCfzp6VTyKA.jpg",
       "cast": [
         {
           "name": "Joaquin Pheonix",
@@ -106,13 +111,14 @@
           "name": "Todd Philips",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "fiqqAI0e4Nc"
     },
     {
       "id": "7",
       "title": "Captain America Brave New World",
       "releaseDate": "14 Feb 2025",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FCABNW.jpg?alt=media&token=7a3adc88-cbf8-4efb-aaaa-811860893292",
+      "poster": "https://image.tmdb.org/t/p/w780/pzIddUEMWhWzfvLI3TwxUG2wGoi.jpg",
       "cast": [
         {
           "name": "Anthony Mackie",
@@ -124,13 +130,14 @@
           "name": "Julius Onah",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "5PSzFLV-EyQ"
     },
     {
       "id": "8",
       "title": "Thunderbolts",
       "releaseDate": "02 May 2025",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FThunderbolts.jpg?alt=media&token=a1c4d14b-8d6b-4222-9ce5-4c7c4384f65e",
+      "poster": "https://image.tmdb.org/t/p/w780/hqcexYHbiTBfDIdDWxrxPtVndBX.jpg",
       "cast": [
         {
           "name": "David Harbour",
@@ -142,13 +149,14 @@
           "name": "Jake Schreier",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "7rs_HhSA7XY"
     },
     {
       "id": "9",
       "title": "Watchmen",
       "releaseDate": "6 March 2009",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FWatchmen.jpeg?alt=media&token=584d8b43-50ac-4abb-a987-26c4e29d6530",
+      "poster": "https://image.tmdb.org/t/p/w780/aVURelN3pM56lFM7Dgfs5TixcIf.jpg",
       "cast": [
         {
           "name": "Patrick wilson",
@@ -160,13 +168,14 @@
           "name": "Zack Snyder",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "89xoXmHgG00"
     },
     {
       "id": "10",
       "title": "V for Vendetta",
       "releaseDate": "11 December 2005",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FV%20for%20vendetta.jpg?alt=media&token=993480f4-c7d8-455a-a03a-1275641099c0",
+      "poster": "https://image.tmdb.org/t/p/w780/1avD1JeaRiJX5M4ahPdZPypGoGN.jpg",
       "cast": [
         {
           "name": "Hugo Weaving",
@@ -178,13 +187,14 @@
           "name": "James McTeigue",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "3ge0navn9E0"
     },
     {
       "id": "11",
       "title": "Constantine",
       "releaseDate": "25 February 2005",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FcONSTANTINE.jpg?alt=media&token=7f380a36-86e2-49f3-881e-0544e078860d",
+      "poster": "https://image.tmdb.org/t/p/w780/vPYgvd2MwHlxTamAOjwVQp4qs1W.jpg",
       "cast": [
         {
           "name": "Keaneu Reeves",
@@ -196,13 +206,14 @@
           "name": "Marc Webb",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "819JCbGfZpg"
     },
     {
       "id": "12",
       "title": "Superman",
       "releaseDate": "11 July 2025",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2Fsuperman%20L.jpg?alt=media&token=4370f850-2258-43f5-92f9-c1f1c20bd7ce",
+      "poster": "https://image.tmdb.org/t/p/w780/ldyfo0BKmz5rWtJJKCvwaNS4cJT.jpg",
       "cast": [
         {
           "name": "David Corenswet",
@@ -214,13 +225,14 @@
           "name": "James Gunn",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "MikgqM0LXr4"
     },
     {
       "id": "13",
       "title": "Deadpool and Wolverine",
       "releaseDate": "26 July 2024",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2Fdeadpool-and-wolverine.jpg?alt=media&token=b274a92d-f03f-4d91-b53c-16d564ab1b62",
+      "poster": "https://image.tmdb.org/t/p/w780/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
       "cast": [
         {
           "name": "Ryan Reynolds",
@@ -232,13 +244,14 @@
           "name": "Shawn Levy",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "Idh8n5XuYIA"
     },
     {
       "id": "14",
       "title": "Venom The Last Dance",
       "releaseDate": "25 Oct 2024",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FVenom%203.png?alt=media&token=c23a5d5a-5630-416d-aae3-d9dcff3ef3ac",
+      "poster": "https://image.tmdb.org/t/p/w780/vGXptEdgZIhPg3cGlc7e8sNPC2e.jpg",
       "cast": [
         {
           "name": "Tom Hardy",
@@ -250,13 +263,14 @@
           "name": "Kelly Marcel",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "FKBN1qAzW3s"
     },
     {
       "id": "15",
       "title": "Spiderman Across the Spiderverse",
       "releaseDate": "02 June 2023",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FAcross%20the%20spiderverse.webp?alt=media&token=a1583828-1462-4525-a926-1df2159571dc",
+      "poster": "https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
       "cast": [
         {
           "name": "Oscar Isaac",
@@ -268,13 +282,14 @@
           "name": "Marc Webb",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "yFrxzaBLDQM"
     },
     {
       "id": "16",
       "title": "The Fantastic 4",
       "releaseDate": "25 July 2025",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2Ffantasticdigital1.webp?alt=media&token=90e3faa7-7282-4f6c-b0f2-1d5d3e8da878",
+      "poster": "https://image.tmdb.org/t/p/w780/nf5qaSEvyYSNeFH0YhSs5EsBLX9.jpg",
       "cast": [
         {
           "name": "Pedro Pascal",
@@ -286,13 +301,14 @@
           "name": "Matt Shakman",
           "role": "Director"
         }
-      ]
+      ],
+      "trailerYoutubeKey": "LJa5wv93YGM"
     },
     {
       "id": "17",
       "title": "The Batman 2",
-      "releaseDate": "2027-10-02",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FBatman2.jpg?alt=media&token=86cb475d-2a47-4768-9f21-2c0a381dd82e",
+      "releaseDate": "2028-02-17",
+      "poster": "https://image.tmdb.org/t/p/w780/caeBJHLNld1h14uvcLvzyHf3Rlk.jpg",
       "cast": [
         {
           "name": "Actor 1",
@@ -309,8 +325,8 @@
     {
       "id": "18",
       "title": "Flashpoint Paradox",
-      "releaseDate": "2003-10-23",
-      "poster": "https://firebasestorage.googleapis.com/v0/b/comics-tv-8e695.appspot.com/o/Images%2FHome%20Page%2FFlashpointparadox.jpg?alt=media&token=2db4884d-dd1e-4243-87fd-ef48908d1ee1",
+      "releaseDate": "2013-07-30",
+      "poster": "https://image.tmdb.org/t/p/w780/hg6RYpSb3vU4i3yQDtE1YhSZNh5.jpg",
       "cast": [
         {
           "name": "Actor 1",
@@ -322,7 +338,2773 @@
           "name": "Director 1",
           "role": "Director"
         }
+      ],
+      "trailerYoutubeKey": "xe0JiobQ98o"
+    },
+    {
+      "id": "19",
+      "title": "Iron Man",
+      "releaseDate": "2 May 2008",
+      "poster": "https://image.tmdb.org/t/p/w780/78lPtwv72eTNqFW9COBYI0dWDJa.jpg",
+      "cast": [
+        {
+          "name": "Robert Downey Jr.",
+          "role": "Tony Stark / Iron Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jon Favreau",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "8ugaeA-nMTc"
+    },
+    {
+      "id": "20",
+      "title": "The Incredible Hulk",
+      "releaseDate": "13 Jun 2008",
+      "poster": "https://image.tmdb.org/t/p/w780/gKzYx79y0AQTL4UAk1cBQJ3nvrm.jpg",
+      "cast": [
+        {
+          "name": "Edward Norton",
+          "role": "Bruce Banner / Hulk"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Louis Leterrier",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "dz6eBeW19Lg"
+    },
+    {
+      "id": "21",
+      "title": "Iron Man 2",
+      "releaseDate": "7 May 2010",
+      "poster": "https://image.tmdb.org/t/p/w780/6WBeq4fCfn7AN0o21W9qNcRF2l9.jpg",
+      "cast": [
+        {
+          "name": "Robert Downey Jr.",
+          "role": "Tony Stark / Iron Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jon Favreau",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "5fUQkLdJ2kE"
+    },
+    {
+      "id": "22",
+      "title": "Thor",
+      "releaseDate": "6 May 2011",
+      "poster": "https://image.tmdb.org/t/p/w780/prSfAi1xGrhLQNxVSUFh61xQ4Qy.jpg",
+      "cast": [
+        {
+          "name": "Chris Hemsworth",
+          "role": "Thor"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Kenneth Branagh",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "uHBnrJowBZE"
+    },
+    {
+      "id": "23",
+      "title": "Captain America: The First Avenger",
+      "releaseDate": "22 Jul 2011",
+      "poster": "https://image.tmdb.org/t/p/w780/vSNxAJTlD0r02V9sPYpOjqDZXUK.jpg",
+      "cast": [
+        {
+          "name": "Chris Evans",
+          "role": "Steve Rogers / Captain America"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Joe Johnston",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "W4DlMggBPvc"
+    },
+    {
+      "id": "24",
+      "title": "The Avengers",
+      "releaseDate": "4 May 2012",
+      "poster": "https://image.tmdb.org/t/p/w780/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
+      "cast": [
+        {
+          "name": "Robert Downey Jr.",
+          "role": "Tony Stark / Iron Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Joss Whedon",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "hIR8Ar-Z4hw"
+    },
+    {
+      "id": "25",
+      "title": "Iron Man 3",
+      "releaseDate": "3 May 2013",
+      "poster": "https://image.tmdb.org/t/p/w780/qhPtAc1TKbMPqNvcdXSOn9Bn7hZ.jpg",
+      "cast": [
+        {
+          "name": "Robert Downey Jr.",
+          "role": "Tony Stark / Iron Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Shane Black",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "YLorLVa95Xo"
+    },
+    {
+      "id": "26",
+      "title": "Thor: The Dark World",
+      "releaseDate": "8 Nov 2013",
+      "poster": "https://image.tmdb.org/t/p/w780/wp6OxE4poJ4G7c0U2ZIXasTSMR7.jpg",
+      "cast": [
+        {
+          "name": "Chris Hemsworth",
+          "role": "Thor"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Alan Taylor",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "npvJ9FTgZbM"
+    },
+    {
+      "id": "27",
+      "title": "Captain America: The Winter Soldier",
+      "releaseDate": "4 Apr 2014",
+      "poster": "https://image.tmdb.org/t/p/w780/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg",
+      "cast": [
+        {
+          "name": "Chris Evans",
+          "role": "Steve Rogers / Captain America"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Anthony Russo",
+          "role": "Director"
+        },
+        {
+          "name": "Joe Russo",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "7SlILk2WMTI"
+    },
+    {
+      "id": "28",
+      "title": "Guardians of the Galaxy",
+      "releaseDate": "1 Aug 2014",
+      "poster": "https://image.tmdb.org/t/p/w780/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg",
+      "cast": [
+        {
+          "name": "Chris Pratt",
+          "role": "Peter Quill / Star-Lord"
+        }
+      ],
+      "crew": [
+        {
+          "name": "James Gunn",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "3CqymRQ1uUU"
+    },
+    {
+      "id": "29",
+      "title": "Avengers: Age of Ultron",
+      "releaseDate": "1 May 2015",
+      "poster": "https://image.tmdb.org/t/p/w780/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg",
+      "cast": [
+        {
+          "name": "Robert Downey Jr.",
+          "role": "Tony Stark / Iron Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Joss Whedon",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "JAUoeqvedMo"
+    },
+    {
+      "id": "30",
+      "title": "Ant-Man",
+      "releaseDate": "17 Jul 2015",
+      "poster": "https://image.tmdb.org/t/p/w780/rQRnQfUl3kfp78nCWq8Ks04vnq1.jpg",
+      "cast": [
+        {
+          "name": "Paul Rudd",
+          "role": "Scott Lang / Ant-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Peyton Reed",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "cx3joJnXydc"
+    },
+    {
+      "id": "31",
+      "title": "Captain America: Civil War",
+      "releaseDate": "6 May 2016",
+      "poster": "https://image.tmdb.org/t/p/w780/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
+      "cast": [
+        {
+          "name": "Chris Evans",
+          "role": "Steve Rogers / Captain America"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Anthony Russo",
+          "role": "Director"
+        },
+        {
+          "name": "Joe Russo",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "dKrVegVI0Us"
+    },
+    {
+      "id": "32",
+      "title": "Doctor Strange",
+      "releaseDate": "4 Nov 2016",
+      "poster": "https://image.tmdb.org/t/p/w780/uGBVj3bEbCoZbDjjl9wTxcygko1.jpg",
+      "cast": [
+        {
+          "name": "Benedict Cumberbatch",
+          "role": "Stephen Strange / Doctor Strange"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Scott Derrickson",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "HSzx-zryEgM"
+    },
+    {
+      "id": "33",
+      "title": "Guardians of the Galaxy Vol. 2",
+      "releaseDate": "5 May 2017",
+      "poster": "https://image.tmdb.org/t/p/w780/y4MBh0EjBlMuOzv9axM4qJlmhzz.jpg",
+      "cast": [
+        {
+          "name": "Chris Pratt",
+          "role": "Peter Quill / Star-Lord"
+        }
+      ],
+      "crew": [
+        {
+          "name": "James Gunn",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "wUn05hdkhjM"
+    },
+    {
+      "id": "34",
+      "title": "Spider-Man: Homecoming",
+      "releaseDate": "7 Jul 2017",
+      "poster": "https://image.tmdb.org/t/p/w780/c24sv2weTHPsmDa7jEMN0m2P3RT.jpg",
+      "cast": [
+        {
+          "name": "Tom Holland",
+          "role": "Peter Parker / Spider-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jon Watts",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "xEvV3OsE2WM"
+    },
+    {
+      "id": "35",
+      "title": "Thor: Ragnarok",
+      "releaseDate": "3 Nov 2017",
+      "poster": "https://image.tmdb.org/t/p/w780/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg",
+      "cast": [
+        {
+          "name": "Chris Hemsworth",
+          "role": "Thor"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Taika Waititi",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "ue80QwXMRHg"
+    },
+    {
+      "id": "36",
+      "title": "Black Panther",
+      "releaseDate": "16 Feb 2018",
+      "poster": "https://image.tmdb.org/t/p/w780/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
+      "cast": [
+        {
+          "name": "Chadwick Boseman",
+          "role": "T'Challa / Black Panther"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Ryan Coogler",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "xjDjIWPwcPU"
+    },
+    {
+      "id": "37",
+      "title": "Ant-Man and the Wasp",
+      "releaseDate": "6 Jul 2018",
+      "poster": "https://image.tmdb.org/t/p/w780/cFQEO687n1K6umXbInzocxcnAQz.jpg",
+      "cast": [
+        {
+          "name": "Paul Rudd",
+          "role": "Scott Lang / Ant-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Peyton Reed",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "UUkn-enk2RU"
+    },
+    {
+      "id": "38",
+      "title": "Captain Marvel",
+      "releaseDate": "8 Mar 2019",
+      "poster": "https://image.tmdb.org/t/p/w780/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg",
+      "cast": [
+        {
+          "name": "Brie Larson",
+          "role": "Carol Danvers / Captain Marvel"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Anna Boden",
+          "role": "Director"
+        },
+        {
+          "name": "Ryan Fleck",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "GX33bIOA5aA"
+    },
+    {
+      "id": "39",
+      "title": "Spider-Man: Far From Home",
+      "releaseDate": "2 Jul 2019",
+      "poster": "https://image.tmdb.org/t/p/w780/4q2NNj4S5dG2RLF9CpXsej7yXl.jpg",
+      "cast": [
+        {
+          "name": "Tom Holland",
+          "role": "Peter Parker / Spider-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jon Watts",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "LFoz8ZJWmPs"
+    },
+    {
+      "id": "40",
+      "title": "Black Widow",
+      "releaseDate": "9 Jul 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg",
+      "cast": [
+        {
+          "name": "Scarlett Johansson",
+          "role": "Natasha Romanoff / Black Widow"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Cate Shortland",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "Fp9pNPdNwjI"
+    },
+    {
+      "id": "41",
+      "title": "Shang-Chi and the Legend of the Ten Rings",
+      "releaseDate": "3 Sep 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/9f2Q0U3IOsLgrI2HkvldwSABZy5.jpg",
+      "cast": [
+        {
+          "name": "Simu Liu",
+          "role": "Shang-Chi"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Destin Daniel Cretton",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "8YjFbMbfXaQ"
+    },
+    {
+      "id": "42",
+      "title": "Eternals",
+      "releaseDate": "5 Nov 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/lFByFSLV5WDJEv3KabbdAF959F2.jpg",
+      "cast": [
+        {
+          "name": "Gemma Chan",
+          "role": "Sersi"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Chloé Zhao",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "x_me3xsvDgk"
+    },
+    {
+      "id": "43",
+      "title": "Spider-Man: No Way Home",
+      "releaseDate": "17 Dec 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+      "cast": [
+        {
+          "name": "Tom Holland",
+          "role": "Peter Parker / Spider-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jon Watts",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "1mTjfMFyPi8"
+    },
+    {
+      "id": "44",
+      "title": "Doctor Strange in the Multiverse of Madness",
+      "releaseDate": "6 May 2022",
+      "poster": "https://image.tmdb.org/t/p/w780/ddJcSKbcp4rKZTmuyWaMhuwcfMz.jpg",
+      "cast": [
+        {
+          "name": "Benedict Cumberbatch",
+          "role": "Stephen Strange / Doctor Strange"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Sam Raimi",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "Rf8LAYJSOL8"
+    },
+    {
+      "id": "45",
+      "title": "Thor: Love and Thunder",
+      "releaseDate": "8 Jul 2022",
+      "poster": "https://image.tmdb.org/t/p/w780/pIkRyD18kl4FhoCNQuWxWu5cBLM.jpg",
+      "cast": [
+        {
+          "name": "Chris Hemsworth",
+          "role": "Thor"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Taika Waititi",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "Go8nTmfrQd8"
+    },
+    {
+      "id": "46",
+      "title": "Black Panther: Wakanda Forever",
+      "releaseDate": "11 Nov 2022",
+      "poster": "https://image.tmdb.org/t/p/w780/sv1xJUazXeYqALzczSZ3O6nkH75.jpg",
+      "cast": [
+        {
+          "name": "Letitia Wright",
+          "role": "Shuri / Black Panther"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Ryan Coogler",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "_Z3QKkl1WyM"
+    },
+    {
+      "id": "47",
+      "title": "Ant-Man and the Wasp: Quantumania",
+      "releaseDate": "17 Feb 2023",
+      "poster": "https://image.tmdb.org/t/p/w780/qnqGbB22YJ7dSs4o6M7exTpNxPz.jpg",
+      "cast": [
+        {
+          "name": "Paul Rudd",
+          "role": "Scott Lang / Ant-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Peyton Reed",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "5WfTEZJnv_8"
+    },
+    {
+      "id": "48",
+      "title": "Guardians of the Galaxy Vol. 3",
+      "releaseDate": "5 May 2023",
+      "poster": "https://image.tmdb.org/t/p/w780/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
+      "cast": [
+        {
+          "name": "Chris Pratt",
+          "role": "Peter Quill / Star-Lord"
+        }
+      ],
+      "crew": [
+        {
+          "name": "James Gunn",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "AAE5VZktooM"
+    },
+    {
+      "id": "49",
+      "title": "The Marvels",
+      "releaseDate": "10 Nov 2023",
+      "poster": "https://image.tmdb.org/t/p/w780/9GBhzXMFjgcZ3FdR9w3bUMMTps5.jpg",
+      "cast": [
+        {
+          "name": "Brie Larson",
+          "role": "Carol Danvers / Captain Marvel"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Nia DaCosta",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "uwmDH12MAA4"
+    },
+    {
+      "id": "50",
+      "title": "Avengers: Doomsday",
+      "releaseDate": "18 Dec 2026",
+      "poster": "https://image.tmdb.org/t/p/w780/cWXtJhrlruF8CeYuaBGE8vdj3Q9.jpg",
+      "cast": [
+        {
+          "name": "Robert Downey Jr.",
+          "role": "Victor von Doom"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Anthony Russo",
+          "role": "Director"
+        },
+        {
+          "name": "Joe Russo",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "irVNGjRFZGk"
+    },
+    {
+      "id": "51",
+      "title": "Avengers: Secret Wars",
+      "releaseDate": "17 Dec 2027",
+      "poster": "https://image.tmdb.org/t/p/w780/f0YBuh4hyiAheXhh4JnJWoKi9g5.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Anthony Russo",
+          "role": "Director"
+        },
+        {
+          "name": "Joe Russo",
+          "role": "Director"
+        }
       ]
+    },
+    {
+      "id": "52",
+      "title": "Ghost Rider",
+      "releaseDate": "2028",
+      "poster": "https://img.youtube.com/vi/OR6dZUSO-Gc/maxresdefault.jpg",
+      "cast": [
+        {
+          "name": "Ryan Gosling",
+          "role": "Ghost Rider"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Shawn Levy",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "OR6dZUSO-Gc"
+    },
+    {
+      "id": "53",
+      "title": "Black Panther 3",
+      "releaseDate": "15 Dec 2028",
+      "poster": "https://image.tmdb.org/t/p/w780/zJc9fYZxgq4yzI0Oru2e1Cf3a3V.jpg",
+      "cast": [
+        {
+          "name": "David Jonsson",
+          "role": "Black Panther"
+        },
+        {
+          "name": "Denzel Washington",
+          "role": "TBA"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Ryan Coogler",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "M0xHK86xXUc"
+    },
+    {
+      "id": "54",
+      "title": "Spider-Man",
+      "releaseDate": "3 May 2002",
+      "poster": "https://image.tmdb.org/t/p/w780/nXdAh5vUwERL4WGVMaee8RoDEAS.jpg",
+      "cast": [
+        {
+          "name": "Tobey Maguire",
+          "role": "Peter Parker / Spider-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Sam Raimi",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "t06RUxPbp_c"
+    },
+    {
+      "id": "55",
+      "title": "Spider-Man 2",
+      "releaseDate": "30 Jun 2004",
+      "poster": "https://image.tmdb.org/t/p/w780/aGuvNAaaZuWXYQQ6N2v7DeuP6mB.jpg",
+      "cast": [
+        {
+          "name": "Tobey Maguire",
+          "role": "Peter Parker / Spider-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Sam Raimi",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "CA5vsCnLm34"
+    },
+    {
+      "id": "56",
+      "title": "Spider-Man 3",
+      "releaseDate": "4 May 2007",
+      "poster": "https://image.tmdb.org/t/p/w780/qFmwhVUoUSXjkKRmca5yGDEXBIj.jpg",
+      "cast": [
+        {
+          "name": "Tobey Maguire",
+          "role": "Peter Parker / Spider-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Sam Raimi",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "e5wUilOeOmg"
+    },
+    {
+      "id": "57",
+      "title": "The Amazing Spider-Man",
+      "releaseDate": "3 Jul 2012",
+      "poster": "https://image.tmdb.org/t/p/w780/jexoNYnPd6vVrmygwF6QZmWPFdu.jpg",
+      "cast": [
+        {
+          "name": "Andrew Garfield",
+          "role": "Peter Parker / Spider-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Marc Webb",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "WLxul0Vzuhk"
+    },
+    {
+      "id": "58",
+      "title": "The Amazing Spider-Man 2",
+      "releaseDate": "2 May 2014",
+      "poster": "https://image.tmdb.org/t/p/w780/dGjoPttcbKR5VWg1jQuNFB247KL.jpg",
+      "cast": [
+        {
+          "name": "Andrew Garfield",
+          "role": "Peter Parker / Spider-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Marc Webb",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "DlM2CWNTQ84"
+    },
+    {
+      "id": "59",
+      "title": "Spider-Man: Into the Spider-Verse",
+      "releaseDate": "14 Dec 2018",
+      "poster": "https://image.tmdb.org/t/p/w780/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
+      "cast": [
+        {
+          "name": "Shameik Moore",
+          "role": "Miles Morales / Spider-Man"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Bob Persichetti",
+          "role": "Director"
+        },
+        {
+          "name": "Peter Ramsey",
+          "role": "Director"
+        },
+        {
+          "name": "Rodney Rothman",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "tg52up16eq0"
+    },
+    {
+      "id": "60",
+      "title": "Venom",
+      "releaseDate": "5 Oct 2018",
+      "poster": "https://image.tmdb.org/t/p/w780/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
+      "cast": [
+        {
+          "name": "Tom Hardy",
+          "role": "Eddie Brock / Venom"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Ruben Fleischer",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "xLCn88bfW1o"
+    },
+    {
+      "id": "61",
+      "title": "Venom: Let There Be Carnage",
+      "releaseDate": "1 Oct 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/pzKsRuKLFmYrW5Q0q8E8G78Tcgo.jpg",
+      "cast": [
+        {
+          "name": "Tom Hardy",
+          "role": "Eddie Brock / Venom"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Andy Serkis",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "GVwq2HlKYpE"
+    },
+    {
+      "id": "62",
+      "title": "Morbius",
+      "releaseDate": "1 Apr 2022",
+      "poster": "https://image.tmdb.org/t/p/w780/Av8Z2jZhEm1FLkFzMThzz9hndJF.jpg",
+      "cast": [
+        {
+          "name": "Jared Leto",
+          "role": "Michael Morbius"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Daniel Espinosa",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "wG2TjtueeSU"
+    },
+    {
+      "id": "63",
+      "title": "Kraven the Hunter",
+      "releaseDate": "13 Dec 2024",
+      "poster": "https://image.tmdb.org/t/p/w780/1GvBhRxY6MELDfxFrete6BNhBB5.jpg",
+      "cast": [
+        {
+          "name": "Aaron Taylor-Johnson",
+          "role": "Sergei Kravinoff / Kraven"
+        }
+      ],
+      "crew": [
+        {
+          "name": "J. C. Chandor",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "hR1-ihzff3I"
+    },
+    {
+      "id": "64",
+      "title": "X-Men",
+      "releaseDate": "14 Jul 2000",
+      "poster": "https://image.tmdb.org/t/p/w780/bRDAc4GogyS9ci3ow7UnInOcriN.jpg",
+      "cast": [
+        {
+          "name": "Hugh Jackman",
+          "role": "Logan / Wolverine"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Bryan Singer",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "s4Wqw8tqgdM"
+    },
+    {
+      "id": "65",
+      "title": "X2",
+      "releaseDate": "2 May 2003",
+      "poster": "https://image.tmdb.org/t/p/w780/bst4alFUXCxISwdRUKSMhhkrX1M.jpg",
+      "cast": [
+        {
+          "name": "Hugh Jackman",
+          "role": "Logan / Wolverine"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Bryan Singer",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "yVzqz_zpP20"
+    },
+    {
+      "id": "66",
+      "title": "X-Men: The Last Stand",
+      "releaseDate": "26 May 2006",
+      "poster": "https://image.tmdb.org/t/p/w780/a2xicU8DpKtRizOHjQLC1JyCSRS.jpg",
+      "cast": [
+        {
+          "name": "Hugh Jackman",
+          "role": "Logan / Wolverine"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Brett Ratner",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "X8ozc_dQprk"
+    },
+    {
+      "id": "67",
+      "title": "Fantastic Four",
+      "releaseDate": "8 Jul 2005",
+      "poster": "https://image.tmdb.org/t/p/w780/4YMcYEFS8sFuW3soP1HVmgR3cSm.jpg",
+      "cast": [
+        {
+          "name": "Ioan Gruffudd",
+          "role": "Reed Richards / Mr. Fantastic"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Tim Story",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "QIx2jkXYu34"
+    },
+    {
+      "id": "68",
+      "title": "Fantastic Four: Rise of the Silver Surfer",
+      "releaseDate": "15 Jun 2007",
+      "poster": "https://image.tmdb.org/t/p/w780/9wRfzTcMyyzkQxVDqBHv8RwuZOv.jpg",
+      "cast": [
+        {
+          "name": "Ioan Gruffudd",
+          "role": "Reed Richards / Mr. Fantastic"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Tim Story",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "7whodtti908"
+    },
+    {
+      "id": "69",
+      "title": "X-Men Origins: Wolverine",
+      "releaseDate": "1 May 2009",
+      "poster": "https://image.tmdb.org/t/p/w780/yj8LbTju1p7CUJg7US2unSBk33s.jpg",
+      "cast": [
+        {
+          "name": "Hugh Jackman",
+          "role": "Logan / Wolverine"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Gavin Hood",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "8TQ-gD4UCmI"
+    },
+    {
+      "id": "70",
+      "title": "X-Men: First Class",
+      "releaseDate": "3 Jun 2011",
+      "poster": "https://image.tmdb.org/t/p/w780/hNEokmUke0dazoBhttFN0o3L7Xv.jpg",
+      "cast": [
+        {
+          "name": "James McAvoy",
+          "role": "Charles Xavier"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Matthew Vaughn",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "2BAYQD_j6Xc"
+    },
+    {
+      "id": "71",
+      "title": "The Wolverine",
+      "releaseDate": "26 Jul 2013",
+      "poster": "https://image.tmdb.org/t/p/w780/t2wVAcoRlKvEIVSbiYDb8d0QqqS.jpg",
+      "cast": [
+        {
+          "name": "Hugh Jackman",
+          "role": "Logan / Wolverine"
+        }
+      ],
+      "crew": [
+        {
+          "name": "James Mangold",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "DwG56k6VGOE"
+    },
+    {
+      "id": "72",
+      "title": "X-Men: Days of Future Past",
+      "releaseDate": "23 May 2014",
+      "poster": "https://image.tmdb.org/t/p/w780/tYfijzolzgoMOtegh1Y7j2Enorg.jpg",
+      "cast": [
+        {
+          "name": "Hugh Jackman",
+          "role": "Logan / Wolverine"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Bryan Singer",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "gsjtg7m1MMM"
+    },
+    {
+      "id": "73",
+      "title": "Deadpool",
+      "releaseDate": "12 Feb 2016",
+      "poster": "https://image.tmdb.org/t/p/w780/3E53WEZJqP6aM84D8CckXx4pIHw.jpg",
+      "cast": [
+        {
+          "name": "Ryan Reynolds",
+          "role": "Wade Wilson / Deadpool"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Tim Miller",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "9vN6DHB6bJc"
+    },
+    {
+      "id": "74",
+      "title": "X-Men: Apocalypse",
+      "releaseDate": "27 May 2016",
+      "poster": "https://image.tmdb.org/t/p/w780/ikA8UhYdTGpqbatFa93nIf6noSr.jpg",
+      "cast": [
+        {
+          "name": "James McAvoy",
+          "role": "Charles Xavier"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Bryan Singer",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "Jer8XjMrUB4"
+    },
+    {
+      "id": "75",
+      "title": "Logan",
+      "releaseDate": "3 Mar 2017",
+      "poster": "https://image.tmdb.org/t/p/w780/fnbjcRDYn6YviCcePDnGdyAkYsB.jpg",
+      "cast": [
+        {
+          "name": "Hugh Jackman",
+          "role": "Logan / Wolverine"
+        }
+      ],
+      "crew": [
+        {
+          "name": "James Mangold",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "XaE_9pfybL4"
+    },
+    {
+      "id": "76",
+      "title": "Deadpool 2",
+      "releaseDate": "18 May 2018",
+      "poster": "https://image.tmdb.org/t/p/w780/to0spRl1CMDvyUbOnbb4fTk3VAd.jpg",
+      "cast": [
+        {
+          "name": "Ryan Reynolds",
+          "role": "Wade Wilson / Deadpool"
+        }
+      ],
+      "crew": [
+        {
+          "name": "David Leitch",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "20bpjtCbCz0"
+    },
+    {
+      "id": "77",
+      "title": "Dark Phoenix",
+      "releaseDate": "7 Jun 2019",
+      "poster": "https://image.tmdb.org/t/p/w780/cCTJPelKGLhALq3r51A9uMonxKj.jpg",
+      "cast": [
+        {
+          "name": "Sophie Turner",
+          "role": "Jean Grey / Phoenix"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Simon Kinberg",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "azvR__GRQic"
+    },
+    {
+      "id": "78",
+      "title": "Blade",
+      "releaseDate": "21 Aug 1998",
+      "poster": "https://image.tmdb.org/t/p/w780/oWT70TvbsmQaqyphCZpsnQR7R32.jpg",
+      "cast": [
+        {
+          "name": "Wesley Snipes",
+          "role": "Blade"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Stephen Norrington",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "O2Y3FFFIvRI"
+    },
+    {
+      "id": "79",
+      "title": "Blade II",
+      "releaseDate": "22 Mar 2002",
+      "poster": "https://image.tmdb.org/t/p/w780/yDHwo3eWcMiy5LnnEnlGV9iLu9k.jpg",
+      "cast": [
+        {
+          "name": "Wesley Snipes",
+          "role": "Blade"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Guillermo del Toro",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "fcCQ7xk8zzM"
+    },
+    {
+      "id": "80",
+      "title": "Blade: Trinity",
+      "releaseDate": "8 Dec 2004",
+      "poster": "https://image.tmdb.org/t/p/w780/6f7iXvPOnf83MaLB1JmPzUor1rr.jpg",
+      "cast": [
+        {
+          "name": "Wesley Snipes",
+          "role": "Blade"
+        }
+      ],
+      "crew": [
+        {
+          "name": "David S. Goyer",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "qcHEDGs7eAY"
+    },
+    {
+      "id": "81",
+      "title": "Daredevil",
+      "releaseDate": "14 Feb 2003",
+      "poster": "https://image.tmdb.org/t/p/w780/oCDBwSkntYamuw8VJIxMRCtDBmi.jpg",
+      "cast": [
+        {
+          "name": "Ben Affleck",
+          "role": "Matt Murdock / Daredevil"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Mark Steven Johnson",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "t3Xc6FjRfoA"
+    },
+    {
+      "id": "82",
+      "title": "The Punisher",
+      "releaseDate": "17 Apr 2004",
+      "poster": "https://image.tmdb.org/t/p/w780/7rmA1HwYp2GKM85BL0cVwCaosGr.jpg",
+      "cast": [
+        {
+          "name": "Thomas Jane",
+          "role": "Frank Castle / Punisher"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jonathan Hensleigh",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "TqVSFchQEyM"
+    },
+    {
+      "id": "83",
+      "title": "Punisher: War Zone",
+      "releaseDate": "5 Dec 2008",
+      "poster": "https://image.tmdb.org/t/p/w780/oOvKJgYUIpfswGHAdW6159bPbvM.jpg",
+      "cast": [
+        {
+          "name": "Ray Stevenson",
+          "role": "Frank Castle / Punisher"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Lexi Alexander",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "liABMxEvPAc"
+    },
+    {
+      "id": "84",
+      "title": "Man-Thing",
+      "releaseDate": "30 Apr 2005",
+      "poster": "https://image.tmdb.org/t/p/w780/kfPPnOygXSGaBFpsCUyu7xQdkoO.jpg",
+      "cast": [
+        {
+          "name": "Matthew Le Nevez",
+          "role": "Dr. Chris Connor"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Brett Leonard",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "RTUL1GWbrRw"
+    },
+    {
+      "id": "85",
+      "title": "Ghost Rider: Spirit of Vengeance",
+      "releaseDate": "17 Feb 2012",
+      "poster": "https://image.tmdb.org/t/p/w780/xEoBT6lYfQNpSpTm8gJMTrQytiw.jpg",
+      "cast": [
+        {
+          "name": "Nicolas Cage",
+          "role": "Johnny Blaze / Ghost Rider"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Mark Neveldine",
+          "role": "Director"
+        },
+        {
+          "name": "Brian Taylor",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "ibZPd9MX0zg"
+    },
+    {
+      "id": "86",
+      "title": "Ultimate Avengers",
+      "releaseDate": "21 Feb 2006",
+      "poster": "https://image.tmdb.org/t/p/w780/iMCkGHVrYRdqKROPRPmVaJVSlg3.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Curt Geda",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "IQ9QjHVaurM"
+    },
+    {
+      "id": "87",
+      "title": "Planet Hulk",
+      "releaseDate": "2 Feb 2010",
+      "poster": "https://image.tmdb.org/t/p/w780/5wCzY3sAs6zHIzzHIcTKN2g0pu8.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "l1Y88nfJhDM"
+    },
+    {
+      "id": "88",
+      "title": "Big Hero 6",
+      "releaseDate": "7 Nov 2014",
+      "poster": "https://image.tmdb.org/t/p/w780/2mxS4wUimwlLmI1xp6QW6NSU361.jpg",
+      "cast": [
+        {
+          "name": "Scott Adsit",
+          "role": "Baymax (voice)"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Don Hall",
+          "role": "Director"
+        },
+        {
+          "name": "Chris Williams",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "8IdMPpKMdcc"
+    },
+    {
+      "id": "89",
+      "title": "Superman II",
+      "releaseDate": "19 Jun 1981",
+      "poster": "https://image.tmdb.org/t/p/w780/3xk5cno9BHcnwc97XO9k21aI1Zi.jpg",
+      "cast": [
+        {
+          "name": "Christopher Reeve",
+          "role": "Clark Kent / Superman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Richard Lester",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "8FF60gilDng"
+    },
+    {
+      "id": "90",
+      "title": "Superman III",
+      "releaseDate": "17 Jun 1983",
+      "poster": "https://image.tmdb.org/t/p/w780/c4oR6qgZW2s5foGkQi2Dd86KuAS.jpg",
+      "cast": [
+        {
+          "name": "Christopher Reeve",
+          "role": "Clark Kent / Superman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Richard Lester",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "O6LHQrfGEW4"
+    },
+    {
+      "id": "91",
+      "title": "Superman IV: The Quest for Peace",
+      "releaseDate": "24 Jul 1987",
+      "poster": "https://image.tmdb.org/t/p/w780/nJFBeU1oKIaIoLVyQYUeB36DW55.jpg",
+      "cast": [
+        {
+          "name": "Christopher Reeve",
+          "role": "Clark Kent / Superman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Sidney J. Furie",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "J3IFSj4ebwU"
+    },
+    {
+      "id": "92",
+      "title": "Batman",
+      "releaseDate": "23 Jun 1989",
+      "poster": "https://image.tmdb.org/t/p/w780/cij4dd21v2Rk2YtUQbV5kW69WB2.jpg",
+      "cast": [
+        {
+          "name": "Michael Keaton",
+          "role": "Bruce Wayne / Batman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Tim Burton",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "ygK7sAavO0c"
+    },
+    {
+      "id": "93",
+      "title": "Batman Returns",
+      "releaseDate": "19 Jun 1992",
+      "poster": "https://image.tmdb.org/t/p/w780/jKBjeXM7iBBV9UkUcOXx3m7FSHY.jpg",
+      "cast": [
+        {
+          "name": "Michael Keaton",
+          "role": "Bruce Wayne / Batman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Tim Burton",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "TlbtLfWvFbo"
+    },
+    {
+      "id": "94",
+      "title": "Batman Forever",
+      "releaseDate": "16 Jun 1995",
+      "poster": "https://image.tmdb.org/t/p/w780/i0fJS8M5UKoETjjJ0zwUiKaR8tr.jpg",
+      "cast": [
+        {
+          "name": "Val Kilmer",
+          "role": "Bruce Wayne / Batman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Joel Schumacher",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "suOgRZflPtk"
+    },
+    {
+      "id": "95",
+      "title": "Batman & Robin",
+      "releaseDate": "20 Jun 1997",
+      "poster": "https://image.tmdb.org/t/p/w780/i7hEUpDuMN2LOrCEifFyGSHZQSY.jpg",
+      "cast": [
+        {
+          "name": "George Clooney",
+          "role": "Bruce Wayne / Batman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Joel Schumacher",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "Zc7sjDHW2KY"
+    },
+    {
+      "id": "96",
+      "title": "Batman Begins",
+      "releaseDate": "15 Jun 2005",
+      "poster": "https://image.tmdb.org/t/p/w780/sPX89Td70IDDjVr85jdSBb4rWGr.jpg",
+      "cast": [
+        {
+          "name": "Christian Bale",
+          "role": "Bruce Wayne / Batman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Christopher Nolan",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "lirBhHXvDSg"
+    },
+    {
+      "id": "97",
+      "title": "The Dark Knight Rises",
+      "releaseDate": "20 Jul 2012",
+      "poster": "https://image.tmdb.org/t/p/w780/hr0L2aueqlP2BYUblTTjmtn0hw4.jpg",
+      "cast": [
+        {
+          "name": "Christian Bale",
+          "role": "Bruce Wayne / Batman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Christopher Nolan",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "GAjBzu8ggi0"
+    },
+    {
+      "id": "98",
+      "title": "Batman v Superman: Dawn of Justice",
+      "releaseDate": "25 Mar 2016",
+      "poster": "https://image.tmdb.org/t/p/w780/5UsK3grJvtQrtzEgqNlDljJW96w.jpg",
+      "cast": [
+        {
+          "name": "Ben Affleck",
+          "role": "Bruce Wayne / Batman"
+        },
+        {
+          "name": "Henry Cavill",
+          "role": "Clark Kent / Superman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Zack Snyder",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "s9EkdAHqtvU"
+    },
+    {
+      "id": "99",
+      "title": "Suicide Squad",
+      "releaseDate": "5 Aug 2016",
+      "poster": "https://image.tmdb.org/t/p/w780/sk3FZgh3sRrmr8vyhaitNobMcfh.jpg",
+      "cast": [
+        {
+          "name": "Margot Robbie",
+          "role": "Harley Quinn"
+        }
+      ],
+      "crew": [
+        {
+          "name": "David Ayer",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "m0Xb9BhfVjY"
+    },
+    {
+      "id": "100",
+      "title": "Wonder Woman",
+      "releaseDate": "2 Jun 2017",
+      "poster": "https://image.tmdb.org/t/p/w780/v4ncgZjG2Zu8ZW5al1vIZTsSjqX.jpg",
+      "cast": [
+        {
+          "name": "Gal Gadot",
+          "role": "Diana Prince / Wonder Woman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Patty Jenkins",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "VSB4wGIdDwo"
+    },
+    {
+      "id": "101",
+      "title": "Justice League",
+      "releaseDate": "17 Nov 2017",
+      "poster": "https://image.tmdb.org/t/p/w780/eifGNCSDuxJeS1loAXil5bIGgvC.jpg",
+      "cast": [
+        {
+          "name": "Ben Affleck",
+          "role": "Bruce Wayne / Batman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Zack Snyder",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "PXrgvNXfN7M"
+    },
+    {
+      "id": "102",
+      "title": "Aquaman",
+      "releaseDate": "21 Dec 2018",
+      "poster": "https://image.tmdb.org/t/p/w780/ufl63EFcc5XpByEV2Ecdw6WJZAI.jpg",
+      "cast": [
+        {
+          "name": "Jason Momoa",
+          "role": "Arthur Curry / Aquaman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "James Wan",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "2wcj6SrX4zw"
+    },
+    {
+      "id": "103",
+      "title": "Shazam!",
+      "releaseDate": "5 Apr 2019",
+      "poster": "https://image.tmdb.org/t/p/w780/xnopI5Xtky18MPhK40cZAGAOVeV.jpg",
+      "cast": [
+        {
+          "name": "Zachary Levi",
+          "role": "Shazam"
+        }
+      ],
+      "crew": [
+        {
+          "name": "David F. Sandberg",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "uilJZZ_iVwY"
+    },
+    {
+      "id": "104",
+      "title": "Joker",
+      "releaseDate": "4 Oct 2019",
+      "poster": "https://image.tmdb.org/t/p/w780/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
+      "cast": [
+        {
+          "name": "Joaquin Phoenix",
+          "role": "Arthur Fleck / Joker"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Todd Phillips",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "-RFFRxcoKfA"
+    },
+    {
+      "id": "105",
+      "title": "Birds of Prey",
+      "releaseDate": "7 Feb 2020",
+      "poster": "https://image.tmdb.org/t/p/w780/h4VB6m0RwcicVEZvzftYZyKXs6K.jpg",
+      "cast": [
+        {
+          "name": "Margot Robbie",
+          "role": "Harley Quinn"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Cathy Yan",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "q2u2raiIlm0"
+    },
+    {
+      "id": "106",
+      "title": "Wonder Woman 1984",
+      "releaseDate": "25 Dec 2020",
+      "poster": "https://image.tmdb.org/t/p/w780/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
+      "cast": [
+        {
+          "name": "Gal Gadot",
+          "role": "Diana Prince / Wonder Woman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Patty Jenkins",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "EMgbWouN4wE"
+    },
+    {
+      "id": "107",
+      "title": "The Suicide Squad",
+      "releaseDate": "6 Aug 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/q61qEyssk2ku3okWICKArlAdhBn.jpg",
+      "cast": [
+        {
+          "name": "Margot Robbie",
+          "role": "Harley Quinn"
+        }
+      ],
+      "crew": [
+        {
+          "name": "James Gunn",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "eg5ciqQzmK0"
+    },
+    {
+      "id": "108",
+      "title": "The Batman",
+      "releaseDate": "4 Mar 2022",
+      "poster": "https://image.tmdb.org/t/p/w780/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+      "cast": [
+        {
+          "name": "Robert Pattinson",
+          "role": "Bruce Wayne / Batman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Matt Reeves",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "vc7_mH2PWHs"
+    },
+    {
+      "id": "109",
+      "title": "Black Adam",
+      "releaseDate": "21 Oct 2022",
+      "poster": "https://image.tmdb.org/t/p/w780/rCtreCr4xiYEWDQTebybolIh6Xe.jpg",
+      "cast": [
+        {
+          "name": "Dwayne Johnson",
+          "role": "Teth-Adam / Black Adam"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jaume Collet-Serra",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "mkomfZHG5q4"
+    },
+    {
+      "id": "110",
+      "title": "Shazam! Fury of the Gods",
+      "releaseDate": "17 Mar 2023",
+      "poster": "https://image.tmdb.org/t/p/w780/3GrRgt6CiLIUXUtoktcv1g2iwT5.jpg",
+      "cast": [
+        {
+          "name": "Zachary Levi",
+          "role": "Shazam"
+        }
+      ],
+      "crew": [
+        {
+          "name": "David F. Sandberg",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "AIc671o9yCI"
+    },
+    {
+      "id": "111",
+      "title": "The Flash",
+      "releaseDate": "16 Jun 2023",
+      "poster": "https://image.tmdb.org/t/p/w780/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg",
+      "cast": [
+        {
+          "name": "Ezra Miller",
+          "role": "Barry Allen / The Flash"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Andy Muschietti",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "jprhe-cWKGs"
+    },
+    {
+      "id": "112",
+      "title": "Blue Beetle",
+      "releaseDate": "18 Aug 2023",
+      "poster": "https://image.tmdb.org/t/p/w780/mXLOHHc1Zeuwsl4xYKjKh2280oL.jpg",
+      "cast": [
+        {
+          "name": "Xolo Maridueña",
+          "role": "Jaime Reyes / Blue Beetle"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Ángel Manuel Soto",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "4wxyy8Rcz4k"
+    },
+    {
+      "id": "113",
+      "title": "Aquaman and the Lost Kingdom",
+      "releaseDate": "22 Dec 2023",
+      "poster": "https://image.tmdb.org/t/p/w780/7lTnXOy0iNtBAdRP3TZvaKJ77F6.jpg",
+      "cast": [
+        {
+          "name": "Jason Momoa",
+          "role": "Arthur Curry / Aquaman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "James Wan",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "4cSkHPW-MPE"
+    },
+    {
+      "id": "114",
+      "title": "Joker: Folie à Deux",
+      "releaseDate": "4 Oct 2024",
+      "poster": "https://image.tmdb.org/t/p/w780/if8QiqCI7WAGImKcJCfzp6VTyKA.jpg",
+      "cast": [
+        {
+          "name": "Joaquin Phoenix",
+          "role": "Arthur Fleck / Joker"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Todd Phillips",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "fiqqAI0e4Nc"
+    },
+    {
+      "id": "115",
+      "title": "Justice League: War",
+      "releaseDate": "4 Feb 2014",
+      "poster": "https://image.tmdb.org/t/p/w780/pdNprWYdgcB8z4FLD3BhRmhEys1.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jay Oliva",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "RGyrxamYhUA"
+    },
+    {
+      "id": "116",
+      "title": "Superman: Unbound",
+      "releaseDate": "7 May 2013",
+      "poster": "https://image.tmdb.org/t/p/w780/nnZKtmVSnueWd4pjk1BekLJxXRL.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "James Tucker",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "EpnT__PBd6Q"
+    },
+    {
+      "id": "117",
+      "title": "Teen Titans: The Judas Contract",
+      "releaseDate": "14 Apr 2017",
+      "poster": "https://image.tmdb.org/t/p/w780/nuGIlNAJUati4qEAH1nrYKUA3xa.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "GIeoysdR8AQ"
+    },
+    {
+      "id": "118",
+      "title": "Jonah Hex",
+      "releaseDate": "18 Jun 2010",
+      "poster": "https://image.tmdb.org/t/p/w780/xwAdu0lOO2Y5sXjK87glhJg3c6r.jpg",
+      "cast": [
+        {
+          "name": "Josh Brolin",
+          "role": "Jonah Hex"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jimmy Hayward",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "3Ppqbnhp7PI"
+    },
+    {
+      "id": "119",
+      "title": "Green Lantern",
+      "releaseDate": "17 Jun 2011",
+      "poster": "https://image.tmdb.org/t/p/w780/fj21HwUprqjjwTdkKC1XZurRSpV.jpg",
+      "cast": [
+        {
+          "name": "Ryan Reynolds",
+          "role": "Hal Jordan / Green Lantern"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Martin Campbell",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "ojYMekJgqJU"
+    },
+    {
+      "id": "120",
+      "title": "A History of Violence",
+      "releaseDate": "23 Sep 2005",
+      "poster": "https://image.tmdb.org/t/p/w780/3qnO72NHmUgs9JZXAmu4aId9QDl.jpg",
+      "cast": [
+        {
+          "name": "Viggo Mortensen",
+          "role": "Tom Stall"
+        }
+      ],
+      "crew": [
+        {
+          "name": "David Cronenberg",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "jsEcDGKh56U"
+    },
+    {
+      "id": "121",
+      "title": "Superman: Doomsday",
+      "releaseDate": "18 Sep 2007",
+      "poster": "https://image.tmdb.org/t/p/w780/itvuWm7DFWWzWgW0xgiaKzzWszP.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Bruce Timm",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "l3keuiWzY-Q"
+    },
+    {
+      "id": "122",
+      "title": "Justice League: The New Frontier",
+      "releaseDate": "25 Feb 2008",
+      "poster": "https://image.tmdb.org/t/p/w780/bj25ueeYNkz4e5t8oMMaAOWmwOc.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Dave Bullock",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "HGoU6KOA9ZI"
+    },
+    {
+      "id": "123",
+      "title": "Green Lantern: First Flight",
+      "releaseDate": "28 Jul 2009",
+      "poster": "https://image.tmdb.org/t/p/w780/ii48ohKJrDPyrGGOBVJ8XSxr5Xk.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Lauren Montgomery",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "B_v_-A26xK8"
+    },
+    {
+      "id": "124",
+      "title": "Superman/Batman: Public Enemies",
+      "releaseDate": "9 Sep 2009",
+      "poster": "https://image.tmdb.org/t/p/w780/izvMc22ywSLFWUXZEIuJJ8dms75.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "Gw3aRtUxra0"
+    },
+    {
+      "id": "125",
+      "title": "Justice League: Crisis on Two Earths",
+      "releaseDate": "27 Feb 2010",
+      "poster": "https://image.tmdb.org/t/p/w780/tN2lodc5g7Fkkus6I6Ch2tNTgb5.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        },
+        {
+          "name": "Lauren Montgomery",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "zGRCVWk8weQ"
+    },
+    {
+      "id": "126",
+      "title": "Superman/Batman: Apocalypse",
+      "releaseDate": "28 Sep 2010",
+      "poster": "https://image.tmdb.org/t/p/w780/d7gHmsA2o5Z1MhcuspMyOSO48KB.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Lauren Montgomery",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "P5jZaQ5-C_4"
+    },
+    {
+      "id": "127",
+      "title": "All-Star Superman",
+      "releaseDate": "22 Feb 2011",
+      "poster": "https://image.tmdb.org/t/p/w780/30GAgK0SvrRoopHlEcrchXqD0hf.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "K9x2pGc_y9o"
+    },
+    {
+      "id": "128",
+      "title": "Green Lantern: Emerald Knights",
+      "releaseDate": "6 Jun 2011",
+      "poster": "https://image.tmdb.org/t/p/w780/weth8sLv9y8L9GsEyLRBUZewXUt.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Lauren Montgomery",
+          "role": "Director"
+        },
+        {
+          "name": "Jay Oliva",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "nNsGQxY0--c"
+    },
+    {
+      "id": "129",
+      "title": "Batman: Year One",
+      "releaseDate": "18 Oct 2011",
+      "poster": "https://image.tmdb.org/t/p/w780/mLZRhulJcDsxZWTdfx0trtk6y07.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        },
+        {
+          "name": "Lauren Montgomery",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "s86sUsWRx0Q"
+    },
+    {
+      "id": "130",
+      "title": "Justice League: Doom",
+      "releaseDate": "28 Feb 2012",
+      "poster": "https://image.tmdb.org/t/p/w780/seCbcjdZYUl8SRKjeWfyi2ngzFj.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Lauren Montgomery",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "dBh4HdaEE6A"
+    },
+    {
+      "id": "131",
+      "title": "Superman vs. The Elite",
+      "releaseDate": "12 Jun 2012",
+      "poster": "https://image.tmdb.org/t/p/w780/6yKW9NVcqySQKa9gVe7GG3WuE9N.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Michael Chang",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "50sTUNQCvFg"
+    },
+    {
+      "id": "132",
+      "title": "Batman: The Dark Knight Returns, Part 1",
+      "releaseDate": "25 Sep 2012",
+      "poster": "https://image.tmdb.org/t/p/w780/rVr2Tdp2LcL3DheXUrVN345Myhg.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jay Oliva",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "J0H7Du2txOE"
+    },
+    {
+      "id": "133",
+      "title": "Batman: The Dark Knight Returns, Part 2",
+      "releaseDate": "29 Jan 2013",
+      "poster": "https://image.tmdb.org/t/p/w780/d1TqoVkyL4x0dlu9w3F9Ah4LjNv.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jay Oliva",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "dD2VyqyKvwg"
+    },
+    {
+      "id": "134",
+      "title": "Batman: Assault on Arkham",
+      "releaseDate": "12 Aug 2014",
+      "poster": "https://image.tmdb.org/t/p/w780/b9KxvIAZkl2f57kjObj8Z9z9LhL.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jay Oliva",
+          "role": "Director"
+        },
+        {
+          "name": "Ethan Spaulding",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "-6abltUcric"
+    },
+    {
+      "id": "135",
+      "title": "Batman vs. Robin",
+      "releaseDate": "14 Apr 2015",
+      "poster": "https://image.tmdb.org/t/p/w780/aGp9XDXmVM5lCKHWtgBC15S7XLr.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jay Oliva",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "ICOmWEVuM1U"
+    },
+    {
+      "id": "136",
+      "title": "Justice League: Gods and Monsters",
+      "releaseDate": "28 Jul 2015",
+      "poster": "https://image.tmdb.org/t/p/w780/9EoqQuEZKmQIYjexoUbkxMcMCVr.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "yxL1Iw73azg"
+    },
+    {
+      "id": "137",
+      "title": "Batman: Bad Blood",
+      "releaseDate": "18 Jan 2016",
+      "poster": "https://image.tmdb.org/t/p/w780/ktjbGsGm5GKlHDvvwQajXvDW2BN.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jay Oliva",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "G-0bQpHlpdQ"
+    },
+    {
+      "id": "138",
+      "title": "Justice League Dark",
+      "releaseDate": "13 Jan 2017",
+      "poster": "https://image.tmdb.org/t/p/w780/gWcTaDFXDrOAPfVzfBFz0Aya5BE.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jay Oliva",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "dpPy3sIxbmA"
+    },
+    {
+      "id": "139",
+      "title": "Batman and Harley Quinn",
+      "releaseDate": "13 Aug 2017",
+      "poster": "https://image.tmdb.org/t/p/w780/v3RP6pp6pfRdvch6QioeQvNdMJs.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "fPL8uL1h8FA"
+    },
+    {
+      "id": "140",
+      "title": "Suicide Squad: Hell to Pay",
+      "releaseDate": "20 Mar 2018",
+      "poster": "https://image.tmdb.org/t/p/w780/va1IgsZeWBbKLsZcFwz3CM1MkMu.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "l0FyWzZtI94"
+    },
+    {
+      "id": "141",
+      "title": "Batman Ninja",
+      "releaseDate": "8 May 2018",
+      "poster": "https://image.tmdb.org/t/p/w780/5xSB0Npkc9Fd9kahKBsq9P4Cdzp.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Junpei Mizusaki",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "08dHXfIprYE"
+    },
+    {
+      "id": "142",
+      "title": "Batman: Gotham by Gaslight",
+      "releaseDate": "23 Jan 2018",
+      "poster": "https://image.tmdb.org/t/p/w780/7souLi5zqQCnpZVghaXv0Wowi0y.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "TJ6EX6zX4FU"
+    },
+    {
+      "id": "143",
+      "title": "Justice League vs. the Fatal Five",
+      "releaseDate": "30 Jul 2019",
+      "poster": "https://image.tmdb.org/t/p/w780/xXC0HrmyQDXlYTiHP7Tq6nzurDI.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "P_AlCgcH9x0"
+    },
+    {
+      "id": "144",
+      "title": "Wonder Woman: Bloodlines",
+      "releaseDate": "2 Aug 2019",
+      "poster": "https://image.tmdb.org/t/p/w780/w1SBqj0fn1j72ST5i1jauWo3swT.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Justin Copeland",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "6ljM52nZTAs"
+    },
+    {
+      "id": "145",
+      "title": "Batman: Hush",
+      "releaseDate": "21 Jul 2019",
+      "poster": "https://image.tmdb.org/t/p/w780/eiVQORVyVuNNZHPAELuWtlXoQsD.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Justin Copeland",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "cQFFnUg0u70"
+    },
+    {
+      "id": "146",
+      "title": "Superman: Red Son",
+      "releaseDate": "23 Feb 2020",
+      "poster": "https://image.tmdb.org/t/p/w780/frSfz7olCSQsp2SmTyu2ciGGQiX.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "n0s0FJfyqGk"
+    },
+    {
+      "id": "147",
+      "title": "Justice League Dark: Apokolips War",
+      "releaseDate": "5 May 2020",
+      "poster": "https://image.tmdb.org/t/p/w780/c01Y4suApJ1Wic2xLmaq1QYcfoZ.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Matt Peters",
+          "role": "Director"
+        },
+        {
+          "name": "Christina Sotta",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "tnCkn5xD2jg"
+    },
+    {
+      "id": "148",
+      "title": "Batman: Soul of the Dragon",
+      "releaseDate": "12 Jan 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/uDhnTtSxU5a8DtZdbbin3aZmkmU.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "eHCAgSuLog4"
+    },
+    {
+      "id": "149",
+      "title": "Batman: The Long Halloween, Part One",
+      "releaseDate": "22 Jun 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/sR7gppb0YGjwLvE6Vnj6wYv5MnW.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Chris Palmer",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "8qodAY3S7Dg"
+    },
+    {
+      "id": "150",
+      "title": "Batman: The Long Halloween, Part Two",
+      "releaseDate": "27 Jul 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/5X1n5q08mZ7NpNpxehMFODxfNYq.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Chris Palmer",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "u0jEvGBwK44"
+    },
+    {
+      "id": "151",
+      "title": "Injustice",
+      "releaseDate": "19 Oct 2021",
+      "poster": "https://image.tmdb.org/t/p/w780/rzrSeqqpm1BwJ3tcTznztBtLLSD.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Matt Peters",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "EofvPQAyYp8"
+    },
+    {
+      "id": "152",
+      "title": "Green Lantern: Beware My Power",
+      "releaseDate": "19 Jul 2022",
+      "poster": "https://image.tmdb.org/t/p/w780/nS41LN1m2HYvVotvgOTcbPW2cjL.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jeff Wamester",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "bjD3r8wPQQA"
+    },
+    {
+      "id": "153",
+      "title": "Legion of Super-Heroes",
+      "releaseDate": "20 Feb 2023",
+      "poster": "https://image.tmdb.org/t/p/w780/8M6bA5t2q5u1nWDTEIXuGDwvboW.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jeff Wamester",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "DKNjOwuBDbo"
+    },
+    {
+      "id": "154",
+      "title": "Justice League: Warworld",
+      "releaseDate": "11 Apr 2023",
+      "poster": "https://image.tmdb.org/t/p/w780/pHdSS5G3wDwJp6jWgMpbSjNiTbr.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jeff Wamester",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "IPDLodUE9gg"
+    },
+    {
+      "id": "155",
+      "title": "Justice League: Crisis on Infinite Earths Part One",
+      "releaseDate": "9 Jan 2024",
+      "poster": "https://image.tmdb.org/t/p/w780/mcRVsjMbhFstRK9z2oGRHiIvulr.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jim Krieg",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "Gx2srhhtB_c"
+    },
+    {
+      "id": "156",
+      "title": "Justice League: Crisis on Infinite Earths Part Two",
+      "releaseDate": "30 Apr 2024",
+      "poster": "https://image.tmdb.org/t/p/w780/g8ak4QAGLZpqMs3CpnFHWWfIzJQ.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jim Krieg",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "w6jtfmXziNQ"
+    },
+    {
+      "id": "157",
+      "title": "Justice League: Crisis on Infinite Earths Part Three",
+      "releaseDate": "9 Jul 2024",
+      "poster": "https://image.tmdb.org/t/p/w780/a3q8NkM8uTh9E23VsbUOdDSbBeN.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jim Krieg",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "tQ3Aahb_PDE"
+    },
+    {
+      "id": "158",
+      "title": "Ultimate Avengers 2",
+      "releaseDate": "8 Aug 2006",
+      "poster": "https://image.tmdb.org/t/p/w780/sMFyYZR9krqcQC99G6jnb10Zv4P.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Will Meugniot",
+          "role": "Director"
+        },
+        {
+          "name": "Dick Sebast",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "gl4jsZcYt9k"
+    },
+    {
+      "id": "159",
+      "title": "The Invincible Iron Man",
+      "releaseDate": "23 Jan 2007",
+      "poster": "https://image.tmdb.org/t/p/w780/eebNTSRa5Hh5skPKGdGJIJpo9Ls.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Frank Paur",
+          "role": "Director"
+        },
+        {
+          "name": "Patrick Archibald",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "-8cMfBIQF88"
+    },
+    {
+      "id": "160",
+      "title": "Doctor Strange: The Sorcerer Supreme",
+      "releaseDate": "6 Feb 2007",
+      "poster": "https://image.tmdb.org/t/p/w780/7ygcpWXsWmEc83j7zE8P0lvC0Q.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Frank Paur",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "L4kCgHvsACo"
+    },
+    {
+      "id": "161",
+      "title": "Next Avengers: Heroes of Tomorrow",
+      "releaseDate": "25 Nov 2008",
+      "poster": "https://image.tmdb.org/t/p/w780/1y4J9HZJoTIMdt77wCq80uXaQJ.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Jay Oliva",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "swn4H4sqm1A"
+    },
+    {
+      "id": "162",
+      "title": "Hulk Vs",
+      "releaseDate": "28 Jan 2009",
+      "poster": "https://image.tmdb.org/t/p/w780/cjUNXJIXBHmKjpI0oH5MmEKgOTt.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Frank Paur",
+          "role": "Director"
+        },
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "MlnmZDvkZ8k"
+    },
+    {
+      "id": "163",
+      "title": "Thor: Tales of Asgard",
+      "releaseDate": "6 Mar 2011",
+      "poster": "https://image.tmdb.org/t/p/w780/nM2rBqEMrAFiNFHXKWOhUgdKK45.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Sam Liu",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "bT6XvIPAN04"
+    },
+    {
+      "id": "164",
+      "title": "Iron Man & Hulk: Heroes United",
+      "releaseDate": "5 Mar 2013",
+      "poster": "https://image.tmdb.org/t/p/w780/xCBBQMPxXsqIlZUAbpeSo1SVj6R.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Leo Riley",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "cr-cyTGtzy8"
+    },
+    {
+      "id": "165",
+      "title": "Iron Man & Captain America: Heroes United",
+      "releaseDate": "4 Nov 2014",
+      "poster": "https://image.tmdb.org/t/p/w780/CX7eRlaxFXiW3UGQBdQUoSVZRi.jpg",
+      "cast": [],
+      "crew": [
+        {
+          "name": "Leo Riley",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "thTmIcLY3O0"
+    },
+    {
+      "id": "166",
+      "title": "Supergirl",
+      "releaseDate": "21 Nov 1984",
+      "poster": "https://image.tmdb.org/t/p/w780/o49a2RDChZkry84LomEORCPDWfk.jpg",
+      "cast": [
+        {
+          "name": "Helen Slater",
+          "role": "Kara Zor-El / Supergirl"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jeannot Szwarc",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "NMUeFT7iqSQ"
+    },
+    {
+      "id": "167",
+      "title": "Swamp Thing",
+      "releaseDate": "19 Feb 1982",
+      "poster": "https://image.tmdb.org/t/p/w780/7BGaE9A7UeyxH29aeFbQfzEmIi0.jpg",
+      "cast": [
+        {
+          "name": "Ray Wise",
+          "role": "Dr. Alec Holland / Swamp Thing"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Wes Craven",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "76debmQRiFw"
+    },
+    {
+      "id": "168",
+      "title": "The Return of Swamp Thing",
+      "releaseDate": "12 May 1989",
+      "poster": "https://image.tmdb.org/t/p/w780/5sm1Yi1hgj805b9o2a1uC6BXhqw.jpg",
+      "cast": [
+        {
+          "name": "Dick Durock",
+          "role": "Swamp Thing"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Jim Wynorski",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "xnVrJXv4M1U"
+    },
+    {
+      "id": "169",
+      "title": "Steel",
+      "releaseDate": "15 Aug 1997",
+      "poster": "https://image.tmdb.org/t/p/w780/ufA7d5LT2rGj58KaZErPhcMkJ4U.jpg",
+      "cast": [
+        {
+          "name": "Shaquille O’Neal",
+          "role": "John Henry Irons / Steel"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Kenneth Johnson",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "-bAWWmLfkWo"
+    },
+    {
+      "id": "170",
+      "title": "Catwoman",
+      "releaseDate": "23 Jul 2004",
+      "poster": "https://image.tmdb.org/t/p/w780/pvnPgukFyEKgCzyOxyLiwyZ8T1C.jpg",
+      "cast": [
+        {
+          "name": "Halle Berry",
+          "role": "Patience Phillips / Catwoman"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Pitof",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "Fp7MeqkCUfc"
+    },
+    {
+      "id": "171",
+      "title": "Elektra",
+      "releaseDate": "14 Jan 2005",
+      "poster": "https://image.tmdb.org/t/p/w780/gC6s6NKHneSrOKyQZnUMb443RKU.jpg",
+      "cast": [
+        {
+          "name": "Jennifer Garner",
+          "role": "Elektra Natchios"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Rob Bowman",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "etfIjKxKzqw"
+    },
+    {
+      "id": "172",
+      "title": "Howard the Duck",
+      "releaseDate": "1 Aug 1986",
+      "poster": "https://image.tmdb.org/t/p/w780/eU0dWo8PJgsSAZFbcyHiUpuLSyW.jpg",
+      "cast": [
+        {
+          "name": "Lea Thompson",
+          "role": "Beverly Switzler"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Willard Huyck",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "yeU4UlDWfKI"
+    },
+    {
+      "id": "173",
+      "title": "Captain America",
+      "releaseDate": "14 Dec 1990",
+      "poster": "https://image.tmdb.org/t/p/w780/vdHrLFfHcJX9nlvUfG3LK2a2hq4.jpg",
+      "cast": [
+        {
+          "name": "Matt Salinger",
+          "role": "Steve Rogers / Captain America"
+        }
+      ],
+      "crew": [
+        {
+          "name": "Albert Pyun",
+          "role": "Director"
+        }
+      ],
+      "trailerYoutubeKey": "cs8rFsmhNTc"
     }
   ],
   "videos": [

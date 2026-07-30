@@ -1,0 +1,20 @@
+<%# Expects locals: email (string|null), avatarUrl (string|null, a
+    user-uploaded custom picture), username (string).
+    Priority: Gravatar (if email has one registered), then a custom
+    uploaded avatarUrl, then a first-letter fallback. The chain is handled
+    client-side by public/Javascript/script.js listening for error events
+    (CSP-safe, no inline onerror handlers) since Gravatar's d=404 mode
+    means we only know whether an image exists once the browser actually
+    requests it. %>
+<span class="avatar-wrapper" data-fallback-initial="<%= avatarInitial(username) %>" data-fallback-color="<%= avatarColor(username) %>">
+    <% if (typeof email !== 'undefined' && email) { %>
+        <img class="avatar avatar-img js-avatar-chain"
+             src="<%= gravatarUrl(email) %>"
+             data-next="<%= (typeof avatarUrl !== 'undefined' && avatarUrl) ? avatarUrl : '' %>"
+             alt="<%= username %>'s profile picture">
+    <% } else if (typeof avatarUrl !== 'undefined' && avatarUrl) { %>
+        <img class="avatar avatar-img js-avatar-chain" src="<%= avatarUrl %>" data-next="" alt="<%= username %>'s profile picture">
+    <% } else { %>
+        <span class="avatar avatar-initial" style="background-color: <%= avatarColor(username) %>"><%= avatarInitial(username) %></span>
+    <% } %>
+</span>

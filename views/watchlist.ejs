@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <header>
-    <h1>YOUR <span style="color: red;">WATCHLIST</span></h1>
+    <h1>YOUR <span class="accent-text">WATCHLIST</span></h1>
     <nav>
         <a href="/">HOME</a>
         <a href="/watchlist">WATCHLIST</a>
@@ -18,6 +19,7 @@
         <% } else { %>
             <a href="/login">LOGIN</a>
         <% } %>
+        <%- include('partials/theme-toggle') %>
     </nav>
     <div class="movie-search">
         <div id="search-bar-container">
@@ -26,7 +28,7 @@
     </div>        
 </header>
 
-<main>
+<main id="main">
     <div class="watchlist-container">
         <% if (watchlist && watchlist.length > 0) { %>
             <div class="watchlist-grid">
@@ -45,10 +47,9 @@
 </main>
 
 <footer>
-    <p>&copy; <span id="current-year"></span> COMICS <span style="color: red;">TV</span></p>
+    <p>&copy; <span id="current-year"></span> COMICS <span class="accent-text">TV</span></p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/public/Javascript/script.js"></script>
 
 </body>

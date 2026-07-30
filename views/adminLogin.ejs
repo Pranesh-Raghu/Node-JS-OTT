@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
 <head>
     <meta charset="UTF-8">
     <title>Admin Login</title>
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
-<body>
-    <style>
-        body{
-            place-content: center;
-        }
-    </style>
-    <h2>Admin Login</h2>
-    <% if (error) { %>
-        <p style="color: red;"><%= error %></p>
-    <% } %>
-    
-    <form action="/admin/login" method="POST">
-        <label>Admin Username:</label>
-        <input type="text" name="username" required><br>
-        
-        <label>Password:</label>
-        <input type="password" name="password" required><br>
-        
-        <button type="submit">Login</button>
-    </form>
+<body class="auth-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+        <a class="auth-brand" href="/">COMICS <span class="accent-text">TV</span></a>
+        <div class="form-card auth-card">
+            <h2>Admin login</h2>
+            <p class="form-card-subtitle">Restricted access for platform staff.</p>
+
+            <% if (error) { %>
+                <p class="error-message"><%= error %></p>
+            <% } %>
+
+            <form action="/admin/login" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <label for="username">Admin username</label>
+                <input type="text" id="username" name="username" autocomplete="username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
+
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

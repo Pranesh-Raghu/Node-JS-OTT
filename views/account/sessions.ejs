@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My sessions</title>
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+    <a href="/"><h1>COMICS <span class="accent-text">TV</span></h1></a>
+    <nav>
+        <a href="/">HOME</a>
+        <a href="/watchlist">WATCHLIST</a>
+        <a href="/account/sessions">SESSIONS</a>
+        <a href="/account/webhooks">WEBHOOKS</a>
+        <% if (user) { %>
+            <a href="/logout">LOGOUT</a>
+        <% } else { %>
+            <a href="/login">LOGIN</a>
+        <% } %>
+        <%- include('../partials/theme-toggle') %>
+    </nav>
+</header>
+
+<main id="main">
+    <div class="form-card">
+        <h2>Your <span class="accent-text">sessions</span></h2>
+        <p class="text-muted">Devices and browsers currently signed in to your account.</p>
+
+        <% if (error) { %>
+            <p class="error-message"><%= error %></p>
+        <% } %>
+        <% if (message) { %>
+            <p class="success-message"><%= message %></p>
+        <% } %>
+
+        <% if (sessions.length === 0) { %>
+            <p>No active sessions found.</p>
+        <% } else { %>
+            <ul class="device-list">
+                <% sessions.forEach(function(device) { %>
+                    <li class="device-item">
+                        <div class="device-item-info">
+                            <strong>
+                                <%= device.label %>
+                                <% if (device.isCurrent) { %>
+                                    <span class="badge-current">This device</span>
+                                <% } %>
+                            </strong>
+                            <span class="device-location">Location: <%= device.locationLabel %></span>
+                            <span class="text-muted">First seen: <%= new Date(device.firstSeenAt).toLocaleString() %></span>
+                            <span class="text-muted">Last seen: <%= new Date(device.lastSeenAt).toLocaleString() %></span>
+                        </div>
+                        <form class="inline-form" action="/account/sessions/<%= encodeURIComponent(device.sessionId) %>/revoke" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button type="submit"><%= device.isCurrent ? 'Sign out' : 'Sign out this device' %></button>
+                        </form>
+                    </li>
+                <% }); %>
+            </ul>
+
+            <form action="/account/sessions/revoke-all" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit">Sign out everywhere</button>
+            </form>
+        <% } %>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; <span id="current-year"></span> COMICS <span class="accent-text">TV</span></p>
+</footer>
+
+<script src="/public/Javascript/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhooks</title>
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+    <a href="/"><h1>COMICS <span class="accent-text">TV</span></h1></a>
+    <nav>
+        <a href="/">HOME</a>
+        <a href="/watchlist">WATCHLIST</a>
+        <a href="/account/sessions">SESSIONS</a>
+        <a href="/account/webhooks">WEBHOOKS</a>
+        <% if (user) { %>
+            <a href="/logout">LOGOUT</a>
+        <% } else { %>
+            <a href="/login">LOGIN</a>
+        <% } %>
+        <%- include('../partials/theme-toggle') %>
+    </nav>
+</header>
+
+<main id="main">
+    <div class="form-card">
+        <h2>Webhook <span class="accent-text">endpoints</span></h2>
+        <p class="text-muted">Get an HTTP POST notification when a subscribed event happens. Deliveries are signed with an HMAC secret shown once, at creation time.</p>
+
+        <% if (error) { %>
+            <p class="error-message"><%= error %></p>
+        <% } %>
+        <% if (message) { %>
+            <p class="success-message"><%= message %></p>
+        <% } %>
+        <% if (newSecret) { %>
+            <p class="success-message">Endpoint created. Copy this secret now &mdash; it will not be shown again.</p>
+            <div class="secret-reveal"><%= newSecret %></div>
+        <% } %>
+
+        <form action="/account/webhooks" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <label for="url">Endpoint URL</label>
+            <input type="text" id="url" name="url" placeholder="https://example.com/webhooks/comics-tv" required><br>
+
+            <span>Event types</span>
+            <div class="event-type-checkboxes">
+                <% availableEvents.forEach(function(eventType) { %>
+                    <label>
+                        <input type="checkbox" name="event_types" value="<%= eventType %>">
+                        <code><%= eventType %></code>
+                    </label>
+                <% }); %>
+            </div>
+
+            <button type="submit">Add endpoint</button>
+        </form>
+    </div>
+
+    <div class="form-card">
+        <h2>Your <span class="accent-text">endpoints</span></h2>
+        <% if (endpoints.length === 0) { %>
+            <p>No webhook endpoints configured yet.</p>
+        <% } else { %>
+            <ul class="webhook-list">
+                <% endpoints.forEach(function(endpoint) { %>
+                    <li class="webhook-item" id="endpoint-<%= endpoint.id %>">
+                        <div class="webhook-item-info">
+                            <strong>
+                                <%= endpoint.url %>
+                                <% if (endpoint.status === 'disabled') { %>
+                                    <span class="badge-status-disabled">Disabled</span>
+                                <% } %>
+                            </strong>
+                            <span class="text-muted">Events: <%= endpoint.event_types.join(', ') %></span>
+                            <span class="text-muted">Created: <%= new Date(endpoint.created_at).toLocaleString() %></span>
+                            <span class="text-muted">Consecutive failures: <%= endpoint.consecutive_failures %></span>
+
+                            <% if (endpoint.deliveries.length > 0) { %>
+                                <ul class="delivery-list">
+                                    <% endpoint.deliveries.forEach(function(delivery) { %>
+                                        <li>
+                                            <%= delivery.event_type %> &mdash; <%= delivery.status %>
+                                            (attempt <%= delivery.attempts %><% if (delivery.last_error) { %>, last error: <%= delivery.last_error %><% } %>)
+                                        </li>
+                                    <% }); %>
+                                </ul>
+                            <% } %>
+                        </div>
+
+                        <div>
+                            <form class="inline-form" action="/account/webhooks/<%= endpoint.id %>/toggle" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit"><%= endpoint.status === 'enabled' ? 'Disable' : 'Enable' %></button>
+                            </form>
+                            <form class="inline-form" action="/account/webhooks/<%= endpoint.id %>/delete" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; <span id="current-year"></span> COMICS <span class="accent-text">TV</span></p>
+</footer>
+
+<script src="/public/Javascript/script.js"></script>
+</body>
+</html>

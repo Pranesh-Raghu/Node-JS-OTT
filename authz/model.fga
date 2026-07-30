@@ -1,0 +1,55 @@
+model
+  schema 1.1
+
+type user
+
+type service
+
+type role
+  relations
+    define assignee: [user, service]
+
+type platform
+  relations
+    define super_admin: [user, role#assignee]
+    define content_admin: [user, role#assignee] or super_admin
+
+    define can_manage_roles: super_admin
+    define can_create_title: content_admin
+    define can_publish_title: content_admin
+    define can_delete_title: content_admin
+
+type account
+  relations
+    define owner: [user]
+    define member: [user] or owner
+
+type profile
+  relations
+    define parent_account: [account]
+    define holder: [user]
+
+    define can_read: holder or owner from parent_account
+    define can_edit_watchlist: holder
+
+type plan
+  relations
+    define subscriber: [account#member]
+    define superseded_by: [plan]
+    define member: subscriber or member from superseded_by
+
+type title
+  relations
+    define parent_platform: [platform]
+    define creator: [user]
+    define required_plan: [plan]
+
+    define published: [user:*]
+    define editor: [user] or creator or content_admin from parent_platform
+
+    define entitled: member from required_plan
+
+    define can_discover: published or editor
+    define can_play: (published and entitled) or editor
+    define can_edit_metadata: editor
+    define can_publish: can_publish_title from parent_platform

@@ -1,120 +1,61 @@
 <!-- admin.ejs -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-     h1, h2 {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            font-weight: 700;
-            color: white
-        }
-        header{
-            color: red;
-            background-color: black;
-        }
-        hr {
-    border: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    margin: 20px 0;
-}
-        form {
-            display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-            background: #ffffff;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            font-weight: 500;
-            display: block;
-            margin-bottom: 8px;
-            color: #22223b;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        input[type="url"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="date"]:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #4A4E69;
-            box-shadow: 0 0 5px rgba(74, 78, 105, 0.5);
-        }
-
-
-        /* Card Styling for Section Separation */
-        .form-card {
-            background: #eaecef;
-            padding: 10px;
-            margin-top: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            form {
-                padding: 15px;
-            }
-
-            button {
-                width: 100%;
-            }
-        }
-</style>
     <title>Admin Panel</title>
 </head>
-<body>
+<body class="admin-page">
+    <a class="skip-link" href="#main">Skip to content</a>
     <header>
-    <h1 style="color: red;">ADMIN PANEL</h1>
-</header>
-<br>
-    <h2>MOVIE</h2>
-    <form action="/admin/add-movie" method="POST">
-        <label>Title:</label><br>
-        <input type="text" name="title" required><br>
-        <label>Release Date:</label><br>
-        <input type="date" name="releaseDate" required><br>
-        <label>Poster URL:</label><br>
-        <input type="text" name="poster" required><br>
-        <label>Cast (JSON):</label><br>
-        <textarea name="cast" required></textarea><br>
-        <label>Crew (JSON):</label><br>
-        <textarea name="crew" required></textarea><br>
-        <button type="submit">Add Movie</button>
-    </form>
-<hr>
-    <h2>VIDEO</h2>
-    <form action="/admin/upload-video" method="POST">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required><br>
-        <label for="videoLink">Video URL:</label>
-        <input type="text" id="videoLink" name="videoLink" required><br>
-        <button type="submit">Upload Video</button>
-    </form>
-<br>    
+        <div class="header-top">
+            <h1 class="accent-text">ADMIN PANEL</h1>
+            <nav>
+                <%- include('partials/theme-toggle') %>
+            </nav>
+        </div>
+    </header>
+    <br>
+    <main id="main">
+        <div class="form-card">
+            <h2>MOVIE</h2>
+            <form action="/admin/add-movie" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required><br>
+                <label for="releaseDate">Release Date:</label>
+                <input type="date" id="releaseDate" name="releaseDate" required><br>
+                <label for="poster">Poster URL:</label>
+                <input type="text" id="poster" name="poster" required><br>
+                <label for="cast">Cast (JSON):</label>
+                <textarea id="cast" name="cast" required></textarea><br>
+                <label for="crew">Crew (JSON):</label>
+                <textarea id="crew" name="crew" required></textarea><br>
+                <button type="submit">Add Movie</button>
+            </form>
+        </div>
+        <hr>
+        <div class="form-card">
+            <h2>VIDEO</h2>
+            <form action="/admin/upload-video" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <label for="titleId">Movie:</label>
+                <select id="titleId" name="titleId" required>
+                    <option value="" disabled selected>Select a movie&hellip;</option>
+                    <% titles.forEach(t => { %>
+                        <option value="<%= t.id %>"><%= t.title %></option>
+                    <% }); %>
+                </select><br>
+                <label for="videoTitle">Video label:</label>
+                <input type="text" id="videoTitle" name="title" required><br>
+                <label for="videoLink">Video URL:</label>
+                <input type="text" id="videoLink" name="videoLink" required><br>
+                <button type="submit">Upload Video</button>
+            </form>
+        </div>
+        <br>
+    </main>
 </body>
 </html>

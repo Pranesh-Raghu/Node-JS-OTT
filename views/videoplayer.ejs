@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <header>
-    <h1 style="color: red;"><%= video.title %></h1>
+    <h1 class="accent-text"><%= video.title %></h1>
     <nav>
         <a href="/">HOME</a>
         <a href="/watchlist">WATCHLIST</a>
@@ -18,20 +19,32 @@
         <% } else { %>
             <a href="/login">LOGIN</a>
         <% } %>
+        <%- include('partials/theme-toggle') %>
     </nav>
 </header>
 
-<main class="video-player-container">
-    <div id="loading-message">Loading video...</div>
-    
-    <video id="video" controls >
-        <source src="<%= video.src %>" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+<main class="video-player-container" id="main">
+    <% if (video.type === 'youtube') { %>
+        <p class="trailer-note">Official trailer</p>
+        <div class="video-embed">
+            <iframe
+                src="https://www.youtube.com/embed/<%= video.youtubeKey %>"
+                title="<%= video.title %> trailer"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+    <% } else { %>
+        <video id="video" controls preload="metadata">
+            <source src="<%= video.src %>" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    <% } %>
 </main>
 
 <footer>
-    <p>&copy; <span id="current-year"></span> COMICS <span style="color: red;">TV</span></p>
+    <p>&copy; <span id="current-year"></span> COMICS <span class="accent-text">TV</span></p>
 </footer>
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<%= typeof theme !== 'undefined' ? theme : 'dark' %>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +8,25 @@
     
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <header>
-    <a href="/"><h1>COMICS <span style="color: red;">TV</span></h1></a>
-    <nav>
-        <a href="/watchlist">WATCHLIST</a>
-        <% if (user) { %>
-            <a href="/logout">LOGOUT</a>
-        <% } else { %>
-            <a href="/login">LOGIN</a>
-        <% } %>
-    </nav>
-    
+    <div class="header-top">
+        <a class="brand" href="/"><h1>COMICS <span class="accent-text">TV</span></h1></a>
+        <nav>
+            <a href="/watchlist">WATCHLIST</a>
+            <% if (user) { %>
+                <a href="/account/sessions">SESSIONS<% if (typeof deviceCount !== 'undefined' && deviceCount > 0) { %> <span class="nav-badge"><%= deviceCount %></span><% } %></a>
+                <a href="/account/webhooks">WEBHOOKS</a>
+                <a href="/logout">LOGOUT</a>
+                <%- include('partials/avatar', { email: typeof email !== 'undefined' ? email : null, avatarUrl: typeof avatarUrl !== 'undefined' ? avatarUrl : null, username: user }) %>
+            <% } else { %>
+                <a href="/login">LOGIN</a>
+            <% } %>
+            <%- include('partials/theme-toggle') %>
+        </nav>
+    </div>
+
     <!-- Search Bar -->
     <div class="movie-search">
         <div id="search-bar-container">
@@ -28,14 +35,14 @@
     </div>
 </header>
 
-<main>
+<main id="main">
     <div class="content">
-        <video autoplay muted loop id="myVideo" class="home">
+        <video autoplay muted loop playsinline id="myVideo" class="home">
             <source src="https://res.cloudinary.com/dhrqc7m0s/video/upload/v1736396468/Venom_pdrw5c.mp4" type="video/mp4">
-          </video> 
+          </video>
                      <h1>Venom
-                <span style="color: red;">The Last Dance </span>(2024)</h1></a><br>
-    
+                <span class="accent-text">The Last Dance </span>(2024)</h1><br>
+
             <h3>After the events of Venom: Let There Be Carnage (2021), Eddie Brock and the symbiote Venom go on the run when they are hunted by both of their worlds.</h3>
          
           </div>
@@ -44,7 +51,7 @@
             <% movies.forEach(movie => { %>
                 <div class="movie-card">
                     <a class="movie-link" href="/movie/<%= movie.id %>">
-                        <img src="<%= movie.poster.startsWith('https://') ? movie.poster : '/' + movie.poster %>" alt="<%= movie.title %>">
+                        <img src="<%= movie.poster.startsWith('https://') ? movie.poster : '/' + movie.poster %>" alt="">
                         <span class="movie-title"><%= movie.title %></span>
                     </a>
 
@@ -52,38 +59,32 @@
                     <% if (user) { %>
                         <button class="add-to-watchlist-btn" data-id="<%= movie.id %>">Add to Watchlist</button>
                     <% } else { %>
-                        <button class="add-to-watchlist-btn" onclick="redirectToLogin()">Add to Watchlist</button>
+                        <a class="add-to-watchlist-btn" href="/login?redirectTo=<%= encodeURIComponent('/movie/' + movie.id) %>">Add to Watchlist</a>
                     <% } %>
 
                 </div>
             <% }); %>
-        </div>      
+        </div>
+
+        <% if (pagination && pagination.totalPages > 1) { %>
+            <nav class="pagination" aria-label="Movie catalog pages">
+                <% if (pagination.hasPrev) { %>
+                    <a class="pagination-link" href="/?page=<%= pagination.page - 1 %>">&laquo; Prev</a>
+                <% } %>
+                <span class="pagination-status">Page <%= pagination.page %> of <%= pagination.totalPages %></span>
+                <% if (pagination.hasNext) { %>
+                    <a class="pagination-link" href="/?page=<%= pagination.page + 1 %>">Next &raquo;</a>
+                <% } %>
+            </nav>
+        <% } %>
     </section>
 </main>
 
 <footer>
-    <p>&copy; <span id="current-year"></span> COMICS <span style="color: red;">TV</span></p>
+    <p>&copy; <span id="current-year"></span> COMICS <span class="accent-text">TV</span></p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/public/Javascript/script.js"></script>
-
-<script>
-    function redirectToLogin() {
-        Swal.fire({
-            title: "Login Required",
-            text: "You need to log in to add movies to your watchlist.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Login",
-            cancelButtonText: "Cancel"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "/login";
-            }
-        });
-    }
-</script>
 
 </body>
 </html>

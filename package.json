@@ -2,34 +2,40 @@
   "name": "comics_tv",
   "version": "1.0.0",
   "description": "A Node.js-powered backend for an OTT (Over-The-Top) platform named COMICS TV.",
-  "main": "server.js",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20 <27"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@openfga/sdk": "^0.9.6",
     "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.3",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
+    "csrf-sync": "^4.2.1",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "express-mysql-session": "^3.0.3",
+    "express-rate-limit": "^7.5.0",
     "express-session": "^1.18.1",
-    "firebase-admin": "^11.0.0",
-    "fs": "^0.0.1-security",
-    "jsonwebtoken": "^9.0.2",
-    "mime": "^2.6.0",
-    "mongodb": "^6.12.0",
-    "mongoose": "^8.9.1",
-    "multer": "^1.4.5-lts.1",
+    "helmet": "^8.0.0",
+    "jose": "^6.2.5",
     "mysql2": "^3.12.0",
-    "socket.io": "^4.8.1",
-    "socket.io-client": "^4.8.1",
-    "sweetalert2": "^11.15.2"
+    "pino": "^9.5.0",
+    "pino-http": "^10.3.0",
+    "ulid": "^2.4.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@openfga/syntax-transformer": "^0.2.2",
+    "knex": "^3.3.0",
+    "pino-pretty": "^13.0.0"
   }
 }
