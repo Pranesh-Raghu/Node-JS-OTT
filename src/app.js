@@ -28,7 +28,18 @@ function createApp() {
 
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, '..', 'views'));
-    app.set('trust proxy', config.NODE_ENV === 'production' ? 1 : false);
+    // 'loopback, linklocal, uniquelocal' (not a bare hop count, and never
+    // `true`) - Render's actual proxy chain has more than one internal hop,
+    // so `trust proxy: 1` was resolving req.ip to Render's own private
+    // address (10.x.x.x) instead of the real visitor, which is why every
+    // session_devices row showed "Local network" regardless of where the
+    // visitor actually was. This preset trusts any hop whose address falls
+    // in a private/loopback/link-local range as an internal proxy - however
+    // many of those there are - and takes the first non-private address in
+    // X-Forwarded-For as the client. A spoofed X-Forwarded-For still can't
+    // fake this, since an external client's packet can never appear to
+    // originate from a private range at Render's edge.
+    app.set('trust proxy', config.NODE_ENV === 'production' ? 'loopback, linklocal, uniquelocal' : false);
 
     app.use(
         pinoHttp({
