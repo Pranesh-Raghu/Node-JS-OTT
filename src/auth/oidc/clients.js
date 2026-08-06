@@ -4,11 +4,16 @@ const { DCR_ALLOWED_SCOPES } = require('./scopes');
 
 // --- CIMD fetcher (simplified) ---
 // Per the "move fast" directive this does basic hostname/scheme validation
-// and a bounded, non-redirecting fetch, but skips the full undici custom-
-// connector SSRF hardening (peer-address checking against a DNS-rebinding
-// attack) from the full design. Flagged, not silently dropped: do not treat
-// this as production-hardened against a hostile client_id URL.
+// and a bounded, non-redirecting fetch. It resolves and validates the
+// hostname once in validateAndResolveClientIdUrl(), then fetchCimdDocument()
+// connects to that exact pinned address instead of letting fetch() re-
+// resolve the hostname itself - closing the DNS-rebinding TOCTOU window a
+// plain two-step "check DNS, then fetch(url)" would have (an attacker's DNS
+// server could answer the check with a public IP and the real connection
+// with an internal one). TLS still validates the certificate against the
+// original hostname via `servername`, so this isn't a cert-pinning bypass.
 const net = require('net');
+const https = require('https');
 const dns = require('dns').promises;
 
 function isPrivateIp(ip) {
@@ -43,29 +48,67 @@ async function validateAndResolveClientIdUrl(rawUrl) {
     } catch {
         return null;
     }
+    if (addresses.length === 0) return null;
     if (addresses.some((a) => isPrivateIp(a.address))) return null;
-    return url;
+    // Pin to the address just validated - fetchCimdDocument() must connect
+    // to this exact IP, not re-resolve url.hostname.
+    return { url, address: addresses[0].address, family: addresses[0].family };
 }
 
 async function fetchCimdDocument(clientIdUrl) {
-    const url = await validateAndResolveClientIdUrl(clientIdUrl);
-    if (!url) return null;
+    const resolved = await validateAndResolveClientIdUrl(clientIdUrl);
+    if (!resolved) return null;
+    const { url, address, family } = resolved;
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 2500);
     try {
-        const res = await fetch(url, { redirect: 'manual', signal: controller.signal });
-        clearTimeout(timeout);
-        if (res.status !== 200) return null;
-        const contentLength = Number(res.headers.get('content-length') || 0);
-        if (contentLength > 5120) return null;
-        const text = await res.text();
-        if (text.length > 5120) return null;
+        const res = await new Promise((resolve, reject) => {
+            const req = https.request(
+                {
+                    // Connect straight to the pinned, already-validated
+                    // address. `servername` keeps SNI and certificate
+                    // verification checking against the real hostname, so a
+                    // valid cert for url.hostname is still required.
+                    host: address,
+                    family,
+                    port: url.port || 443,
+                    path: `${url.pathname}${url.search}`,
+                    servername: url.hostname,
+                    headers: { Host: url.hostname },
+                    timeout: 2500,
+                },
+                resolve
+            );
+            req.on('error', reject);
+            req.on('timeout', () => req.destroy(new Error('CIMD fetch timed out')));
+            req.end();
+        });
+
+        if (res.statusCode !== 200) {
+            res.resume();
+            return null;
+        }
+        const contentLength = Number(res.headers['content-length'] || 0);
+        if (contentLength > 5120) {
+            res.resume();
+            return null;
+        }
+
+        let text = '';
+        let tooLarge = false;
+        for await (const chunk of res) {
+            text += chunk;
+            if (text.length > 5120) {
+                tooLarge = true;
+                break;
+            }
+        }
+        res.destroy();
+        if (tooLarge) return null;
+
         const doc = JSON.parse(text);
         if (doc.client_id !== clientIdUrl) return null;
         return doc;
     } catch {
-        clearTimeout(timeout);
         return null;
     }
 }

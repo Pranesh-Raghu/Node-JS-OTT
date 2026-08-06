@@ -170,10 +170,21 @@ router.post('/oauth/token', express.urlencoded({ extended: false }), async (req,
 
             if (updateResult.affectedRows === 0) {
                 // Replay or unknown/expired code. If it exists and was already
-                // consumed, that's a replay: revoke every token family that
-                // descended from it (best-effort; family linkage isn't
-                // tracked back to codes in this simplified version, so we
-                // just deny here rather than skip the check entirely).
+                // consumed, that's a replay: revoke the token family that
+                // descended from it (family_id is backfilled onto the code
+                // row right after that family is created below), the same
+                // way the refresh_token branch below revokes on reuse.
+                const [replayedRows] = await pool.execute(
+                    'SELECT consumed_at, family_id FROM oauth_authorization_codes WHERE code_hash = ?',
+                    [codeHash]
+                );
+                const replayed = replayedRows[0];
+                if (replayed?.consumed_at && replayed.family_id) {
+                    await pool.execute(
+                        "UPDATE oauth_token_families SET revoked_at = NOW(), revoked_reason = 'code_replay' WHERE family_id = ?",
+                        [replayed.family_id]
+                    );
+                }
                 return res.status(400).json({ error: 'invalid_grant' });
             }
 
@@ -197,6 +208,13 @@ router.post('/oauth/token', express.urlencoded({ extended: false }), async (req,
                 `INSERT INTO oauth_token_families (family_id, client_id, account_id, resource, scope, absolute_expires_at)
                  VALUES (?, ?, ?, ?, ?, NOW() + INTERVAL '30 days')`,
                 [familyId, clientId, codeRow.account_id, codeRow.resource, codeRow.scope]
+            );
+            // Link the code back to the family it produced, so a later
+            // replay of this same code (see the `affectedRows === 0` branch
+            // above) can find and revoke it.
+            await pool.execute(
+                'UPDATE oauth_authorization_codes SET family_id = ? WHERE code_hash = ?',
+                [familyId, codeHash]
             );
 
             const refreshToken = crypto.randomBytes(32).toString('base64url');

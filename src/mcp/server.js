@@ -4,6 +4,7 @@ const { StreamableHTTPServerTransport } = require('@modelcontextprotocol/sdk/ser
 const { z } = require('zod');
 const { requireBearerAuth } = require('../auth/principal');
 const catalogService = require('../services/catalogService');
+const { can } = require('../authz/fga');
 
 const router = express.Router();
 router.use(express.json());
@@ -50,6 +51,18 @@ function buildServer(auth) {
                 inputSchema: { id: z.string() },
             },
             async ({ id }) => {
+                // catalogService.getMovie() has no published-status filter
+                // (unlike search_catalog's listMoviesPage) - the web route
+                // for the same lookup enforces `can_discover` via
+                // requireFgaPermission, so this tool must check it too, or
+                // an MCP client with only catalog:read could fetch an
+                // unpublished/draft title by id. tier: 'browse' semantics -
+                // fail open on an FGA outage, treat "not allowed" the same
+                // as "not found" so this doesn't leak existence either.
+                const allowed = await can(auth.subject, 'can_discover', `title:${id}`, { failOpen: true });
+                if (!allowed) {
+                    return { isError: true, content: [{ type: 'text', text: 'Movie not found' }] };
+                }
                 const movie = await catalogService.getMovie(id);
                 if (!movie) {
                     return { isError: true, content: [{ type: 'text', text: 'Movie not found' }] };

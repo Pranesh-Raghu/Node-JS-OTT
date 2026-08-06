@@ -16,6 +16,15 @@ router.post(
     requireFgaPermission('can_create_title', () => 'platform:comics_tv', { tier: 'strict', admin: true }),
     adminController.addMovie
 );
-router.post('/upload-video', requireAdminLogin, adminController.uploadVideo);
+router.post(
+    '/upload-video',
+    requireAdminLogin,
+    // Was missing the OpenFGA check that every other admin write path has -
+    // an admin session alone let anyone attach a playable video asset to a
+    // title with no fine-grained permission check. `can_publish_title`
+    // matches this action's semantics (it's what makes a title playable).
+    requireFgaPermission('can_publish_title', () => 'platform:comics_tv', { tier: 'strict', admin: true }),
+    adminController.uploadVideo
+);
 
 module.exports = router;

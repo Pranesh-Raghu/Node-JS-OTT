@@ -71,8 +71,15 @@ async function signupUser(rawEmail, password) {
     return { ok: true, username };
 }
 
+// Same timing-parity approach as verifyUserLogin above: compare against the
+// dummy hash even when the username doesn't exist, so "unknown admin" and
+// "wrong password" cost the same time and an attacker can't use response
+// latency to enumerate valid admin usernames.
 async function verifyAdminLogin(username, password) {
-    return adminRepo.findByCredentials(username, password);
+    const admin = await adminRepo.findByUsername(username);
+    const hashToCompare = admin?.password || DUMMY_HASH;
+    const isMatch = await bcrypt.compare(password, hashToCompare);
+    return admin && isMatch ? admin : null;
 }
 
 // Matches by Google's stable subject id first (survives an email change on
