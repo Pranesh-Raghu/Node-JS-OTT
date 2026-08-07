@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="1170" viewBox="0 0 780 1170">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="70%" r="60%">
+      <stop offset="0%" stop-color="#ff5e00" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#3a0d00" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#050505" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="780" height="1170" fill="#050505"/>
+  <rect width="780" height="1170" fill="url(#glow)"/>
+
+  <!-- Marvel Studios-style reveal card, not real promo art: a plain
+       wordmark + release-window slide, the kind shown on a Hall H/D23
+       announcement screen before any actual poster exists. -->
+  <rect x="0" y="120" width="780" height="6" fill="#ec1d24"/>
+  <text x="390" y="90" font-family="Helvetica, Arial, sans-serif" font-size="34"
+        font-weight="700" letter-spacing="10" text-anchor="middle" fill="#ec1d24">MARVEL STUDIOS</text>
+
+  <g font-family="Helvetica, Arial, sans-serif" text-anchor="middle" fill="#f2f2f2">
+    <text x="390" y="600" font-size="30" letter-spacing="8" fill="#c9c9c9">FIRST LOOK</text>
+    <text x="390" y="690" font-size="90" font-weight="700" letter-spacing="3">GHOST RIDER</text>
+  </g>
+
+  <rect x="0" y="1044" width="780" height="6" fill="#ec1d24"/>
+  <text x="390" y="1100" font-family="Helvetica, Arial, sans-serif" font-size="40"
+        font-weight="700" letter-spacing="14" text-anchor="middle" fill="#f2f2f2">2028</text>
+</svg>

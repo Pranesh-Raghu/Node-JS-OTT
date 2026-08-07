@@ -639,8 +639,11 @@ a.watch-now-btn:hover {
     display: inline-block;
     padding: 0.35rem 0.9rem;
     border-radius: 999px;
-    background: rgba(255, 213, 79, 0.12);
-    color: #ffd54f;
+    /* Deliberately NOT gold - the IMDb badge below already owns that color,
+       and having both pills the same shade made the two pieces of data
+       hard to tell apart at a glance. */
+    background: rgba(77, 208, 225, 0.12);
+    color: #4dd0e1;
     font-weight: 600;
     font-size: 0.95rem;
     letter-spacing: 0.02em;
