@@ -54,10 +54,21 @@ async function searchPublished(query, { limit = 30 } = {}) {
     }));
 }
 
+// Security fix: this used to have no `status = 'published'` filter (unlike
+// listPublished/searchPublished above), so both GET /movie/:id and
+// GET /api/titles/:id leaked full details of unpublished/draft titles to
+// anonymous visitors who had (or guessed) the id. The FGA `can_discover`
+// check in front of both routes doesn't catch this: for an anonymous
+// subject it's tier: 'browse', which passes unconditionally and defers to
+// "the app layer" for the actual publish check - this is that check. A
+// logged-in non-editor is unaffected either way, since can_discover
+// already resolves false for them on an unpublished title. (The MCP
+// get_movie tool has its own explicit can_discover check for the same
+// reason - see src/mcp/server.js.)
 async function findById(id) {
     const [rows] = await pool.execute(
         `SELECT id, title, poster_url, release_date, trailer_youtube_key, status
-         FROM titles WHERE id = ? AND deleted_at IS NULL`,
+         FROM titles WHERE id = ? AND status = 'published' AND deleted_at IS NULL`,
         [id]
     );
     if (rows.length === 0) return null;

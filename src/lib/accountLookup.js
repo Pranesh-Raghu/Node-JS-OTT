@@ -27,29 +27,48 @@ async function getOrCreateAccountIdForUsername(username) {
     const [users] = await pool.execute('SELECT username, password FROM users WHERE username = ?', [username]);
     if (users.length === 0) return null;
 
-    const accountId = await withTransaction(async (conn) => {
-        // Re-check inside the transaction: another request may have created
-        // the account between the lookup above and here.
-        const [dupe] = await conn.execute('SELECT id FROM accounts WHERE username = ?', [username]);
-        if (dupe.length > 0) return { id: dupe[0].id, isNew: false };
+    // Bug fix: two requests racing this lazy-creation path (e.g. the very
+    // first request after signup, where trackSessionDevice middleware and
+    // the route handler's own account lookup can both land here at once)
+    // could both pass the dupe-check below under READ COMMITTED isolation
+    // - each sees 0 rows, since neither has committed yet - and the loser's
+    // INSERT then hit uq_accounts_username and threw a raw 500 instead of
+    // gracefully resolving to the winner's row.
+    let accountId;
+    try {
+        accountId = await withTransaction(async (conn) => {
+            // Re-check inside the transaction: another request may have
+            // created the account between the lookup above and here.
+            const [dupe] = await conn.execute('SELECT id FROM accounts WHERE username = ?', [username]);
+            if (dupe.length > 0) return { id: dupe[0].id, isNew: false };
 
-        // Google-only accounts have a NULL users.password (see the Google
-        // SSO migration) - password_algo must stay NULL alongside it, or
-        // this violates the ck_accounts_hash_pair check constraint
-        // ((password_hash IS NULL) = (password_algo IS NULL)).
-        const passwordAlgo = users[0].password ? 'bcrypt' : null;
-        const [rows] = await conn.execute(
-            `INSERT INTO accounts (ulid, username, password_hash, password_algo, role, status)
-             VALUES (?, ?, ?, ?, 'user', 'active') RETURNING id`,
-            [ulid(), username, users[0].password, passwordAlgo]
-        );
-        const newAccountId = rows[0].id;
-        await conn.execute(
-            `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', TRUE)`,
-            [ulid(), newAccountId]
-        );
-        return { id: newAccountId, isNew: true };
-    });
+            // Google-only accounts have a NULL users.password (see the Google
+            // SSO migration) - password_algo must stay NULL alongside it, or
+            // this violates the ck_accounts_hash_pair check constraint
+            // ((password_hash IS NULL) = (password_algo IS NULL)).
+            const passwordAlgo = users[0].password ? 'bcrypt' : null;
+            const [rows] = await conn.execute(
+                `INSERT INTO accounts (ulid, username, password_hash, password_algo, role, status)
+                 VALUES (?, ?, ?, ?, 'user', 'active') RETURNING id`,
+                [ulid(), username, users[0].password, passwordAlgo]
+            );
+            const newAccountId = rows[0].id;
+            await conn.execute(
+                `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', TRUE)`,
+                [ulid(), newAccountId]
+            );
+            return { id: newAccountId, isNew: true };
+        });
+    } catch (err) {
+        // uq_accounts_username: lost the race - the transaction above was
+        // rolled back, so re-select on a fresh query rather than treating
+        // this as a real failure.
+        if (err.code === '23505') {
+            const [winner] = await pool.execute('SELECT id FROM accounts WHERE username = ?', [username]);
+            if (winner.length > 0) return winner[0].id;
+        }
+        throw err;
+    }
 
     if (accountId.isNew) {
         // Mirrors scripts/seed-fga-tuples.js's per-account tuples. Without
