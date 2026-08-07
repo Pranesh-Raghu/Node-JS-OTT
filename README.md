@@ -1,13 +1,15 @@
 # COMICS TV
 
-A Marvel/DC streaming platform built on Express, EJS, and Postgres, with a hand-rolled
-OAuth 2.1 authorization server, OpenFGA-based fine-grained authorization, an MCP server,
-and Google SSO.
+A Marvel/DC streaming platform built on Express, Postgres, and a React SPA (plus EJS for
+the auth-critical pages that stayed server-rendered), with a hand-rolled OAuth 2.1
+authorization server, OpenFGA-based fine-grained authorization, an MCP server, and
+Google SSO.
 
 ## Table of contents
 
 - [Features](#features)
 - [Architecture](#architecture)
+  - [UI: EJS + a React SPA](#ui-ejs--a-react-spa)
 - [Authorization (OpenFGA)](#authorization-openfga)
 - [Requirements](#requirements)
 - [Setup](#setup)
@@ -76,20 +78,48 @@ src/
   db/                  Postgres connection pool + transaction helper
   repositories/        Only place raw SQL lives
   services/            Business logic, transaction boundaries
-  controllers/         Request/response glue
-  routes/              Express routers
+  controllers/         Request/response glue (controllers/api/ = JSON, for the SPA)
+  routes/              Express routers (routes/apiRoutes.js = the SPA's JSON API)
   middleware/          CSRF, rate limiting, session/device tracking, view locals
   auth/                OAuth 2.1 authorization server, Google SSO client
   authz/               OpenFGA client + permission middleware
   mcp/                 Model Context Protocol server
   webhooks/            Signing, delivery, retry logic
+  lib/serveSpa.js      Serves the built React shell (public/app/index.html) for SPA routes
 authz/model.fga        OpenFGA authorization model (DSL)
 openfga/Dockerfile     Wraps the upstream openfga/openfga image for Render (see Deployment)
 migrations/            Knex migrations (raw SQL, no ORM at runtime)
 scripts/               One-off seed/backfill scripts
-views/                 EJS templates
-public/                Static assets, CSS, client-side JS
+client/                React SPA source (Vite). Owns: home, movie, video player,
+                       watchlist, account/sessions, account/webhooks, account/profile,
+                       admin. Built into public/app/ (gitignored) by `npm run build`.
+views/                 EJS templates - login, signup, admin login, OAuth
+                       consent/error only. Everything else moved to client/ (see
+                       "UI: EJS + a React SPA" below).
+public/                Static assets, CSS, and the built SPA bundle (public/app/)
 ```
+
+### UI: EJS + a React SPA
+
+The 5 pages above stay server-rendered EJS deliberately - they're redirect-heavy,
+security-sensitive (login, OAuth consent), and gain nothing from being client-rendered.
+Every other page is a React + React Router SPA, served by this **same** Express app
+(same origin, so session cookies and CSRF work with zero CORS changes):
+
+- `npm run build` (`vite build`, see `vite.config.mjs`) compiles `client/` into
+  `public/app/`, which lands under the app's existing `express.static('/public')`
+  mount - no separate static route.
+- Each SPA route (`/`, `/movie/:id`, `/video/:id`, `/watchlist`,
+  `/account/{sessions,webhooks,profile}`, `/admin`) is still owned by its original
+  Express route, with its original auth/FGA guard intact - only the handler body
+  changed, from `res.render(...)` to `serveSpa` (`src/lib/serveSpa.js`). The SPA then
+  fetches its data from `/api/*` (`src/routes/apiRoutes.js`), guarded the same way
+  (`requireApiLogin`/`requireApiAdmin`, or `requireFgaPermission(..., {json: true})`).
+- **Render's build command must be `npm install && npm run build`**, not a plain
+  `npm install` - see [Deployment](#deployment).
+- `public/css/style.css` is shared, unbundled, between the EJS pages and the React
+  pages (linked from `client/index.html` as a plain `<link>`, not imported into the
+  Vite module graph) - both render identical page chrome from one stylesheet.
 
 ## Authorization (OpenFGA)
 
@@ -231,9 +261,19 @@ variable with a placeholder value.
 ## Running the app
 
 ```bash
-npm start   # production
-npm run dev # restarts on file changes (node --watch)
+npm run build      # builds the React SPA into public/app/ - required at least once
+npm start          # production
+npm run dev        # restarts the server on file changes (node --watch)
+npm run dev:client # Vite dev server on :5173 with HMR, proxying everything else to
+                    # the Express app on $PORT (see vite.config.mjs's server.proxy) -
+                    # use this instead of rebuilding on every client change
 ```
+
+`npm start`/`npm run dev` serve whatever's already built in `public/app/` - they don't
+build it, and won't notice if `client/` has changed since the last build.
+`src/lib/serveSpa.js` throws at boot (in production) if `public/app/index.html` is
+missing entirely, rather than serving a broken page - so run `npm run build` at least
+once after cloning, and again after pulling client-side changes.
 
 The app listens on the port set in `PORT` (defaults to `1000`).
 
@@ -258,7 +298,13 @@ services point at a free external Postgres instead ([Neon](https://neon.tech) he
 card required):
 
 - **App**: https://node-js-ott-6.onrender.com/ — Node native runtime, builds from this
-  repo's root, start command `node src/index.js`.
+  repo's root, **build command `npm install && npm run build`**, start command
+  `node src/index.js`. The build command runs `vite build`, producing the React SPA
+  bundle at `public/app/` (gitignored — never commit it) that
+  `src/lib/serveSpa.js` serves for the migrated pages (see
+  [Architecture](#architecture)). A plain `npm install` build command deploys a broken
+  app: `serveSpa.js` fails loudly at boot with `SPA bundle not found` rather than
+  serving stale or missing content.
 - **OpenFGA**: https://comics-tv-openfga.onrender.com/ — Docker runtime, builds from
   `openfga/Dockerfile` with root directory `openfga`. The upstream `openfga/openfga`
   image has **no default command** (its entrypoint alone just prints help and exits),
