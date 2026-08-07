@@ -6,6 +6,7 @@
 // create in the DB is cleaned up in a `finally`, not left behind.
 const { test, after } = require('node:test');
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const request = require('supertest');
 const { createApp } = require('../src/app');
 const { pool } = require('../src/db/pool');
@@ -126,6 +127,94 @@ test('signup -> watchlist add/list/remove works end-to-end', async (t) => {
 
     const removeRes = await agent.delete(`/api/watchlist/${title.id}`).set('X-CSRF-Token', token);
     assert.equal(removeRes.status, 200);
+});
+
+// Regression test for the very first fix of the EJS->React migration
+// session: session.regenerate() (called on login/signup/Google callback)
+// used to silently wipe req.session.pendingAuthRequest, so an anonymous
+// user starting the OAuth authorize flow would log in fine and then dead-
+// end on GET /oauth/consent with "No pending authorization request". Runs
+// the full flow for real: register a DCR client, hit /oauth/authorize
+// anonymously, sign up (the exact regenerate() call that broke this),
+// confirm /oauth/consent still resumes, submit consent, and exchange the
+// resulting code for a real signed access token via PKCE.
+test('OAuth authorize -> signup -> consent survives session.regenerate()', async (t) => {
+    const agent = request.agent(app);
+    const username = `oauthtest_${Date.now()}`;
+    const email = `${username}@example.com`;
+    let clientId;
+
+    t.after(async () => {
+        await pool.execute('DELETE FROM profiles WHERE account_id = (SELECT id FROM accounts WHERE username = ?)', [username]);
+        await pool.execute('DELETE FROM accounts WHERE username = ?', [username]);
+        await pool.execute('DELETE FROM users WHERE username = ?', [username]);
+        if (clientId) await pool.execute('DELETE FROM oauth_clients WHERE client_id = ?', [clientId]);
+    });
+
+    const verifier = crypto.randomBytes(32).toString('base64url');
+    const challenge = crypto.createHash('sha256').update(verifier).digest('base64url');
+    const redirectUri = 'https://example.com/callback';
+
+    const clientRes = await request(app)
+        .post('/oauth/register')
+        .send({ client_name: 'Regression test client', redirect_uris: [redirectUri], grant_types: ['authorization_code'], scope: 'catalog:read' });
+    assert.equal(clientRes.status, 201);
+    clientId = clientRes.body.client_id;
+
+    const authorizeQuery = {
+        client_id: clientId,
+        redirect_uri: redirectUri,
+        response_type: 'code',
+        code_challenge: challenge,
+        code_challenge_method: 'S256',
+        scope: 'catalog:read',
+        state: 'test-state',
+    };
+
+    const anonAuthorizeRes = await agent.get('/oauth/authorize').query(authorizeQuery);
+    assert.equal(anonAuthorizeRes.status, 302);
+    assert.equal(anonAuthorizeRes.headers.location, '/login?redirectTo=%2Foauth%2Fconsent');
+
+    const preSignupToken = extractCsrfToken(await agent.get('/api/session'));
+    const signupRes = await agent.post('/signup').type('form').send({ email, password: 'TestPass123!', _csrf: preSignupToken });
+    assert.equal(signupRes.status, 302);
+
+    // The actual regression: this used to 400 "No pending authorization
+    // request" because regenerate() (inside handleSignup) wiped it.
+    const consentResumeRes = await agent.get('/oauth/consent');
+    assert.equal(consentResumeRes.status, 302);
+    assert.match(consentResumeRes.headers.location, /^\/oauth\/authorize\?/);
+    assert.match(consentResumeRes.headers.location, new RegExp(`client_id=${clientId}`));
+
+    const consentPageRes = await agent.get(consentResumeRes.headers.location);
+    assert.equal(consentPageRes.status, 200);
+    const csrfMatch = consentPageRes.text.match(/name="_csrf" value="([^"]*)"/);
+    assert.ok(csrfMatch, 'consent page should render a CSRF-protected form');
+
+    const consentSubmitRes = await agent.post('/oauth/consent').type('form').send({
+        clientId,
+        redirectUri,
+        codeChallenge: challenge,
+        scope: 'catalog:read',
+        state: 'test-state',
+        resource: '',
+        _csrf: csrfMatch[1],
+    });
+    assert.equal(consentSubmitRes.status, 302);
+    const callbackUrl = new URL(consentSubmitRes.headers.location);
+    const code = callbackUrl.searchParams.get('code');
+    assert.ok(code, 'expected an authorization code in the consent redirect');
+
+    const tokenRes = await request(app).post('/oauth/token').type('form').send({
+        grant_type: 'authorization_code',
+        code,
+        redirect_uri: redirectUri,
+        client_id: clientId,
+        code_verifier: verifier,
+    });
+    assert.equal(tokenRes.status, 200);
+    assert.ok(tokenRes.body.access_token);
+    assert.equal(tokenRes.body.scope, 'catalog:read');
 });
 
 after(async () => {
