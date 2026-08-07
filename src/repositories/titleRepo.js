@@ -9,12 +9,16 @@ async function countPublished() {
     return rows[0].total;
 }
 
+// Highest IMDB rating first (see migrations/20260807000003_imdb_ratings.js
+// and scripts/fetch-imdb-ratings.js) - a title with no rating yet sorts
+// after every rated one (NULLS LAST), then falls back to release date so
+// the pre-backfill ordering doesn't scramble arbitrarily in the meantime.
 async function listPublished({ limit, offset }) {
     const [rows] = await pool.query(
         `SELECT id, title, poster_url, release_date, trailer_youtube_key
          FROM titles
          WHERE status = 'published' AND deleted_at IS NULL
-         ORDER BY release_date ASC, id ASC
+         ORDER BY imdb_rating DESC NULLS LAST, release_date ASC, id ASC
          LIMIT ? OFFSET ?`,
         [limit, offset]
     );
