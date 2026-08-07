@@ -670,17 +670,34 @@ a.watch-now-btn:hover {
     letter-spacing: 0.03em;
 }
 
+/* Card, not just a left border - a tinted background + padding on every
+   side (not only the left) plus a labeled heading reads as its own
+   callout block rather than an oddly-indented paragraph. Not italic -
+   italics read as decorative filler at body-text size, not something
+   worth actually reading. */
 .movie-synopsis {
-    /* Not italic - italics read as "dumb"/decorative at body-text size;
-       a clean upright weight with a touch more line-height and a
-       brighter-than-body color keeps this legible as the actual plot
-       description it is, while the accent border still marks it as its
-       own distinct block from the cast/crew lines below. */
-    border-left: 3px solid var(--accent-color);
-    padding-left: 1rem;
+    background: rgba(255, 111, 0, 0.08);
+    border: 1px solid rgba(255, 111, 0, 0.25);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.movie-synopsis-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.movie-synopsis p {
     font-size: 1.05rem;
     line-height: 1.7;
     color: #e4e4e4;
+    margin: 0;
 }
 
 .visually-hidden {
@@ -1237,6 +1254,16 @@ hr {
 .toast-success { background: linear-gradient(to right, #2e7d32, #43a047); }
 .toast-info    { background: linear-gradient(to right, #37474f, #546e7a); }
 .toast-error   { background: linear-gradient(to right, #c62828, #e53935); }
+
+.toast-title-logo {
+    /* Inline within a toast's single line of text - height matched to the
+       toast's own font-size rather than the much larger movie-page logo. */
+    display: inline-block;
+    height: 1.4em;
+    max-width: 8rem;
+    vertical-align: middle;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+}
 
 .empty-label {
     color: #ff4500;

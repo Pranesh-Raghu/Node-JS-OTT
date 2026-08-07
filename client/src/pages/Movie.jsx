@@ -107,7 +107,12 @@ export function Movie() {
                         </span>
                     )}
                 </div>
-                {movie.synopsis && <p className="movie-synopsis">{movie.synopsis}</p>}
+                {movie.synopsis && (
+                    <div className="movie-synopsis">
+                        <span className="movie-synopsis-label">Synopsis</span>
+                        <p>{movie.synopsis}</p>
+                    </div>
+                )}
                 {movie.cast.length > 0 && (
                     <p>
                         Cast:{' '}

@@ -15,7 +15,7 @@ async function countPublished() {
 // the pre-backfill ordering doesn't scramble arbitrarily in the meantime.
 async function listPublished({ limit, offset }) {
     const [rows] = await pool.query(
-        `SELECT id, title, poster_url, release_date, trailer_youtube_key
+        `SELECT id, title, poster_url, release_date, trailer_youtube_key, logo_url
          FROM titles
          WHERE status = 'published' AND deleted_at IS NULL
          ORDER BY imdb_rating DESC NULLS LAST, release_date ASC, id ASC
@@ -28,6 +28,7 @@ async function listPublished({ limit, offset }) {
         poster: r.poster_url,
         releaseDate: r.release_date,
         trailerYoutubeKey: r.trailer_youtube_key,
+        logoUrl: r.logo_url,
     }));
 }
 
@@ -42,7 +43,7 @@ async function listPublished({ limit, offset }) {
 // keep "batman" matching a title stored as "Batman".
 async function searchPublished(query, { limit = 30 } = {}) {
     const [rows] = await pool.query(
-        `SELECT id, title, poster_url, release_date, trailer_youtube_key
+        `SELECT id, title, poster_url, release_date, trailer_youtube_key, logo_url
          FROM titles
          WHERE status = 'published' AND deleted_at IS NULL AND title ILIKE ?
          ORDER BY title ASC
@@ -55,6 +56,7 @@ async function searchPublished(query, { limit = 30 } = {}) {
         poster: r.poster_url,
         releaseDate: r.release_date,
         trailerYoutubeKey: r.trailer_youtube_key,
+        logoUrl: r.logo_url,
     }));
 }
 

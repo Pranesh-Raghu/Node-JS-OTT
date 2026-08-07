@@ -51,7 +51,23 @@ export function Home() {
     async function handleAddToWatchlist(movie) {
         try {
             const { added } = await api.post('/api/watchlist', { titleId: movie.id });
-            showToast(added ? 'success' : 'info', added ? `Added "${movie.title}" to your watchlist` : `"${movie.title}" is already in your watchlist`);
+            // showToast's message can be a JSX node, not just a string (see
+            // ToastContext.jsx - it's rendered as {t.message} either way).
+            // Swap the quoted text title for the title-treatment logo when
+            // one exists, same as the movie details page.
+            const titleNode = movie.logoUrl ? (
+                <img className="toast-title-logo" src={movie.logoUrl} alt={movie.title} />
+            ) : (
+                `"${movie.title}"`
+            );
+            showToast(
+                added ? 'success' : 'info',
+                <>
+                    {added ? 'Added ' : ''}
+                    {titleNode}
+                    {added ? ' to your watchlist' : ' is already in your watchlist'}
+                </>
+            );
         } catch {
             showToast('error', 'Could not update your watchlist. Please try again.');
         }
