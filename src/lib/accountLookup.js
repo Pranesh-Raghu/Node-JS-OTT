@@ -17,12 +17,28 @@ const { ulid } = require('ulid');
 const { pool, withTransaction } = require('../db/pool');
 const { writeTuples } = require('../authz/fga');
 const logger = require('../logger');
+const { createTtlCache } = require('./ttlCache');
+
+// Performance: this resolution used to run on essentially every
+// authenticated request (GET /api/session alone triggers it, and that's
+// fetched once per SPA page load) - a username's account_id never changes
+// once the account exists, so caching it is safe with no real invalidation
+// story needed. 10 minutes is arbitrary but generous; the only staleness
+// risk is a brand-new signup's very first few requests still resolving the
+// slow way, which is already the case today regardless.
+const accountIdCache = createTtlCache({ ttlMs: 10 * 60 * 1000, maxEntries: 5000 });
 
 async function getOrCreateAccountIdForUsername(username) {
     if (!username) return null;
 
+    const cached = accountIdCache.get(username);
+    if (cached !== undefined) return cached;
+
     const [existing] = await pool.execute('SELECT id FROM accounts WHERE username = ?', [username]);
-    if (existing.length > 0) return existing[0].id;
+    if (existing.length > 0) {
+        accountIdCache.set(username, existing[0].id);
+        return existing[0].id;
+    }
 
     const [users] = await pool.execute('SELECT username, password FROM users WHERE username = ?', [username]);
     if (users.length === 0) return null;
@@ -65,10 +81,15 @@ async function getOrCreateAccountIdForUsername(username) {
         // this as a real failure.
         if (err.code === '23505') {
             const [winner] = await pool.execute('SELECT id FROM accounts WHERE username = ?', [username]);
-            if (winner.length > 0) return winner[0].id;
+            if (winner.length > 0) {
+                accountIdCache.set(username, winner[0].id);
+                return winner[0].id;
+            }
         }
         throw err;
     }
+
+    accountIdCache.set(username, accountId.id);
 
     if (accountId.isNew) {
         // Mirrors scripts/seed-fga-tuples.js's per-account tuples. Without
@@ -98,20 +119,31 @@ async function getOrCreateAccountIdForUsername(username) {
 // this should always find one - the create-if-missing fallback is cheap
 // insurance for any account that predates that guarantee, not the expected
 // path.
+// Same caching rationale as accountIdCache above - a default profile_id
+// never changes once it exists.
+const profileIdCache = createTtlCache({ ttlMs: 10 * 60 * 1000, maxEntries: 5000 });
+
 async function getDefaultProfileIdForAccount(accountId) {
     if (!accountId) return null;
+
+    const cached = profileIdCache.get(accountId);
+    if (cached !== undefined) return cached;
 
     const [existing] = await pool.execute(
         'SELECT id FROM profiles WHERE account_id = ? AND is_default = TRUE AND deleted_at IS NULL LIMIT 1',
         [accountId]
     );
-    if (existing.length > 0) return existing[0].id;
+    if (existing.length > 0) {
+        profileIdCache.set(accountId, existing[0].id);
+        return existing[0].id;
+    }
 
     try {
         const [rows] = await pool.execute(
             `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', TRUE) RETURNING id`,
             [ulid(), accountId]
         );
+        profileIdCache.set(accountId, rows[0].id);
         return rows[0].id;
     } catch (err) {
         // uq_profiles_one_default: another concurrent request already won
@@ -121,7 +153,10 @@ async function getDefaultProfileIdForAccount(accountId) {
                 'SELECT id FROM profiles WHERE account_id = ? AND is_default = TRUE AND deleted_at IS NULL LIMIT 1',
                 [accountId]
             );
-            if (rows.length > 0) return rows[0].id;
+            if (rows.length > 0) {
+                profileIdCache.set(accountId, rows[0].id);
+                return rows[0].id;
+            }
         }
         throw err;
     }

@@ -92,7 +92,31 @@ function createApp() {
 
     // Security: only serve the public/ directory. Serving the repo root
     // exposed .env, data.json, server.js, and package.json over HTTP.
-    app.use('/public', express.static(path.join(__dirname, '..', 'public'), { dotfiles: 'ignore' }));
+    //
+    // Performance: this had NO Cache-Control at all before, so every asset
+    // (including the SPA's own JS bundle) was refetched on every
+    // navigation. public/app/assets/* is Vite content-hashed (a filename
+    // change is the only way its content ever changes), so it's safe to
+    // cache forever; css/images aren't hashed, so 1 day is a middle ground
+    // - long enough to matter, short enough that a real change shows up
+    // same-day. public/app/index.html itself is excluded (see
+    // src/lib/serveSpa.js, which sets its own no-store) - it's the one
+    // file in this tree that legitimately changes without its name
+    // changing, on every deploy.
+    app.use(
+        '/public',
+        express.static(path.join(__dirname, '..', 'public'), {
+            dotfiles: 'ignore',
+            maxAge: '1d',
+            setHeaders: (res, filePath) => {
+                if (filePath.includes(`${path.sep}app${path.sep}assets${path.sep}`)) {
+                    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+                } else if (filePath.endsWith(`${path.sep}app${path.sep}index.html`)) {
+                    res.setHeader('Cache-Control', 'no-store');
+                }
+            },
+        })
+    );
 
     // createTableIfMissing: false - we own this table via migration 0001
     // (indexed on `expire` from the start; the library's auto-created
