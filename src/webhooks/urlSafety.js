@@ -65,4 +65,32 @@ async function validateWebhookUrl(rawUrl) {
     return { ok: true, url };
 }
 
-module.exports = { validateWebhookUrl, isPrivateIp };
+// Security fix: validateWebhookUrl above only ran at endpoint-creation time.
+// deliver.js used to call fetch(row.url) directly on every delivery/retry
+// (spread over up to 12 hours of backoff) with no re-check - so a user
+// could register a webhook against a domain that resolved publicly, then
+// repoint its DNS at an internal address before the next delivery attempt
+// and the app would POST straight to it. This re-resolves and re-validates
+// right before every delivery attempt, and returns the exact address to
+// connect to (deliver.js must connect to this address, not let its HTTP
+// client re-resolve url.hostname itself, or the same TOCTOU gap reopens
+// between this check and the request).
+async function resolveDeliveryAddress(url) {
+    const isLocalHttp = url.protocol === 'http:' && (url.hostname === 'localhost' || url.hostname === '127.0.0.1');
+    if (isLocalHttp) {
+        // Loopback by construction (the hostname string itself is checked
+        // above, not a DNS answer that could be re-pointed) - nothing to pin.
+        return { address: url.hostname === 'localhost' ? '127.0.0.1' : url.hostname, family: 4, isLocalHttp: true };
+    }
+
+    let addresses;
+    try {
+        addresses = await dns.lookup(url.hostname, { all: true });
+    } catch {
+        return null;
+    }
+    if (addresses.length === 0 || addresses.some((a) => isPrivateIp(a.address))) return null;
+    return { address: addresses[0].address, family: addresses[0].family, isLocalHttp: false };
+}
+
+module.exports = { validateWebhookUrl, resolveDeliveryAddress, isPrivateIp };
