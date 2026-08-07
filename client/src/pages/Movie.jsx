@@ -67,14 +67,33 @@ export function Movie() {
 
     const { movie, hasVideo } = state;
     const user = session?.user;
+    // en-GB reads as "31 July 2026" everywhere regardless of the visitor's
+    // locale - a fixed, unambiguous format beats one that silently flips to
+    // M/D/Y for US browsers on a release-date field people compare across
+    // titles. timeZone: 'UTC' keeps the date's calendar day pinned to what's
+    // stored, since the string arrives with no time component to localize.
+    const formattedReleaseDate = movie.releaseDate
+        ? new Date(`${movie.releaseDate}T00:00:00Z`).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+              timeZone: 'UTC',
+          })
+        : 'TBA';
 
     return (
         <Layout title={<h1 className="accent-text">{movie.title}</h1>}>
             <div className="movie-details">
                 <img src={movie.poster} alt={movie.title} />
-                <h2>
-                    Release Date: <span className="release-date">{movie.releaseDate}</span>
-                </h2>
+                <div className="movie-meta">
+                    <span className="release-date-pill">{formattedReleaseDate}</span>
+                    {movie.imdbRating !== null && (
+                        <span className="imdb-badge" title="IMDB rating">
+                            <span className="imdb-badge-label">IMDb</span> {movie.imdbRating.toFixed(1)}
+                        </span>
+                    )}
+                </div>
+                {movie.synopsis && <p className="movie-synopsis">{movie.synopsis}</p>}
                 {movie.cast.length > 0 && (
                     <p>
                         Cast:{' '}

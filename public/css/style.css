@@ -624,6 +624,55 @@ a.watch-now-btn:hover {
     text-shadow: 0 0 12px rgba(255, 213, 79, 0.4);
 }
 
+/* Meta row: replaces the old bare "Release Date: ..." h2 with a
+   pill/badge row so the IMDB rating (when present) reads as a distinct
+   piece of data rather than more plain body text. */
+.movie-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.release-date-pill {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(255, 213, 79, 0.12);
+    color: #ffd54f;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+}
+
+.imdb-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(245, 197, 24, 0.12);
+    color: #f5c518;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.imdb-badge-label {
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    background: #f5c518;
+    color: #000;
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+}
+
+.movie-synopsis {
+    font-style: italic;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 1rem;
+}
+
 /* 3D Button Effect */
 .movie-details button {
     margin-top: 2rem;

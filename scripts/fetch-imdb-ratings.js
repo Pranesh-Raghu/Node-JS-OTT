@@ -53,10 +53,18 @@ async function omdbLookup(title, year) {
 // Retry once, title-only, before giving up - OMDb's `t=` lookup returns
 // its single best match rather than a list, so this can't introduce
 // ambiguity the year filter was guarding against.
+//
+// EXCEPT for titles dated after this year: those are unreleased/placeholder
+// entries (e.g. "Ghost Rider" dated 2028 - a plain reused title with no
+// OMDb record of its own yet, unlike sequels such as "The Batman 2" that
+// happen not to collide with anything). A title-only match there can only
+// land on an older, unrelated film by the same name, since nothing dated
+// in the future can have a real OMDb entry - skip the fallback entirely
+// rather than risk exactly that (see Ghost Rider's history in git blame).
 async function lookupByTitleAndYear(title, year) {
     const exact = await omdbLookup(title, year);
     if (exact) return exact;
-    if (!year) return null;
+    if (!year || Number(year) > new Date().getFullYear()) return null;
     return omdbLookup(title, null);
 }
 
