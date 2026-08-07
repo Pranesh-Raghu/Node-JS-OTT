@@ -71,7 +71,7 @@ async function searchPublished(query, { limit = 30 } = {}) {
 // reason - see src/mcp/server.js.)
 async function findById(id) {
     const [rows] = await pool.execute(
-        `SELECT id, title, poster_url, release_date, trailer_youtube_key, status, synopsis, imdb_rating
+        `SELECT id, title, poster_url, release_date, trailer_youtube_key, status, synopsis, imdb_rating, logo_url
          FROM titles WHERE id = ? AND status = 'published' AND deleted_at IS NULL`,
         [id]
     );
@@ -94,6 +94,7 @@ async function findById(id) {
         releaseDate: row.release_date,
         trailerYoutubeKey: row.trailer_youtube_key,
         synopsis: row.synopsis,
+        logoUrl: row.logo_url,
         // pg returns NUMERIC columns as strings (avoids float rounding on
         // the driver side) - cast here so the client gets a number like
         // every other rating UI would expect, not "8.1" needing its own

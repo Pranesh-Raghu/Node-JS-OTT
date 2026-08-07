@@ -81,8 +81,22 @@ export function Movie() {
           })
         : 'TBA';
 
+    // Prefer the official title logo (TMDB's title-treatment art, e.g. the
+    // stylized bat-logo for "The Dark Knight Rises") over plain text when
+    // one's been fetched - see scripts/fetch-title-logos.js. The text
+    // title still renders (visually-hidden), so screen readers and the
+    // page's <title>/SEO story are unaffected either way.
+    const titleHeading = movie.logoUrl ? (
+        <h1 className="movie-title-logo-wrap">
+            <span className="visually-hidden">{movie.title}</span>
+            <img className="movie-title-logo" src={movie.logoUrl} alt="" />
+        </h1>
+    ) : (
+        <h1 className="accent-text">{movie.title}</h1>
+    );
+
     return (
-        <Layout title={<h1 className="accent-text">{movie.title}</h1>}>
+        <Layout title={titleHeading}>
             <div className="movie-details">
                 <img src={movie.poster} alt={movie.title} />
                 <div className="movie-meta">
