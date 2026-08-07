@@ -115,8 +115,12 @@ Every other page is a React + React Router SPA, served by this **same** Express 
   changed, from `res.render(...)` to `serveSpa` (`src/lib/serveSpa.js`). The SPA then
   fetches its data from `/api/*` (`src/routes/apiRoutes.js`), guarded the same way
   (`requireApiLogin`/`requireApiAdmin`, or `requireFgaPermission(..., {json: true})`).
-- **Render's build command must be `npm install && npm run build`**, not a plain
-  `npm install` - see [Deployment](#deployment).
+- **Render's build command must be `npm install --include=dev && npm run build`**, not
+  a plain `npm install`. Render sets `NODE_ENV=production` for the App service, which
+  makes a bare `npm install` skip `devDependencies` - `vite` (and
+  `@vitejs/plugin-react`) live there, so `npm run build`'s `vite build` fails with
+  `vite: not found` without `--include=dev` forcing them in for this one install. See
+  [Deployment](#deployment).
 - `public/css/style.css` is shared, unbundled, between the EJS pages and the React
   pages (linked from `client/index.html` as a plain `<link>`, not imported into the
   Vite module graph) - both render identical page chrome from one stylesheet.
@@ -298,13 +302,18 @@ services point at a free external Postgres instead ([Neon](https://neon.tech) he
 card required):
 
 - **App**: https://node-js-ott-6.onrender.com/ — Node native runtime, builds from this
-  repo's root, **build command `npm install && npm run build`**, start command
-  `node src/index.js`. The build command runs `vite build`, producing the React SPA
-  bundle at `public/app/` (gitignored — never commit it) that
+  repo's root, **build command `npm install --include=dev && npm run build`**, start
+  command `node src/index.js`. The build command runs `vite build`, producing the
+  React SPA bundle at `public/app/` (gitignored — never commit it) that
   `src/lib/serveSpa.js` serves for the migrated pages (see
-  [Architecture](#architecture)). A plain `npm install` build command deploys a broken
-  app: `serveSpa.js` fails loudly at boot with `SPA bundle not found` rather than
-  serving stale or missing content.
+  [Architecture](#architecture)). Two ways this fails if the build command is wrong:
+  a plain `npm install` (no `npm run build` at all) deploys a broken app -
+  `serveSpa.js` fails loudly at boot with `SPA bundle not found` rather than serving
+  stale or missing content. `npm install && npm run build` *without* `--include=dev`
+  fails at the build step itself with `vite: not found` - Render sets
+  `NODE_ENV=production`, which makes `npm install` skip `devDependencies`
+  (`vite`/`@vitejs/plugin-react` live there), so they're missing when `vite build`
+  tries to run.
 - **OpenFGA**: https://comics-tv-openfga.onrender.com/ — Docker runtime, builds from
   `openfga/Dockerfile` with root directory `openfga`. The upstream `openfga/openfga`
   image has **no default command** (its entrypoint alone just prints help and exits),
