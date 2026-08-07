@@ -1,11 +1,28 @@
 const titleRepo = require('../repositories/titleRepo');
 
+// Was duplicated as a controller-local constant in both the EJS
+// catalogController.home and the JSON API's catalogPage below - moved here
+// so there's exactly one definition.
+const PAGE_SIZE = 24;
+
 async function listMoviesPage({ limit, offset }) {
     return titleRepo.listPublished({ limit, offset });
 }
 
 async function countMovies() {
     return titleRepo.countPublished();
+}
+
+// Shared pagination math for the home page - used by the JSON API
+// (src/controllers/api/catalogController.js) and, until it's retired, the
+// legacy EJS controller (src/controllers/catalogController.js).
+async function getCatalogPage(requestedPage) {
+    const total = await countMovies();
+    const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    const page = Number.isInteger(requestedPage) && requestedPage >= 1 && requestedPage <= totalPages ? requestedPage : 1;
+    const offset = (page - 1) * PAGE_SIZE;
+    const movies = await listMoviesPage({ limit: PAGE_SIZE, offset });
+    return { movies, pagination: { page, totalPages, hasPrev: page > 1, hasNext: page < totalPages } };
 }
 
 async function searchMovies(query) {
@@ -40,4 +57,14 @@ async function listForAdminSelect() {
     return titleRepo.listForAdminSelect();
 }
 
-module.exports = { listMoviesPage, countMovies, searchMovies, getMovie, getPlayable, addMovie, addVideo, listForAdminSelect };
+module.exports = {
+    listMoviesPage,
+    countMovies,
+    getCatalogPage,
+    searchMovies,
+    getMovie,
+    getPlayable,
+    addMovie,
+    addVideo,
+    listForAdminSelect,
+};

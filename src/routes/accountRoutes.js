@@ -1,21 +1,28 @@
 const express = require('express');
-const sessionsController = require('../controllers/sessionsController');
-const webhooksController = require('../controllers/webhooksController');
 const profileController = require('../controllers/profileController');
+const { serveSpa } = require('../lib/serveSpa');
 
 const router = express.Router();
 
-router.get('/account/profile', profileController.showProfile);
-router.post('/account/profile', profileController.updateProfile);
+// FGA-style login-redirect guard for shell routes, matching the pattern in
+// catalogRoutes.js/catalogController.requireLoginForWatchlist - preserves
+// the pre-migration UX of sending an anonymous visitor straight to /login
+// with a redirectTo, rather than a generic API 401.
+function requireLoginRedirect(req, res, next) {
+    if (!req.session.user) {
+        return res.redirect(`/login?redirectTo=${encodeURIComponent(req.originalUrl)}`);
+    }
+    next();
+}
+
+router.get('/account/profile', requireLoginRedirect, serveSpa);
+// Public (no login required) - unchanged by the migration, see
+// profileController.serveAvatar's own comment. Referenced directly as an
+// <img src> both by the remaining EJS pages and by client/src/components/
+// Avatar.jsx, so its URL shape can't change.
 router.get('/account/avatar/:username', profileController.serveAvatar);
 
-router.get('/account/sessions', sessionsController.listSessions);
-router.post('/account/sessions/:sessionId/revoke', sessionsController.revokeSession);
-router.post('/account/sessions/revoke-all', sessionsController.revokeAllSessions);
-
-router.get('/account/webhooks', webhooksController.listWebhooks);
-router.post('/account/webhooks', webhooksController.createWebhook);
-router.post('/account/webhooks/:id/toggle', webhooksController.toggleWebhook);
-router.post('/account/webhooks/:id/delete', webhooksController.deleteWebhook);
+router.get('/account/sessions', requireLoginRedirect, serveSpa);
+router.get('/account/webhooks', requireLoginRedirect, serveSpa);
 
 module.exports = router;

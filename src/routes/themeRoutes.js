@@ -1,4 +1,5 @@
 const express = require('express');
+const { setThemeCookie } = require('../lib/theme');
 
 const router = express.Router();
 
@@ -15,11 +16,7 @@ function safeReturnPath(referer, req) {
 
 router.get('/theme/toggle', (req, res) => {
     const next = res.locals.theme === 'light' ? 'dark' : 'light';
-    res.cookie('theme', next, {
-        maxAge: 365 * 24 * 60 * 60 * 1000,
-        httpOnly: false,
-        sameSite: 'lax',
-    });
+    setThemeCookie(res, next);
     res.redirect(safeReturnPath(req.get('referer'), req));
 });
 

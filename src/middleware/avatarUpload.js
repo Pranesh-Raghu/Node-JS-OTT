@@ -30,14 +30,18 @@ const avatarUpload = multer({
 // type, too large) redirect back to the form with a friendly message
 // instead of hitting the generic 500 page.
 //
-// This is mounted directly in app.js, scoped to /account/profile, BEFORE
-// the global CSRF middleware - not in the route file, and not chained after
-// the CSRF check. The CSRF token lives in the multipart body alongside the
-// file, and csrf-sync reads it from req.body._csrf; if multer hasn't parsed
-// the body yet (which is the case for any multipart request reaching the
-// global CSRF middleware, since express.json()/urlencoded() don't touch
-// multipart bodies), req.body is undefined and CSRF validation fails for
-// every single submission, not intermittently.
+// This is mounted directly in app.js, scoped to /account/profile AND
+// /api/account/avatar (the React SPA's equivalent), BEFORE the global CSRF
+// middleware - not in the route file, and not chained after the CSRF
+// check. The CSRF token lives in the multipart body alongside the file for
+// the EJS form, and csrf-sync reads it from req.body._csrf; if multer
+// hasn't parsed the body yet (which is the case for any multipart request
+// reaching the global CSRF middleware, since express.json()/urlencoded()
+// don't touch multipart bodies), req.body is undefined and CSRF validation
+// fails for every single submission, not intermittently. The SPA sends its
+// token as an X-CSRF-Token header instead (see client/src/lib/api.js),
+// which sidesteps this ordering problem entirely, but it's simplest to
+// keep both paths behind the same multer mount rather than fork it.
 function avatarUploadMiddleware(req, res, next) {
     avatarUpload.single('avatar')(req, res, (err) => {
         if (!err) return next();
@@ -46,6 +50,13 @@ function avatarUploadMiddleware(req, res, next) {
             : err.message === 'UNSUPPORTED_FILE_TYPE'
                 ? 'Please upload a JPEG, PNG, WEBP, or GIF image.'
                 : 'Upload failed. Please try again.';
+        // req.path is relative to the mount point here (Express strips the
+        // matched app.use() prefix, so it's just '/' for both mounted
+        // paths) - req.originalUrl still has the real path, which is what
+        // actually distinguishes the two callers.
+        if (req.originalUrl.startsWith('/api/')) {
+            return res.status(400).json({ error: 'upload_failed', message });
+        }
         res.redirect(`/account/profile?error=${encodeURIComponent(message)}`);
     });
 }

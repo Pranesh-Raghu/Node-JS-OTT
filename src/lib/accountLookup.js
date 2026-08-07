@@ -71,4 +71,41 @@ async function getOrCreateAccountIdForUsername(username) {
     return accountId.id;
 }
 
-module.exports = { getOrCreateAccountIdForUsername };
+// watchlist_items (migration 0001) is keyed on profile_id, not account_id -
+// it was designed for the multi-profile model (see the `profiles` table)
+// even though every account currently has exactly one profile. Every
+// account-creation path here and in scripts/backfill-accounts.js already
+// inserts a 'Default' is_default=TRUE profile alongside the account, so
+// this should always find one - the create-if-missing fallback is cheap
+// insurance for any account that predates that guarantee, not the expected
+// path.
+async function getDefaultProfileIdForAccount(accountId) {
+    if (!accountId) return null;
+
+    const [existing] = await pool.execute(
+        'SELECT id FROM profiles WHERE account_id = ? AND is_default = TRUE AND deleted_at IS NULL LIMIT 1',
+        [accountId]
+    );
+    if (existing.length > 0) return existing[0].id;
+
+    try {
+        const [rows] = await pool.execute(
+            `INSERT INTO profiles (ulid, account_id, name, is_default) VALUES (?, ?, 'Default', TRUE) RETURNING id`,
+            [ulid(), accountId]
+        );
+        return rows[0].id;
+    } catch (err) {
+        // uq_profiles_one_default: another concurrent request already won
+        // this rare race - re-fetch instead of surfacing a 500 for it.
+        if (err.code === '23505') {
+            const [rows] = await pool.execute(
+                'SELECT id FROM profiles WHERE account_id = ? AND is_default = TRUE AND deleted_at IS NULL LIMIT 1',
+                [accountId]
+            );
+            if (rows.length > 0) return rows[0].id;
+        }
+        throw err;
+    }
+}
+
+module.exports = { getOrCreateAccountIdForUsername, getDefaultProfileIdForAccount };

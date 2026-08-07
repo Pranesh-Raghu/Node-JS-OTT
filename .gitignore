@@ -5,6 +5,7 @@ node_modules/
 *.exe
 coverage/
 dist/
+public/app/
 .DS_Store
 npm-debug.log*
 *.local

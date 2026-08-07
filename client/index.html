@@ -1,0 +1,23 @@
+<!doctype html>
+<!-- data-theme is a placeholder here; src/lib/serveSpa.js rewrites it to the
+     real value from the `theme` cookie before sending, so the correct theme
+     is present in the very first byte and there's no flash-of-wrong-theme
+     (and no inline <script> needed to fix it up, which the CSP would block
+     anyway - see vite.config.mjs). -->
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COMICS TV</title>
+    <!-- Deliberately NOT imported into the Vite module graph - see the CSS
+         strategy note in the migration plan. The 5 EJS pages that remain
+         (login, signup, adminLogin, oauth/consent, oauth/error) link this
+         same file; importing it here would get it hashed into a
+         Vite-owned asset path those pages can't find. -->
+    <link rel="stylesheet" href="/public/css/style.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

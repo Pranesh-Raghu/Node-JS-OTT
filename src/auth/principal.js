@@ -4,8 +4,14 @@ const { verifyApiKey } = require('./api-keys');
 const RESOURCE_ID = process.env.MCP_RESOURCE_ID || 'http://localhost:1000/mcp';
 
 // Resolves exactly one credential chain, no fall-through between them.
-// Session cookies are never accepted here (this middleware is mounted only
-// on /api and /mcp, which don't have express-session applied at all).
+// Session cookies are never accepted here - not because express-session
+// isn't applied (it's mounted globally in src/app.js and IS parsed on
+// every request, /mcp included; this comment used to claim otherwise),
+// but because this middleware only checks the Authorization header and
+// never consults req.session at all. The session-cookie-authenticated
+// React SPA talks to /api/* instead, guarded by
+// src/middleware/requireApiAuth.js, which is a separate code path from
+// this one - this middleware is mounted only on /mcp (src/mcp/server.js).
 async function requireBearerAuth(req, res, next) {
     const authHeader = req.headers.authorization || '';
     if (!authHeader.startsWith('Bearer ')) {

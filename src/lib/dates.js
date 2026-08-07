@@ -35,4 +35,17 @@ function parseReleaseDate(raw) {
     throw new Error(`Unrecognized release date format: "${raw}"`);
 }
 
-module.exports = { parseReleaseDate };
+// src/db/pool.js's type parser (see its comment) returns TIMESTAMP columns
+// as naive 'YYYY-MM-DD HH:MM:SS[.ffffff]' strings, with no 'T' separator
+// and no timezone marker - `new Date(naive)` on that exact shape is
+// Invalid Date in Safari (and implementation-defined generally, the same
+// footgun parseReleaseDate above avoids). The DB session's timezone is UTC
+// (Neon's default, unconfigured here), so the wall-clock value already IS
+// UTC - this just makes that explicit so JSON API responses carry a real
+// ISO-8601 timestamp the client can parse anywhere.
+function timestampToIso(naive) {
+    if (!naive) return null;
+    return `${naive.replace(' ', 'T')}Z`;
+}
+
+module.exports = { parseReleaseDate, timestampToIso };

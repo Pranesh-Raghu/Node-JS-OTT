@@ -13,6 +13,7 @@ const catalogRoutes = require('./routes/catalogRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const healthRoutes = require('./routes/healthRoutes');
 const accountRoutes = require('./routes/accountRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 const { csrfSynchronisedProtection, attachCsrfToken } = require('./middleware/csrf');
 const { globalLimiter, authLimiter } = require('./middleware/rateLimit');
@@ -59,9 +60,13 @@ function createApp() {
     // execute script, so this doesn't open an XSS path the way a broad
     // script-src would. media-src/frame-src stay on explicit allowlists
     // since those load actual video/iframe content. style-src keeps
-    // 'unsafe-inline' for now because some inline style="" attributes are
-    // still being removed in a parallel cleanup pass; tighten once that
-    // lands (see the frontend hardening phase).
+    // 'unsafe-inline': the EJS views' own inline style="" attributes are
+    // gone now (the pages that had them moved to React - see the EJS->
+    // React migration plan), but client/src/components/Avatar.jsx sets a
+    // per-user background-color as an inline style the same way, so the
+    // underlying need hasn't gone away, just moved. script-src stays
+    // 'self' with no 'unsafe-inline'/'unsafe-eval' either way - see
+    // vite.config.mjs's modulePreload.polyfill:false for why that matters.
     app.use(
         helmet({
             contentSecurityPolicy: {
@@ -111,9 +116,10 @@ function createApp() {
     );
 
     app.use(globalLimiter);
-    // Scoped to this one path, and mounted before the CSRF check: see the
-    // comment on avatarUploadMiddleware for why order matters here.
-    app.use('/account/profile', avatarUploadMiddleware);
+    // Scoped to these two paths (the EJS form and its React/SPA
+    // equivalent), and mounted before the CSRF check: see the comment on
+    // avatarUploadMiddleware for why order matters here.
+    app.use(['/account/profile', '/api/account/avatar'], avatarUploadMiddleware);
     app.use(attachCsrfToken);
     app.use(csrfSynchronisedProtection);
     app.use(trackSessionDevice);
@@ -121,6 +127,7 @@ function createApp() {
     app.use('/', themeRoutes);
 
     app.use('/', healthRoutes);
+    app.use('/', apiRoutes);
     app.use('/', catalogRoutes);
     app.use('/login', authLimiter);
     app.use('/signup', authLimiter);

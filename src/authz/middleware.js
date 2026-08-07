@@ -27,20 +27,27 @@ async function fgaSubjectForAdminRequest(req) {
 // tier: 'browse' fails OPEN on an FGA outage (an outage shouldn't take the
 // whole homepage down); 'strict' fails CLOSED (playback/admin — an outage
 // must not grant access it can't verify).
-function requireFgaPermission(relation, objectFromReq, { tier = 'strict', admin = false } = {}) {
+//
+// json: true switches every response below from a plain-text page response
+// to a JSON one, for use on /api/* routes (the React SPA) instead of a
+// server-rendered page. The status-code semantics are unchanged - only the
+// body shape differs - so the fail-open/fail-closed tier logic below stays
+// a single shared implementation rather than being forked per caller.
+function requireFgaPermission(relation, objectFromReq, { tier = 'strict', admin = false, json = false } = {}) {
+    const respond = (res, status, message) =>
+        json ? res.status(status).json({ error: message.toLowerCase().replace(/ /g, '_'), message }) : res.status(status).send(message);
+
     return async (req, res, next) => {
         try {
             const subject = admin ? await fgaSubjectForAdminRequest(req) : await fgaSubjectForRequest(req);
             const object = objectFromReq(req);
             if (!subject) {
                 if (tier === 'browse') return next(); // anonymous browse still allowed via can_discover's `published` branch at the app layer
-                return res.status(401).send('Login required');
+                return respond(res, 401, 'Login required');
             }
             const allowed = await can(subject, relation, object, { failOpen: tier === 'browse' });
             if (!allowed) {
-                return res.status(tier === 'browse' ? 404 : 403).send(
-                    tier === 'browse' ? 'Not found' : 'Not authorized'
-                );
+                return tier === 'browse' ? respond(res, 404, 'Not found') : respond(res, 403, 'Not authorized');
             }
             next();
         } catch (err) {
