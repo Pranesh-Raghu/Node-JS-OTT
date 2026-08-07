@@ -700,8 +700,15 @@ a.watch-now-btn:hover {
 }
 
 .movie-title-logo {
-    max-width: 100%;
-    max-height: 9rem;
+    /* 9rem (144px) dwarfed the rest of the page next to a 2rem heading
+       elsewhere on it - 4rem lands closer to that scale. max-width caps
+       it separately from max-height since a wide/short logo (most title
+       treatments are) would otherwise stay tall-capped but stretch full
+       container width. */
+    max-width: 320px;
+    max-height: 4rem;
+    width: auto;
+    height: auto;
     /* TMDB logo art is transparent PNG - drop shadow keeps it legible
        against light backgrounds without needing per-theme image swaps. */
     filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.45));
