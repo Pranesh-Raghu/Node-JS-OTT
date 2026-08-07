@@ -5,8 +5,22 @@ const logger = require('../logger');
 const googleAuth = require('../auth/google');
 
 function regenerateSession(req) {
+    // Bug fix: express-session's regenerate() destroys the old session and
+    // generates a brand-new empty one - it doesn't just rotate the id. That
+    // silently wiped `pendingAuthRequest`, which GET /oauth/authorize
+    // (src/auth/oidc/routes.js) writes before redirecting an anonymous user
+    // to /login?redirectTo=/oauth/consent. Every login/signup/Google-callback
+    // path calls regenerateSession() for session-fixation protection, so an
+    // MCP client or AI agent starting OAuth while logged out would log in
+    // successfully and then dead-end on GET /oauth/consent with "No pending
+    // authorization request". Carry it across the regenerate explicitly.
+    const pendingAuthRequest = req.session.pendingAuthRequest;
     return new Promise((resolve, reject) => {
-        req.session.regenerate((err) => (err ? reject(err) : resolve()));
+        req.session.regenerate((err) => {
+            if (err) return reject(err);
+            if (pendingAuthRequest) req.session.pendingAuthRequest = pendingAuthRequest;
+            resolve();
+        });
     });
 }
 

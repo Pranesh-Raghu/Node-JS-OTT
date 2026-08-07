@@ -4,11 +4,14 @@ const { csrfSynchronisedProtection, generateToken } = csrfSync({
     getTokenFromRequest: (req) => req.body?._csrf || req.headers['x-csrf-token'],
     // OAuth token/registration/MCP endpoints are machine-to-machine or
     // pre-session; they authenticate via bearer tokens/client credentials,
-    // not the session-bound CSRF token.
+    // not the session-bound CSRF token. `/api/*` is deliberately NOT
+    // exempt: those are session-cookie-authenticated browser requests (the
+    // React SPA), so they need the same CSRF protection as a form post.
+    // csrf-sync already skips GET/HEAD/OPTIONS by default, which is why
+    // GET /api/search and GET /api/session need no token.
     skipCsrfProtection: (req) =>
         req.path === '/oauth/token' ||
         req.path === '/oauth/register' ||
-        req.path.startsWith('/api/') ||
         req.path.startsWith('/mcp'),
 });
 
